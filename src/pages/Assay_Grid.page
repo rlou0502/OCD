@@ -1,0 +1,61 @@
+<apex:page controller="AssayGridController">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!save}" id="saveButton" value="Save"/>
+                <apex:commandButton action="{!cancel}" immediate="true" value="Cancel"/>
+            </apex:pageBlockButtons>
+            
+            <table id="ExistingAssayTable" cellspacing="5" border="1">
+            <tr>
+            Current Assays
+            </tr>
+            
+            <tr>
+            <td>Assay Name</td>
+            <td>Product</td>
+            <td>Patient Volume</td>
+            <td>Usage Volume</td>
+            <td>Current Company</td>
+            <td>Reagent Contract Expiration</td>
+            </tr>
+            <apex:repeat value="{!AssayDetails}" var="ass">
+            <td><apex:outputField label="Assay Name" value="{!AssayDetailMap[ass].name}"/></td>
+            <td><apex:outputField label="Product" value="{!AssayDetailMap[ass].Product__c}"/></td>
+            <td><apex:outputField label="Patient Volume" value="{!AssayDetailMap[ass].patient_volume__c}"/></td>
+            <td><apex:outputField label="Usage Volume" value="{!AssayDetailMap[ass].usage_volume__c}"/></td>
+            <td><apex:outputField label="Current Company" value="{!AssayDetailMap[ass].Current_Company__c}"/></td>
+            <td><apex:outputField label="Reagent Contract Expiration" value="{!AssayDetailMap[ass].Reagent_Contract_Expiration__c}"/></td>
+            </apex:repeat>
+            </table>
+            
+            <table id="AssayTable" cellspacing="5" border="5">
+                <tr>
+                All Assays available to add
+                </tr>
+                <tr>
+                  <td>Assay Name</td>
+                
+                <td>Patient Volume</td>
+                <td>Usage Volume</td>
+                <td>Current Company</td>
+                <td>Reagent Contract Expiration</td>
+                </tr>
+                <apex:repeat value="{!keys}" var="key">
+                <tr>
+                <td><apex:outputField label="Assay Name" value="{!AssayMap[key].name}"/></td>
+                
+                <td><apex:inputText value="{!PVolumeMap[key]}"/></td>
+                <td><apex:inputText value="{!UVolumeMap[key]}"/></td>
+                <td><apex:inputText value="{!UVolumeMap[key]}"/></td>
+                <td><apex:inputText value="{!UVolumeMap[key]}"/></td>
+                </tr>
+                
+                
+                </apex:repeat>
+            </table>
+            
+        </apex:pageBlock>
+    </apex:form>
+  
+</apex:page>

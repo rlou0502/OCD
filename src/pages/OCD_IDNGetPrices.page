@@ -1,0 +1,330 @@
+<!-- --
+* @author Roy Lou
+* @date 10/10/2016 
+*
+* @group Network Quote
+* @group-content ../../ApexDocContent/OCD_IDNGetPrices.htm 
+*
+* @description This is the VisualForce Page handling "Get prices" event for IDN quote
+* @Change History
+*
+*   Tag         Author              Date           Requested-BY      Description     
+* *****************************************************************************************************************              
+*   1.0.0       Roy Lou             10/10/2016     N/A               Initial Version
+*                                                                               
+* *****************************************************************************************************************/-->
+<apex:page standardController="REVVY__MnQuote__c" extensions="OCD_IDNMembersController" >
+<head> 
+    <link href="{!URLFOR($Resource.REVVY__jquery, '/css/smoothness/jquery-ui-1.8.18.custom.css')}" rel="stylesheet" type="text/css"/>
+    <apex:includeScript value="{!URLFOR($Resource.DA, '/bower_components/jquery/dist/jquery.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.REVVY__jquery, '/js/jquery-ui-1.8.18.custom.min.js')}"/>
+    <script type="text/javascript">
+    	j$ = jQuery.noConflict();
+    	var quoteId = "{!quoteId}";
+    	var idnType = "{!IDNType}";
+    	var batchSize = {!attachmentBatchSize};
+    	var limitSize = {!attachmentLimitSize};
+    	var stepSize = 0;
+    	var reagentBatchSize = {!reagentLineUpdateBatchSize};
+    	var updateProgressBar = function(selector, myPer) {
+            j$(selector)
+    			.progressbar({ value: myPer })
+    			.children('.ui-progressbar-value')
+    			.html(myPer + '%')
+    			.css("display", "block");
+        }
+        var updateProgressBarWithSteps = function(selector, stepSize) {
+        	var progressSoFar = j$( selector ).progressbar( "value" ) + stepSize;
+            if(progressSoFar > 100) {
+            	progressSoFar = 100;
+            }
+            updateProgressBar(selector, progressSoFar);    
+        }
+        //showErrorAndReturn("#progressbar", "err");
+        var showErrorAndReturn = function(selector, errorMsg) {
+            j$(selector)
+    			.progressbar({ value: 100 })
+    			.children('.ui-progressbar-value')
+    			.html(errorMsg)
+    			.css("display", "block");
+    		j$("body").css("cursor", "default");
+            window.top.location = '/'+quoteId;
+            setTimeout(function() { window.top.location = '/'+quoteId; }, 5000);
+        }
+        
+        var IDNMediator = (function ($) {
+	        var remoteAction = function() {
+	        	var deferred = j$.Deferred();
+	            var args = Array.prototype.slice.call(arguments);
+	            var that = this;
+	            var handler = function(result, event) {
+	            	//console.log('remoteAction status=' + event.status + ' event =' + event.type);
+	                if (event.status) {
+	                	if(result.success) {
+	                        //console.log(result);
+	                        //updateProgressBarWithSteps("#progressbar", stepSize);
+	                        deferred.resolve(result.data);
+	                    } else {
+	                        deferred.reject(result.data);
+	                    }
+	                } else if (event.type === 'exception') {
+	                    console.log(event.message);
+	                    deferred.reject(event.message);
+	                } else {
+	                    console.log(event.message);
+	                    deferred.reject(event.message);
+	                }
+	            }
+	            var options = {
+	                escape: true,
+	                buffer: false,
+	                timeout: 120000
+	            }
+	            args.push(handler);
+	            args.push(options);
+	            Visualforce.remoting.Manager.invokeAction.apply(Visualforce.remoting.Manager, args);
+	            return deferred.promise();
+	        }
+        
+	        var _getPriceForParentQuote = function(parentId) {
+	            return remoteAction('{!$RemoteAction.OCD_IDNMembersController.getPrice}',
+	                            parentId);
+	        }
+	        
+	        var _updateBaseReagentPrice = function(quoteId, offset, limit) {
+	            return remoteAction('{!$RemoteAction.OCD_IDNMembersController.updateBaseReagentPrice}',
+	                quoteId, offset, limit);
+	        }
+	        var _saveAttachmentsAsQuote = function(quoteId, offset, limit) {
+	            return remoteAction('{!$RemoteAction.OCD_IDNMembersController.saveAttachmentsAsQuote}',
+	                quoteId, offset, limit);
+	        }
+	        
+	        var _updateTradeInValue = function(quoteId) {
+	            return remoteAction('{!$RemoteAction.OCD_IDNMembersController.updateTradeInValues}',
+	                            quoteId);
+	        }
+	        
+	        var _setupGetPriceSteps = function(quoteId) {
+	            return remoteAction('{!$RemoteAction.OCD_IDNMembersController.setupGetPriceSteps}',
+	                            quoteId);
+	        }
+        
+		    var _updateBaseReagentPriceDeferred  = $.Deferred();
+		    var _updateTradeInValueDeferred = $.Deferred();
+		    var _saveAttachmentsAsQuoteDeferred  = $.Deferred();
+		    var _getPriceStepsDeferred = $.Deferred();
+		    var _getIDNPriceDeferred = $.Deferred();
+		    
+			var _setupDeferredHandler = function() {
+				var deferredObj = Array.prototype.shift.call(arguments);
+				return $.when(deferredObj).then.apply(null, Array.prototype.slice.call(arguments, 0));
+			};
+			var _updateBaseReagentPriceDeferredHandler = function() {	
+				return _setupDeferredHandler.apply(null, [_updateBaseReagentPriceDeferred].concat(
+			      Array.prototype.slice.call(arguments, 0)
+			    ));	
+			};
+			var _updateTradeInValueDeferredHandler = function() {	
+				return _setupDeferredHandler.apply(null, [_updateTradeInValueDeferred].concat(
+			      Array.prototype.slice.call(arguments, 0)
+			    ));	
+			};
+			var _saveAttachmentsAsQuoteDeferredHandler = function() {	
+				return _setupDeferredHandler.apply(null, [_saveAttachmentsAsQuoteDeferred].concat(
+			      Array.prototype.slice.call(arguments, 0)
+			    ));	
+			};
+			var _getPriceStepsDeferredHandler = function() {	
+				return _setupDeferredHandler.apply(null, [_getPriceStepsDeferred].concat(
+			      Array.prototype.slice.call(arguments, 0)
+			    ));	
+			};
+			var _getIDNPriceDeferredHandler = function() {	
+				return _setupDeferredHandler.apply(null, [_getIDNPriceDeferred].concat(
+			      Array.prototype.slice.call(arguments, 0)
+			    ));	
+			};
+			
+		    return {
+		    	//remote actions
+		        getPriceForParentQuote : _getPriceForParentQuote,
+		        updateBaseReagentPrice : _updateBaseReagentPrice,
+		        saveAttachmentsAsQuote : _saveAttachmentsAsQuote,
+		        updateTradeInValue : _updateTradeInValue,
+		        setupGetPriceSteps : _setupGetPriceSteps,
+		    	//deferred flags
+		        updateBaseReagentPriceDeferred : _updateBaseReagentPriceDeferred,
+		        updateTradeInValueDeferred : _updateTradeInValueDeferred,
+		        saveAttachmentsAsQuoteDeferred : _saveAttachmentsAsQuoteDeferred,
+		        getPriceStepsDeferred : _getPriceStepsDeferred,
+		        getIDNPriceDeferred : _getIDNPriceDeferred,
+		        //handlers
+		        updateBaseReagentPriceDeferredHandler : _updateBaseReagentPriceDeferredHandler,
+		        updateTradeInValueDeferredHandler : _updateTradeInValueDeferredHandler,
+		        saveAttachmentsAsQuoteDeferredHandler : _saveAttachmentsAsQuoteDeferredHandler,
+		        getPriceStepsDeferredHandler : _getPriceStepsDeferredHandler,
+		        getIDNPriceDeferredHandler : _getIDNPriceDeferredHandler
+		    };
+		})(j$);
+		
+        var handleUpdateBaseReagentPrice = function(quoteId, offset, limit) {
+            console.log(quoteId + " offset=" + offset + " limit=" + limit);
+            j$.when(IDNMediator.updateBaseReagentPrice(quoteId, offset, limit)).then(function(status) {
+                console.log("updateBaseReagentPrice status = " + status);
+                if(status === 'continue') {
+                    handleUpdateBaseReagentPrice(quoteId, offset+limit, limit);
+                } else {
+                    IDNMediator.updateBaseReagentPriceDeferred.resolve(true);
+                }
+                updateProgressBarWithSteps("#progressbar", stepSize);
+            }, function(status) {
+                IDNMediator.updateBaseReagentPriceDeferred.reject(status);
+            });
+        }
+        
+        var handleUpdateTradeInValue = function(quoteId) {
+        	console.log('inside handleUpdateTradeInValue');
+            j$.when(IDNMediator.updateTradeInValue(quoteId)).then(function() {
+            	updateProgressBarWithSteps("#progressbar", stepSize);
+                IDNMediator.updateTradeInValueDeferred.resolve(this);
+                });
+        }
+
+        var handleSaveAttachmentsAsQuote = function(quoteId, offset, limit) {
+            console.log(quoteId + " offset=" + offset + " limit=" + limit);
+            j$.when(IDNMediator.saveAttachmentsAsQuote(quoteId, offset, limit)).then(function(status) {
+            	console.log(status);
+                if(status === 'continue') {
+                    handleSaveAttachmentsAsQuote(quoteId, offset+limit, limit);
+                } else {
+                    IDNMediator.saveAttachmentsAsQuoteDeferred.resolve(true);
+                }
+                updateProgressBarWithSteps("#progressbar", stepSize);
+            },
+            function(status) {
+            	console.log(status);
+            	showErrorAndReturn("#progressbar", status);
+            });
+        }
+        
+        var handleGetPriceSteps = function(quoteId) {
+        	j$.when(IDNMediator.setupGetPriceSteps(quoteId)).then(function(data) {
+                stepSize = data;
+                console.log("step size data ---- =" + data);
+                updateProgressBarWithSteps("#progressbar", stepSize);
+                console.log("IDN Type ---=" + idnType);
+                console.log("step size ---- =" + stepSize);
+                IDNMediator.getPriceStepsDeferred.resolve(true);
+            }, function(e) {
+            	IDNMediator.getPriceStepsDeferred.reject(e);
+            	showErrorAndReturn("#progressbar", e);
+                console.log("My ajax failed " + e);
+                 
+            });
+        }
+        
+        var handleIDNGetPrice = function(quoteId) {
+        	j$.when(IDNMediator.getPriceForParentQuote(quoteId)).then(function(response) {
+                if(response === "Saving quote as attachments") {
+                    console.log("Saving quote as attachments---"); 
+                    updateProgressBarWithSteps("#progressbar", stepSize);
+                    IDNMediator.getIDNPriceDeferred.resolve(true);
+                    //handleSaveAttachmentsAsQuote(quoteId, 0, limitSize);
+                } else {
+                    console.log("getPrice done..." + response);
+                    showErrorAndReturn("#progressbar", response);
+                    IDNMediator.getIDNPriceDeferred.reject(response);
+                }
+        	});
+        }
+        
+        j$(document).ready(function() {
+        	IDNMediator.updateBaseReagentPriceDeferredHandler(function() {
+                    updateProgressBar("#progressbar", 100);
+                    j$("body").css("cursor", "default");
+                    window.top.location = '/'+quoteId;
+                    console.log('whole process done....');
+            }, function(status) {
+                 showErrorAndReturn("#progressbar", status);
+            });
+            IDNMediator.updateTradeInValueDeferredHandler(function() {
+                if(idnType === "Base Reagent Price") {
+                	handleUpdateBaseReagentPrice(quoteId, 0, reagentBatchSize);
+                } else {
+                   	updateProgressBar("#progressbar", 100);
+                   	j$("body").css("cursor", "default");
+                   	window.top.location = '/'+quoteId;
+                   	console.log('whole process done ------');
+                }
+            }, function(status){
+            	showErrorAndReturn("#progressbar", status);
+            });
+            IDNMediator.saveAttachmentsAsQuoteDeferredHandler(function() {
+            	console.log("save attachment as quote done");
+            	handleUpdateTradeInValue(quoteId);
+            }, function(status){
+            	showErrorAndReturn("#progressbar", status);
+            });
+            
+            IDNMediator.getPriceStepsDeferredHandler(function() {
+            	console.log("calling get price...");
+            	handleIDNGetPrice(quoteId);
+            }, function(status){
+            	showErrorAndReturn("#progressbar", status);
+            });
+            
+            IDNMediator.getIDNPriceDeferredHandler(function() {
+            	handleSaveAttachmentsAsQuote(quoteId, 0, limitSize);
+            }, function(status){
+            	showErrorAndReturn("#progressbar", status);
+            });
+            
+        	updateProgressBar("#progressbar", 0);
+        	j$("#progressbar").show();
+            j$("body").css("cursor", "progress");
+            handleGetPriceSteps(quoteId);
+            /*
+            //updateProgressBarWithSteps("#progressbar", stepSize);
+            j$.when(IDNMediator.setupGetPriceSteps(quoteId)).then(function(data) {
+                stepSize = data;
+                console.log("step size data ---- =" + data);
+                
+                console.log("IDN Type --- =" + idnType);
+                console.log("step size ---- =" + stepSize);
+                j$.when(IDNMediator.getPriceForParentQuote(quoteId)).then(function(response) {
+                  if(response === "Saving quote as attachments") {
+                      console.log("Saving quote as attachments"); 
+                      updateProgressBarWithSteps("#progressbar", stepSize);
+                      handleSaveAttachmentsAsQuote(quoteId, 0, limitSize);
+                  } else {
+                      console.log("getPrice done..." + response);
+                      showErrorAndReturn("#progressbar", response);
+                  }
+          		});
+            }, function(e) {
+            	showErrorAndReturn("#progressbar", e);
+                console.log("My ajax failed " + e);
+                 
+            });
+            */    
+        		
+        });
+	</script>
+</head>
+	<apex:outputPanel >
+    	<div id="progressbar"></div>
+    </apex:outputPanel>
+    <apex:detail subject="{!quoteId}" relatedList="true" title="true"/>
+    <style type="text/css">
+		.ui-progressbar-value {
+            font-size: 13px;
+            font-weight: normal;
+            color: white;
+            line-height: 18px;
+            padding-left: 10px;
+        	background: Gray;
+        	text-align: right
+        }
+    </style>
+</apex:page>

@@ -1,0 +1,451 @@
+<!-- --
+* @author Roy Lou
+* @date 10/10/2016 
+*
+* @group Network Quote
+* @group-content ../../ApexDocContent/OCD_IDNMembers.htm 
+*
+* @description This is the VisualForce Page handling IDN process
+* @Change History
+*
+*   Tag         Author              Date           Requested-BY      Description     
+* *****************************************************************************************************************              
+*   1.0.0       Roy Lou             10/10/2016     N/A               Initial Version
+*                                                                               
+* *****************************************************************************************************************/-->
+<apex:page standardController="REVVY__MnQuote__c" extensions="OCD_IDNMembersController" action="{!setIDNPushTopic}">
+<head> 
+    <link href="{!URLFOR($Resource.REVVY__jquery, '/css/smoothness/jquery-ui-1.8.18.custom.css')}" rel="stylesheet" type="text/css"/>
+    <apex:includeScript value="{!URLFOR($Resource.DA, '/bower_components/jquery/dist/jquery.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.REVVY__jquery, '/js/jquery-ui-1.8.18.custom.min.js')}"/>
+    <script type="text/javascript">
+    	j$ = jQuery.noConflict();
+    	var quoteId = "{!quoteId}";
+    	var idnType = "{!IDNType}";
+    	var batchSize = {!attachmentBatchSize};
+    	var limitSize = {!attachmentLimitSize};
+    	var stepSize = 0;
+    	var reagentBatchSize = {!reagentLineUpdateBatchSize};
+    	var updateProgressBar = function(selector, myPer) {
+            j$(selector)
+    			.progressbar({ value: myPer })
+    			.children('.ui-progressbar-value')
+    			.html(myPer + '%')
+    			.css("display", "block");
+        }
+        //showErrorAndReturn("#progressbar", "err");
+        var showErrorAndReturn = function(selector, errorMsg) {
+            j$(selector)
+    			.progressbar({ value: 100 })
+    			.children('.ui-progressbar-value')
+    			.html(errorMsg)
+    			.css("display", "block");
+    		j$("body").css("cursor", "default");
+            window.top.location = '/'+quoteId;
+            setTimeout(function() { window.top.location = '/'+quoteId; }, 5000);
+        }
+        
+    	var remoteAction = function() {
+        	var deferred = j$.Deferred();
+            var args = Array.prototype.slice.call(arguments);
+            var that = this;
+            var handler = function(result, event) {
+            	console.log('remoteAction status=' + event.status + ' event =' + event.type);
+                if (event.status) {
+                	if(result.success) {
+                        //console.log(result);
+                        var progressSoFar = j$( "#progressbar" ).progressbar( "value" ) + stepSize;
+                        if(progressSoFar > 100) {
+                        	progressSoFar = 100;
+                        }
+                        updateProgressBar("#progressbar", progressSoFar);
+                        deferred.resolve(result.data);
+                    } else {
+                        deferred.reject(result.data);
+                    }
+                } else if (event.type === 'exception') {
+                    console.log(event.message);
+                    deferred.reject(event.message);
+                } else {
+                    console.log(event.message);
+                    deferred.reject(event.message);
+                }
+            }
+            var options = {
+                escape: true,
+                buffer: false,
+                timeout: 120000
+            }
+            args.push(handler);
+            args.push(options);
+            Visualforce.remoting.Manager.invokeAction.apply(Visualforce.remoting.Manager, args);
+            return deferred.promise();
+        }
+    	var updateBaseReagentPrice = function(quoteId, offset, limit) {
+            return remoteAction('{!$RemoteAction.OCD_IDNMembersController.updateBaseReagentPrice}',
+                quoteId, offset, limit);
+        }
+        var saveAttachmentsAsQuote = function(quoteId, offset, limit) {
+            return remoteAction('{!$RemoteAction.OCD_IDNMembersController.saveAttachmentsAsQuote}',
+                quoteId, offset, limit);
+        }
+        var setupChildrenQuotes = function(parentId, quoteIds) {
+            return remoteAction('{!$RemoteAction.OCD_IDNMembersController.setupChildrenQuotes}',
+                parentId, quoteIds);
+        }
+        var addMemberToIDNQuote = function(parentId, qId) {
+            return remoteAction('{!$RemoteAction.OCD_IDNMembersController.addMembers}',
+                            parentId, qId);
+        }
+        var getPriceForParentQuote = function(parentId) {
+            return remoteAction('{!$RemoteAction.OCD_IDNMembersController.getPrice}',
+                            parentId);
+        }
+        
+        var getPriceForQuote = function(quoteId) {
+            return remoteAction('{!$RemoteAction.OCD_IDNMembersController.getPrice}',
+                            quoteId);
+        }
+        var updateTradeInValue = function(quoteId) {
+            return remoteAction('{!$RemoteAction.OCD_IDNMembersController.updateTradeInValues}',
+                            quoteId);
+        }
+        
+        var completeIDNProcess = function(quoteId, idnStatus) {
+            return remoteAction('{!$RemoteAction.OCD_IDNMembersController.completeIDNProcess}',
+                            quoteId, idnStatus);
+        }
+        
+        var cloneQuote = function(quoteId) {
+            return remoteAction('{!$RemoteAction.OCD_IDNMembersController.cloneQuote}',
+                quoteId);
+        }
+        
+        var handleException = function(msg) {
+        }
+        
+        var updateBaseReagentPriceDeferred;
+        var handleUpdateBaseReagentPrice = function(quoteId, offset, limit) {
+            console.log(quoteId + " offset=" + offset + " limit=" + limit);
+            j$.when(updateBaseReagentPrice(quoteId, offset, limit)).then(function(status) {
+                console.log("updateBaseReagentPrice status = " + status);
+                if(status === 'continue') {
+                    handleUpdateBaseReagentPrice(quoteId, offset+limit, limit);
+                } else {
+                    updateBaseReagentPriceDeferred.resolve(true);
+                }
+            }, function(status) {
+                updateBaseReagentPriceDeferred.reject(status);
+                });
+        }
+        
+        var updateTradeInValueDeferred;
+        var handleUpdateTradeInValue = function(quoteId) {
+        	console.log('inside handleUpdateTradeInValue');
+            j$.when(updateTradeInValue(quoteId)).then(function() {
+                updateTradeInValueDeferred.resolve(this);
+                });
+        }
+        var saveAttachmentsAsQuoteDeferred;
+        var handleSaveAttachmentsAsQuote = function(quoteId, offset, limit) {
+            console.log(quoteId + " offset=" + offset + " limit=" + limit);
+            j$.when(saveAttachmentsAsQuote(quoteId, offset, limit)).then(function(status) {
+            	console.log(status);
+                if(status === 'continue') {
+                    handleSaveAttachmentsAsQuote(quoteId, offset+limit, limit);
+                } else {
+                    saveAttachmentsAsQuoteDeferred.resolve(true);
+                }
+            },
+            function(status) {
+            	console.log(status);
+            	showErrorAndReturn("#progressbar", status);
+            });
+        }
+        var childrenQuotesGetPriceCompleteDeferred;
+        var handleChildrenQuotesGetPrice = function(childrenQuoteIds) {
+            var clonedQuotes = childrenQuoteIds.slice(0);
+            childrenQuotesGetPriceCompleteDeferred = j$.Deferred();
+            j$.when(childrenQuotesGetPriceCompleteDeferred).then(function() {
+                //updateProgressBar("#progressbar", 17);
+                handleAddMembers(quoteId, clonedQuotes);
+            }, function(status) {
+            	console.log(status);
+            	showErrorAndReturn("#progressbar", status);
+            });
+            recursiveGetPrice(childrenQuoteIds);
+        };
+        var recursiveGetPrice = function(childrenQuoteIds) {
+            if(childrenQuoteIds.length > 0){
+                var oneQuote = childrenQuoteIds.shift();
+                j$.when(getPriceForQuote(oneQuote)).then(function() {
+                    recursiveGetPrice(childrenQuoteIds);
+                }, function(status) {
+                	childrenQuotesGetPriceCompleteDeferred.reject(status);
+                });
+            } else {
+                childrenQuotesGetPriceCompleteDeferred.resolve(true);
+            }
+        };
+    	var addMembersCompleteDeferred;
+        var handleAddMembers = function(parentId, childrenQuoteIds) {
+        	console.log('childrenQuoteIds size = ' + childrenQuoteIds.length);
+            addMembersCompleteDeferred = j$.Deferred();
+            j$.when(addMembersCompleteDeferred).then(function() {
+                	//updateProgressBar("#progressbar", 32);
+                	j$.when(getPriceForParentQuote(quoteId)).then(function(response) {
+                        //updateProgressBar("#progressbar", 47);
+                        if(response === "Saving quote as attachments") {
+                            console.log("Saving quote as attachments");
+                            saveAttachmentsAsQuoteDeferred = j$.Deferred(); 
+                            j$.when(saveAttachmentsAsQuoteDeferred).then(function() {
+                                	//updateProgressBar("#progressbar", 60);
+                                	handleUpdateTradeInValue(quoteId);
+                                    console.log("save attachment as quote done");
+                                });
+                            handleSaveAttachmentsAsQuote(quoteId, 0, limitSize);
+                        } else {
+                            console.log("getPrice done..." + response);
+                            showErrorAndReturn("#progressbar", response);
+                        }
+                });
+            });
+            console.log("add member...");
+            recursiveAddMembers(parentId, childrenQuoteIds);
+        };
+        var recursiveAddMembers = function(parentId, childrenQuoteIds) {
+            console.log("add member..." + childrenQuoteIds.length);
+            if(childrenQuoteIds.length > 0){
+                var oneQuote = childrenQuoteIds.shift();
+                console.log("add member..." + oneQuote);
+                console.log("add member..." + childrenQuoteIds);
+                j$.when(addMemberToIDNQuote(parentId, oneQuote)).then(function() {
+                    console.log("add member...recursive...");
+                    recursiveAddMembers(parentId, childrenQuoteIds);
+                }, function(status){
+                	showErrorAndReturn("#progressbar", status);
+                });
+            } else {
+                console.log("add member...final resolve...");
+                addMembersCompleteDeferred.resolve(true);
+            }
+            
+        };
+    	var clonedSelectedQuotes = [];
+    	var cloneMemberQuotesDeferred;
+    	var handleCloneMemberQuotes = function(childrenQuoteIds) {
+            console.log("clone member..." + childrenQuoteIds.length);
+            if(childrenQuoteIds.length > 0){
+                var oneQuote = childrenQuoteIds.shift();
+                console.log("clone one member..." + oneQuote);
+                j$.when(cloneQuote(oneQuote)).then(function(result) {
+                    console.log("clone member...recursive...");
+                    clonedSelectedQuotes.push(result.clonedQuote);
+                    handleCloneMemberQuotes(childrenQuoteIds);
+                }, function(status){
+                	showErrorAndReturn("#progressbar", status);
+                });
+            } else {
+                console.log("clone member quote...final resolve..." + clonedSelectedQuotes);
+                cloneMemberQuotesDeferred.resolve(true);
+            }
+        };
+
+    	j$(document).ready(function() {
+            j$("#progressbar").hide();
+            updateProgressBar("#progressbar", 0);
+            
+            //var originalArray = [1,2,3,4,5,6,7,8];
+            updateBaseReagentPriceDeferred=j$.Deferred();
+        	j$.when(updateBaseReagentPriceDeferred).then(function() {
+                //updateProgressBar("#progressbar", 90);
+               // j$.when(completeIDNProcess(quoteId, "IDN_Completed")).then(function() {
+                    updateProgressBar("#progressbar", 100);
+                    j$("body").css("cursor", "default");
+                    window.top.location = '/'+quoteId;
+                    console.log('whole process done....');
+               //     });
+             }, function(status) {
+                 console.log(status);
+                 });
+            updateTradeInValueDeferred = j$.Deferred();
+            j$.when(updateTradeInValueDeferred).then(function() {
+                //updateProgressBar("#progressbar", 75);
+                console.log('inside updateTradeInValueDeferred when IDN type =' + idnType);
+                if(idnType === "Base Reagent Price") {
+                	handleUpdateBaseReagentPrice(quoteId, 0, reagentBatchSize);
+                } else {
+                   	updateProgressBar("#progressbar", 100);
+                   	j$("body").css("cursor", "default");
+                   	window.top.location = '/'+quoteId;
+                   	console.log('whole process done....');
+                    
+                	/*
+                   j$.when(completeIDNProcess(quoteId, "IDN_Completed")).then(function() {
+                    	updateProgressBar("#progressbar", 100);
+                    	j$("body").css("cursor", "default");
+                    	window.top.location = '/'+quoteId;
+                    	console.log('whole process done....');
+                    }, function(status) {
+                    	updateProgressBar("#progressbar", 100);
+                    	j$("body").css("cursor", "default");
+                    	window.top.location = '/'+quoteId;
+                    	console.log('error = ' + status);
+                    });
+                    */
+                }
+            }, function(status){
+                	showErrorAndReturn("#progressbar", status);
+                });
+            cloneMemberQuotesDeferred = j$.Deferred();
+            j$.when(cloneMemberQuotesDeferred).then(function() {
+            	var membersToProcess = clonedSelectedQuotes.slice(0);
+  				if(idnType === "Base Reagent Price") {
+                    handleChildrenQuotesGetPrice(membersToProcess);
+                } else {
+                    handleAddMembers(quoteId, membersToProcess);
+                }
+            }, function(status){
+                	showErrorAndReturn("#progressbar", status);
+                });
+            console.log(quoteId);
+            var selectedMembers = [];
+            j$(".btn.submitSelectedMembers").click(function() {
+        		j$("input:checkbox:checked").each(function() {
+                   selectedMembers.push(j$(this).siblings(".quoteId").val());
+                 });
+                j$("#progressbar").show();
+                j$("body").css("cursor", "progress");
+                //console.log(quoteId);
+                //console.log(idnType);
+                //console.log(selectedMembers);
+                var setupPromise = setupChildrenQuotes(quoteId, selectedMembers);
+                j$.when(setupPromise).then(function(data) {
+                    var members = selectedMembers.slice(0);
+                    //updateProgressBar("#progressbar", 5);
+                    stepSize = data;
+                    console.log("IDN Type =" + idnType);
+                    console.log("step size  =" + stepSize);
+                    handleCloneMemberQuotes(members);
+                }, function(e) {
+                	showErrorAndReturn("#progressbar", e);
+                    console.log("My ajax failed " + e);
+                     
+                });
+             
+			});
+        });
+    </script>
+</head>
+    <apex:sectionHeader title="IDN" subtitle="{!idnAccount.Name}"/>
+	
+	<apex:form >
+	<apex:actionFunction name="selectAllAccountJS" action="{!executeSelectAllAccount}" rerender="memberAccountId" />
+	<apex:actionFunction name="selectAllQuoteJS" action="{!executeSelectAllQuote}" rerender="memberQuoteId" />
+	<apex:pageMessages />
+	<apex:pageBlock title="IDN Members" mode="edit">
+		<apex:pageBlockButtons >
+			<apex:commandButton action="{!previous}" value="Previous" rendered="{!STEP=='1'}"/>
+			<apex:commandButton action="{!next}" value="Next" rendered="{!STEP=='0'}"/>
+			<!-- 
+			<apex:commandButton action="{!submitMemberSelection}" value="Submit" rendered="{!STEP=='1'}" />
+			 -->
+            <apex:outputPanel layout="inline" rendered="{!STEP=='1'}" > 
+            	<input type="button" class="btn submitSelectedMembers" value="Submit Members" />
+            </apex:outputPanel>
+            <apex:outputPanel layout="inline" rendered="{!$User.Email == 'rlou@modeln.com'}" > 
+            	<input type="button" class="btn deleteLines" value="Delete Quote Lines" />
+            </apex:outputPanel>
+			<apex:commandButton action="{!cancel}" value="Cancel"/>
+ 		</apex:pageBlockButtons>
+        <apex:outputPanel rendered="{!STEP=='1'}">
+                <div id="progressbar"></div>
+            </apex:outputPanel>
+ 		<apex:pageBlockSection title="Select Members" columns="1" rendered="{!STEP=='0'}" id="memberAccountId">
+            
+ 			<apex:pageBlockTable value="{!idnMemberList}" var="idnm">			
+				<apex:column >
+					<apex:facet name="header"><apex:inputCheckbox value="{!selectAllAccount}" onclick="selectAllAccountJS();" /></apex:facet>
+					<apex:inputCheckbox value="{!idnm.selected}"/>
+				</apex:column>
+				<apex:column value="{!idnm.acc.Name}"/>
+				<apex:column value="{!idnm.acc.BillingStreet}"/>
+				<apex:column value="{!idnm.acc.BillingCity}"/>
+				<apex:column value="{!idnm.acc.BillingState}"/>
+				<apex:column value="{!idnm.acc.BillingPostalCode}"/>
+				<apex:column value="{!idnm.acc.BillingCountry}"/>
+ 			</apex:pageBlockTable>
+		</apex:pageBlockSection>
+
+ 		<apex:pageBlockSection title="Select Member Quotes" columns="1" rendered="{!STEP=='1'}" id="memberQuoteId">
+ 			<apex:pageBlockTable value="{!quoteList}" var="q">			
+				<apex:column >
+					<apex:facet name="header"><apex:inputCheckbox value="{!selectAllQuote}" onclick="selectAllQuoteJS();" /></apex:facet>
+					<apex:inputCheckbox value="{!q.selected}"/>
+                    <apex:inputHidden value="{!q.quote.Id}" html-class="quoteId"/>
+				</apex:column>
+				<apex:column value="{!q.quote.REVVY__Account__r.Name}"/>
+				<apex:column >
+					<apex:facet name="header">{!$Label.IDN_CustomerNumber}</apex:facet>	
+					{!q.quote.Ship_To_Customer_Number_for_Quote__c}
+				</apex:column>
+				<apex:column value="{!q.quote.Name}"/>
+				<apex:column value="{!q.quote.REVVY__Id__c}"/>
+				<apex:column value="{!q.quote.REVVY__Opportunity__r.Name}"/>
+				<apex:column >
+					<apex:facet name="header">{!$Label.IDN_RecordType}</apex:facet>	
+					{!q.quote.RecordType.Name}
+				</apex:column>
+				<apex:column value="{!q.quote.REVVY__Primary__c}"/>
+				
+ 			</apex:pageBlockTable>
+		</apex:pageBlockSection>
+
+	</apex:pageBlock>
+	<apex:outputPanel id="tstpopup">
+        <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopUp}"/>
+            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayPopUp}">
+               {!$Label.IDN_Process_Msg}<br/><br/><br/>
+                <apex:commandButton value="Close" action="{!closePopup}" rerender="tstpopup"/>
+            </apex:outputPanel>
+        </apex:outputPanel>
+	</apex:form>
+	<style type="text/css">
+        .custPopup{
+            background-color: white;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            /* These are the 3 css properties you will need to change so the popup 
+            displays in the center of the screen. First set the width. Then set 
+            margin-left to negative half of what the width is. You can add 
+            the height property for a fixed size pop up if you want.*/
+            width: 500px;
+            margin-left: -250px;
+            top:100px;
+        }
+        .popupBackground{
+            background-color:black;
+            opacity: 0.20;
+            filter: alpha(opacity = 20);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }
+		.ui-progressbar-value {
+            font-size: 13px;
+            font-weight: normal;
+            color: white;
+            line-height: 18px;
+            padding-left: 10px;
+        	background: Gray;
+        	text-align: right
+        }
+    </style>
+</apex:page>

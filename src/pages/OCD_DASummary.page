@@ -1,0 +1,1889 @@
+<!-- --
+* @author Indra Lugina
+* @date 10/10/2016 
+*
+* @group Financial Assessment
+* @group-content ../../ApexDocContent/OCD_DASummary.htm 
+*
+* @description This is the VisualForce Page for Financial Assessment Summary Page
+* @Change History
+*
+*   Tag         Author              Date           Requested-BY      Description     
+* *****************************************************************************************************************              
+*   1.0.0       Indra Lugina        10/10/2016     N/A               Initial Version
+*                                                                               
+* *****************************************************************************************************************/-->
+<apex:page standardcontroller="OCD_Deal_Assessment__c" extensions="OCD_DAController" standardStylesheets="false" sidebar="false" showHeader="false" docType="html-5.0" 
+           applyHtmlTag="false" applyBodyTag="false" language="{!userLocale}">
+
+<html class="no-js">
+
+<head>
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="Deal Assessment Summary and Cash Flow"/>
+    <meta name="author" content="Ortho Clinical"/>
+
+    <title>{!da.Quote__r.Name} ({!da.Quote__r.REVVY__Id__c})</title>
+    <link href="{!URLFOR($Resource.DA, '/js/jquery-gauge.css')}" type="text/css" rel="stylesheet"/>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{!URLFOR($Resource.DA, '/bower_components/bootstrap/dist/css/bootstrap.min.css')}" rel="stylesheet"/>
+
+    <!-- MetisMenu CSS -->
+    <link href="{!URLFOR($Resource.DA, '/bower_components/metisMenu/dist/metisMenu.min.css')}" rel="stylesheet"/>
+
+    <!-- Timeline CSS -->
+    <link href="{!URLFOR($Resource.DA, '/dist/css/timeline.css')}" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link href="{!URLFOR($Resource.DA, '/dist/css/sb-admin-2.css')}" rel="stylesheet"/>
+
+    <!-- Morris Charts CSS -->
+    <link href="{!URLFOR($Resource.DA, '/bower_components/morrisjs/morris.css')}" rel="stylesheet"/>
+
+    <!-- Custom Fonts -->
+    <link href="{!URLFOR($Resource.DA, '/bower_components/font-awesome/css/font-awesome.min.css')}" rel="stylesheet" type="text/css"/>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .dealIndicator {
+            position: relative;
+            width: 20vw;
+            height: 20vw;
+            box-sizing: border-box;
+            float:left;
+            margin:20px
+        }
+    </style>
+</head>
+<apex:form >
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><strong>{!da.Quote__r.Name} ({!da.Quote__r.REVVY__Id__c})</strong></a>
+            </div>
+            <!-- /.navbar-header -->
+
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <apex:commandLink action="{!redirectToDashboard}"><i class="fa fa-dashboard fa-fw"></i> {!$Label.DA_Dashboard}</apex:commandLink> 
+                        </li>
+                        <li>
+                            <apex:commandLink action="{!redirectToSummary}"><i class="fa fa-table fa-fw"></i> {!$Label.DA_Summary}</apex:commandLink> 
+                        </li>
+                        <li>
+                            <apex:commandLink action="{!redirectToCashFlow}"><i class="fa  fa-money fa-fw"></i> {!$Label.DA_Cash_Flow}</apex:commandLink> 
+                        </li>
+                        <li>
+                            <apex:commandLink action="{!redirectToQuote}"><i class="fa  fa-sign-out fa-fw"></i> {!$Label.DA_Quote}</apex:commandLink> 
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header"> {!$Label.DA_Summary}</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-folder-open fa-fw"></i> <strong>{!$Label.DA_CustomerContactInfo}</strong>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_CustomerName}
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.Quote__r.REVVY__Account__r.Name}"/>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_OppClosedDate}
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.Quote__r.REVVY__Opportunity__r.CloseDate}"/>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_Type}
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.Type_of_Customer__c}"/>
+                                    </span>
+                                </a>                                
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_ContractLengthMonths}
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.Contract_Length_months__c}"/>
+                                    </span>
+                                </a>
+                                <apex:actionFunction action="{!changeCurrency}" name="changeCurrencyJS">
+                                	<apex:param name="q" value="" assignTo="{!selectedCurrency}"/>
+                                </apex:actionFunction>
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_Currency}
+                                    <span class="pull-right text-muted">
+                                    	<apex:selectList value="{!selectedCurrency}" size="1" multiselect="false" onchange="javascript:changeCurrencyJS(this.value);">
+                                    		<apex:selectOptions value="{!currencyOptionList}"/>                                    		
+                                    	</apex:selectList>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_Country}
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.Quote__r.REVVY__Account__r.BillingCountry}"/>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bell fa-fw"></i> <strong>{!$Label.DA_OfferEvaluation}</strong>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_ReagentGPPCT}
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.Reagents_GP__c}"/>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_OveralGPPCT}
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.Overall_GP__c}"/>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_NPV}
+                                    <span class="pull-right text-muted">                                    
+                                    <c:OCD_Formatter amount="{!da.NPV__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_PaybackYrs}
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.Payback_Yrs__c}"/>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_EBITDAAVGYR}
+                                    <span class="pull-right text-muted">
+                                    <c:OCD_Formatter amount="{!da.EBITDA_Avg_Yr__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_EBITDAPCTSales}
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.EBITDA_Sales__c}"/>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_CountryHurdle}
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.Country_Hurdle__c}"/>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- 
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-folder-open fa-fw"></i> <strong>Indicator</strong>
+                        </div>                        
+                        <div class="panel-body">
+                        </div>
+                    </div>
+                </div>
+                -->                
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseEQ"><strong>{!$Label.DA_Equipment}</strong></a>
+                            </h4>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div id="collapseEQ" class="panel-collapse collapse in">
+                        <div class="panel-body">
+
+
+                           <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{!$Label.DA_Description}</th>
+                                                        <th style="text-align:center;">{!$Label.DA_Quantity}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+													<apex:repeat value="{!equipmentWSList}" var="eq">
+                                                    <tr>
+                                                        <td><strong><apex:outputText value="{!eq.REVVY__Catalog_Node__r.Name}"/></strong>
+                                                        	<br/>&nbsp;<br/>
+				                                            <table style="margin-left: 50px;" width="100%">
+				                                            	<apex:repeat value="{!eq.REVVY__QuoteItemSubLine__r}" var="ws">
+				                                            	<tr>
+				                                            	<td width="50%"><i><apex:outputText value="{!ws.REVVY__Catalog_Node__r.Name} - [{!ws.OCD_Product_Type__c}]"/></i></td>
+				                                            	<td width="50%" style="text-align:left;"><i>{!ws.REVVY__Quantity__c} {!$Label.DA_Months}</i></td>
+				                                            	</tr>
+				                                            	</apex:repeat>
+				                                            </table>
+                                                        </td>
+                                                        <td style="text-align:center;"><apex:outputText value="{!eq.REVVY__Quantity__c}"/></td>
+                                                    </tr>
+                                                    </apex:repeat>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </div>
+                                <!-- /.panel -->
+                            </div>
+                            <!-- /.col-lg-12 Equipment -->
+                        </div>                        
+                        <!-- /.panel-body -->
+                        </div>
+                    </div>
+                    <!-- /.panel default -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+
+            <!-- Equipment -->
+
+            <!-- Line of Business -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseCL"><strong>{!majorLOB.majorLOBName}</strong></a>
+                            </h4>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div id="collapseCL" class="panel-collapse collapse in">
+                        
+			            <!-- Volume and ASP -->
+                        <div class="panel-body">
+                           <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <strong>{!$Label.DA_VolumesAndASP}</strong>
+                                    </div>
+
+
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{!$Label.DA_Description}</th>
+                                                        <th style="text-align:right;">{!$Label.DA_Total}</th>
+                                                        <apex:repeat value="{!majorLOB.syearList}" var="val">
+                                                            <th style="text-align:right;">{!val}</th>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Volumes}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobVolumeList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Value__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" /></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_ASP}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobASPList}" var="val">
+                                                            <td style="text-align:right;">{!val.Value__c}</td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </div>
+                                <!-- /.panel -->
+                            </div>
+                            <!-- /.col-lg-12 Equipment -->
+                        </div>                                               
+ 			            <!-- Volume and ASP -->
+                        
+                        <div class="panel-body">
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <strong>{!$Label.DA_Revenue}</strong>
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{!$Label.DA_Description}</th>
+                                                        <th style="text-align:right;">{!$Label.DA_TotalContract}</th>
+                                                        <apex:repeat value="{!majorLOB.syearList}" var="val">
+                                                            <th style="text-align:right;">{!val}</th>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Reagents}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobReagentRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+														 </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Consumables}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobConsumablesRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Equipment}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobEquipmentRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Accessories}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobAccessoryRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Service}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobServiceRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Other}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobOtherRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_MPAUDA3P}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobMpaUda3PRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>{!$Label.DA_TotalRevenueDetail}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobTotalRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </div>
+                                <!-- /.panel -->
+                            </div>
+                            <!-- /.col-lg-12 Overall Quote Revenue -->
+
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <strong>{!$Label.DA_SystemStandardCost}</strong>
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{!$Label.DA_Description}</th>
+                                                        <th style="text-align:right;">{!$Label.DA_TotalContract}</th>
+                                                        <apex:repeat value="{!majorLOB.syearList}" var="val">
+                                                            <th style="text-align:right;">{!val}</th>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Reagents}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobReagentCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Consumables}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobConsumablesCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Equipment}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobEquipmentCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Accessories}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobAccessoryCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Service}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobServiceCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Other}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobOtherCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_MPAUDA3P}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobMpaUda3PCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>{!$Label.DA_TotalCostDetail}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobTotalCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </div>
+                                <!-- /.panel -->
+                            </div>
+                            <!-- /.col-lg-12 Overall Quote Cost -->
+
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <strong>{!$Label.DA_Profit}</strong>
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{!$Label.DA_Description}</th>
+                                                        <th style="text-align:right;">{!$Label.DA_TotalContract}</th>
+                                                        <apex:repeat value="{!majorLOB.syearList}" var="val">
+                                                            <th style="text-align:right;">{!val}</th>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Reagents}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobReagentGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Consumables}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobConsumablesGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Equipment}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobEquipmentGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Accessories}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobAccessoryGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Service}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobServiceGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Other}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobOtherGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_MPAUDA3P}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobMpaUda3PGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>{!$Label.DA_TotalGrossProfitDetail}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobTotalGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>{!$Label.DA_GPPCT}</td>
+                                                        <apex:repeat value="{!majorLOB.mlobTotalGPPCTList}" var="val">
+                                                            <td style="text-align:right;">{!val}%</td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.panel-body -->
+                                    </div>
+                                </div>
+                                <!-- /.panel -->
+                            </div>
+                            <!-- /.col-lg-12 -->
+
+
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+
+            <!-- /.Line of Business -->    
+
+            <!-- Minor Line of Business -->
+			<apex:outputPanel rendered="{!majorLOB.isCC}">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseCC">{!lobMap['CC'].lobName}</a>
+                            </h4>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div id="collapseCC" class="panel-collapse collapse in">
+
+			            <!-- Volume and ASP -->
+                        <div class="panel-body">
+                           <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <strong>{!$Label.DA_VolumesAndASP}</strong>
+                                    </div>
+
+
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{!$Label.DA_Description}</th>
+                                                        <th style="text-align:right;">{!$Label.DA_Total}</th>
+                                                        <apex:repeat value="{!majorLOB.syearList}" var="val">
+                                                            <th style="text-align:right;">{!val}</th>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Volumes}</td>
+                                                        <apex:repeat value="{!cclob.cclobReagentVolumeList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Value__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" /></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_ASP}</td>
+                                                        <apex:repeat value="{!cclob.cclobReagentASPList}" var="val">
+                                                        	<td style="text-align:right;">{!val.Value__c}</td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </div>
+                                <!-- /.panel -->
+                            </div>
+                            <!-- /.col-lg-12 Equipment -->
+                        </div>                                               
+ 			            <!-- Volume and ASP -->
+
+                        <div class="panel-body">
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        {!$Label.DA_Revenue}
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{!$Label.DA_Description}</th>
+                                                        <th style="text-align:right;">{!$Label.DA_TotalContract}</th>
+                                                        <apex:repeat value="{!lobMap['CC'].syearList}" var="val">
+                                                            <th style="text-align:right;">{!val}</th>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Reagents}</td>
+                                                        <apex:repeat value="{!cclob.cclobReagentRList}" var="val">
+                                                        	<td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Consumables}</td>
+                                                        <apex:repeat value="{!cclob.cclobConsumablesRList}" var="val">
+                                                        	<td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Equipment}</td>
+                                                        <apex:repeat value="{!cclob.cclobEquipmentRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Accessories}</td>
+                                                        <apex:repeat value="{!cclob.cclobAccessoryRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Service}</td>
+                                                        <apex:repeat value="{!cclob.cclobServiceRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Other}</td>
+                                                        <apex:repeat value="{!cclob.cclobOtherRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_MPAUDA3P}</td>
+                                                        <apex:repeat value="{!cclob.cclobMpaUda3PRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>{!$Label.DA_TotalRevenueDetail}</td>
+                                                        <apex:repeat value="{!cclob.cclobTotalRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </div>
+                                <!-- /.panel -->
+                            </div>
+                            <!-- /.col-lg-12 Overall Quote Revenue -->
+
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        {!$Label.DA_SystemStandardCost}
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{!$Label.DA_Description}</th>
+                                                        <th style="text-align:right;">{!$Label.DA_TotalContract}</th>
+                                                        <apex:repeat value="{!lobMap['CC'].syearList}" var="val">
+                                                            <th style="text-align:right;">{!val}</th>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Reagents}</td>
+                                                        <apex:repeat value="{!cclob.cclobReagentCList}" var="val">
+                                                          
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Consumables}</td>
+                                                        <apex:repeat value="{!cclob.cclobConsumablesCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Equipment}</td>
+                                                        <apex:repeat value="{!cclob.cclobEquipmentCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Accessories}</td>
+                                                        <apex:repeat value="{!cclob.cclobAccessoryCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Service}</td>
+                                                        <apex:repeat value="{!cclob.cclobServiceCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Other}</td>
+                                                        <apex:repeat value="{!cclob.cclobOtherCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_MPAUDA3P}</td>
+                                                        <apex:repeat value="{!cclob.cclobMpaUda3PCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>{!$Label.DA_TotalCostDetail}</td>
+                                                        <apex:repeat value="{!cclob.cclobTotalCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </div>
+                                <!-- /.panel -->
+                            </div>
+                            <!-- /.col-lg-12 Overall Quote Cost -->
+
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Gross Profit
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{!$Label.DA_Description}</th>
+                                                        <th style="text-align:right;">{!$Label.DA_TotalContract}</th>
+                                                        <apex:repeat value="{!lobMap['CC'].syearList}" var="val">
+                                                            <th style="text-align:right;">{!val}</th>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Reagents}</td>
+                                                        <apex:repeat value="{!cclob.cclobReagentGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Consumables}</td>
+                                                        <apex:repeat value="{!cclob.cclobConsumablesGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Equipment}</td>
+                                                        <apex:repeat value="{!cclob.cclobEquipmentGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Accessories}</td>
+                                                        <apex:repeat value="{!cclob.cclobAccessoryGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Service}</td>
+                                                        <apex:repeat value="{!cclob.cclobServiceGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Other}</td>
+                                                        <apex:repeat value="{!cclob.cclobOtherGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_MPAUDA3P}</td>
+                                                        <apex:repeat value="{!cclob.cclobMpaUda3PGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>{!$Label.DA_TotalGrossProfitDetail}</td>
+                                                        <apex:repeat value="{!cclob.cclobTotalGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>{!$Label.DA_GPPCT}</td>
+                                                        <apex:repeat value="{!cclob.cclobTotalGPPCTList}" var="val">
+                                                            <td style="text-align:right;">{!val}%</td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.panel-body -->
+                                    </div>
+                                </div>
+                                <!-- /.panel -->
+                            </div>
+                            <!-- /.col-lg-12 -->
+
+
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+			</apex:outputPanel>
+
+
+
+			<apex:outputPanel rendered="{!majorLOB.isIA}">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseIA">{!lobMap['IA'].lobName}</a>
+                            </h4>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div id="collapseIA" class="panel-collapse collapse in">
+
+			            <!-- Volume and ASP -->
+                        <div class="panel-body">
+                           <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <strong>{!$Label.DA_VolumesAndASP}</strong>
+                                    </div>
+
+
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{!$Label.DA_Description}</th>
+                                                        <th style="text-align:right;">{!$Label.DA_Total}</th>
+                                                        <apex:repeat value="{!majorLOB.syearList}" var="val">
+                                                            <th style="text-align:right;">{!val}</th>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Volumes}</td>
+                                                        <apex:repeat value="{!ialob.ialobReagentVolumeList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Value__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" /></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_ASP}</td>
+                                                        <apex:repeat value="{!ialob.ialobReagentASPList}" var="val">
+                                                        	<td style="text-align:right;">{!val.Value__c}</td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </div>
+                                <!-- /.panel -->
+                            </div>
+                            <!-- /.col-lg-12 Equipment -->
+                        </div>                                               
+ 			            <!-- Volume and ASP -->
+
+                        <div class="panel-body">
+
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        {!$Label.DA_Revenue}
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{!$Label.DA_Description}</th>
+                                                        <th style="text-align:right;">{!$Label.DA_TotalContract}</th>
+                                                        <apex:repeat value="{!lobMap['IA'].syearList}" var="val">
+                                                            <th style="text-align:right;">{!val}</th>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Reagents}</td>
+                                                        <apex:repeat value="{!ialob.ialobReagentRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Consumables}</td>
+                                                        <apex:repeat value="{!ialob.ialobConsumablesRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Equipment}</td>
+                                                        <apex:repeat value="{!ialob.ialobEquipmentRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Accessories}</td>
+                                                        <apex:repeat value="{!ialob.ialobAccessoryRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Service}</td>
+                                                        <apex:repeat value="{!ialob.ialobServiceRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Other}</td>
+                                                        <apex:repeat value="{!ialob.ialobOtherRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_MPAUDA3P}</td>
+                                                        <apex:repeat value="{!ialob.ialobMpaUda3PRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>{!$Label.DA_TotalRevenueDetail}</td>
+                                                        <apex:repeat value="{!ialob.ialobTotalRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </div>
+                                <!-- /.panel -->
+                            </div>
+                            <!-- /.col-lg-12 Overall Quote Revenue -->
+
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        {!$Label.DA_SystemStandardCost}
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{!$Label.DA_Description}</th>
+                                                        <th style="text-align:right;">{!$Label.DA_TotalContract}</th>
+                                                        <apex:repeat value="{!lobMap['IA'].syearList}" var="val">
+                                                            <th style="text-align:right;">{!val}</th>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Reagents}</td>
+                                                        <apex:repeat value="{!ialob.ialobReagentCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Consumables}</td>
+                                                        <apex:repeat value="{!ialob.ialobConsumablesCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Equipment}</td>
+                                                        <apex:repeat value="{!ialob.ialobEquipmentCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Accessories}</td>
+                                                        <apex:repeat value="{!ialob.ialobAccessoryCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Service}</td>
+                                                        <apex:repeat value="{!ialob.ialobServiceCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Other}</td>
+                                                        <apex:repeat value="{!ialob.ialobOtherCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_MPAUDA3P}</td>
+                                                        <apex:repeat value="{!ialob.ialobMpaUda3PCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>{!$Label.DA_TotalCostDetail}</td>
+                                                        <apex:repeat value="{!ialob.ialobTotalCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </div>
+                                <!-- /.panel -->
+                            </div>
+                            <!-- /.col-lg-12 Overall Quote Cost -->
+
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Gross Profit
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{!$Label.DA_Description}</th>
+                                                        <th style="text-align:right;">{!$Label.DA_TotalContract}</th>
+                                                        <apex:repeat value="{!lobMap['IA'].syearList}" var="val">
+                                                            <th style="text-align:right;">{!val}</th>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Reagents}</td>
+                                                        <apex:repeat value="{!ialob.ialobReagentGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Consumables}</td>
+                                                        <apex:repeat value="{!ialob.ialobConsumablesGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Equipment}</td>
+                                                        <apex:repeat value="{!ialob.ialobEquipmentGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Accessories}</td>
+                                                        <apex:repeat value="{!ialob.ialobAccessoryGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Service}</td>
+                                                        <apex:repeat value="{!ialob.ialobServiceGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Other}</td>
+                                                        <apex:repeat value="{!ialob.ialobOtherGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_MPAUDA3P}</td>
+                                                        <apex:repeat value="{!ialob.ialobMpaUda3PGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>{!$Label.DA_TotalGrossProfitDetail}</td>
+                                                        <apex:repeat value="{!ialob.ialobTotalGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>{!$Label.DA_GPPCT}</td>
+                                                        <apex:repeat value="{!ialob.ialobTotalGPPCTList}" var="val">
+                                                            <td style="text-align:right;">{!val}%</td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.panel-body -->
+                                    </div>
+                                </div>
+                                <!-- /.panel -->
+                            </div>
+                            <!-- /.col-lg-12 -->
+
+
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+			</apex:outputPanel>
+            <apex:outputPanel rendered="{!majorLOB.isCAT}">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseCAT">{!lobMap['CAT'].lobName}</a>
+                            </h4>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div id="collapseCAT" class="panel-collapse collapse in">
+
+			            <!-- Volume and ASP -->
+                        <div class="panel-body">
+                           <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <strong>{!$Label.DA_VolumesAndASP}</strong>
+                                    </div>
+
+
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{!$Label.DA_Description}</th>
+                                                        <th style="text-align:right;">{!$Label.DA_Total}</th>
+                                                        <apex:repeat value="{!majorLOB.syearList}" var="val">
+                                                            <th style="text-align:right;">{!val}</th>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Volumes}</td>
+                                                        <apex:repeat value="{!catlob.catlobReagentVolumeList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Value__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" /></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_ASP}</td>
+                                                        <apex:repeat value="{!catlob.catlobReagentASPList}" var="val">
+                                                        	<td style="text-align:right;">{!val.Value__c}</td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </div>
+                                <!-- /.panel -->
+                            </div>
+                            <!-- /.col-lg-12 Equipment -->
+                        </div>                                               
+ 			            <!-- Volume and ASP -->                        
+                        
+                        <div class="panel-body">
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        {!$Label.DA_Revenue}
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{!$Label.DA_Description}</th>
+                                                        <th style="text-align:right;">{!$Label.DA_TotalContract}</th>
+                                                        <apex:repeat value="{!lobMap['CAT'].syearList}" var="val">
+                                                            <th style="text-align:right;">{!val}</th>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Reagents}</td>
+                                                        <apex:repeat value="{!catlob.catlobReagentRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Consumables}</td>
+                                                        <apex:repeat value="{!catlob.catlobConsumablesRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Equipment}</td>
+                                                        <apex:repeat value="{!catlob.catlobEquipmentRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Accessories}</td>
+                                                        <apex:repeat value="{!catlob.catlobAccessoryRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Service}</td>
+                                                        <apex:repeat value="{!catlob.catlobServiceRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Other}</td>
+                                                        <apex:repeat value="{!catlob.catlobOtherRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_MPAUDA3P}</td>
+                                                        <apex:repeat value="{!catlob.catlobMpaUda3PRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>{!$Label.DA_TotalRevenueDetail}</td>
+                                                        <apex:repeat value="{!catlob.catlobTotalRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </div>
+                                <!-- /.panel -->
+                            </div>
+                            <!-- /.col-lg-12 Overall Quote Revenue -->
+
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        {!$Label.DA_SystemStandardCost}
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{!$Label.DA_Description}</th>
+                                                        <th style="text-align:right;">{!$Label.DA_TotalContract}</th>
+                                                        <apex:repeat value="{!lobMap['CAT'].syearList}" var="val">
+                                                            <th style="text-align:right;">{!val}</th>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Reagents}</td>
+                                                        <apex:repeat value="{!catlob.catlobReagentCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Consumables}</td>
+                                                        <apex:repeat value="{!catlob.catlobConsumablesCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Equipment}</td>
+                                                        <apex:repeat value="{!catlob.catlobEquipmentCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Accessories}</td>
+                                                        <apex:repeat value="{!catlob.catlobAccessoryCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Service}</td>
+                                                        <apex:repeat value="{!catlob.catlobServiceCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Other}</td>
+                                                        <apex:repeat value="{!catlob.catlobOtherCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_MPAUDA3P}</td>
+                                                        <apex:repeat value="{!catlob.catlobMpaUda3PCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>{!$Label.DA_TotalCostDetail}</td>
+                                                        <apex:repeat value="{!catlob.catlobTotalCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </div>
+                                <!-- /.panel -->
+                            </div>
+                            <!-- /.col-lg-12 Overall Quote Cost -->
+
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Gross Profit
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{!$Label.DA_Description}</th>
+                                                        <th style="text-align:right;">{!$Label.DA_TotalContract}</th>
+                                                        <apex:repeat value="{!lobMap['CAT'].syearList}" var="val">
+                                                            <th style="text-align:right;">{!val}</th>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Reagents}</td>
+                                                        <apex:repeat value="{!catlob.catlobReagentGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}" /></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Consumables}</td>
+                                                        <apex:repeat value="{!catlob.catlobConsumablesGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Equipment}</td>
+                                                        <apex:repeat value="{!catlob.catlobEquipmentGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Accessories}</td>
+                                                        <apex:repeat value="{!catlob.catlobAccessoryGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Service}</td>
+                                                        <apex:repeat value="{!catlob.catlobServiceGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Other}</td>
+                                                        <apex:repeat value="{!catlob.catlobOtherGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_MPAUDA3P}</td>
+                                                        <apex:repeat value="{!catlob.catlobMpaUda3PGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>{!$Label.DA_TotalGrossProfitDetail}</td>
+                                                        <apex:repeat value="{!catlob.catlobTotalGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.panel-body -->
+                                    </div>
+                                </div>
+                                <!-- /.panel -->
+                            </div>
+                            <!-- /.col-lg-12 -->
+
+
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!majorLOB.isTradIH}">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTRADIH">{!lobMap['TRADIH'].lobName}</a>
+                            </h4>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div id="collapseTRADIH" class="panel-collapse collapse in">
+
+			            <!-- Volume and ASP -->
+                        <div class="panel-body">
+                           <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <strong>{!$Label.DA_VolumesAndASP}</strong>
+                                    </div>
+
+
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{!$Label.DA_Description}</th>
+                                                        <th style="text-align:right;">{!$Label.DA_Total}</th>
+                                                        <apex:repeat value="{!majorLOB.syearList}" var="val">
+                                                            <th style="text-align:right;">{!val}</th>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Volumes}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobReagentVolumeList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Value__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" /></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_ASP}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobReagentASPList}" var="val">
+                                                        	<td style="text-align:right;">{!val.Value__c}</td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </div>
+                                <!-- /.panel -->
+                            </div>
+                            <!-- /.col-lg-12 Equipment -->
+                        </div>                                               
+ 			            <!-- Volume and ASP -->                        
+                        
+                        <div class="panel-body">
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        {!$Label.DA_Revenue}
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{!$Label.DA_Description}</th>
+                                                        <th style="text-align:right;">{!$Label.DA_TotalContract}</th>
+                                                        <apex:repeat value="{!lobMap['TRADIH'].syearList}" var="val">
+                                                            <th style="text-align:right;">{!val}</th>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Reagents}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobReagentRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Consumables}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobConsumablesRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Equipment}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobEquipmentRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Accessories}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobAccessoryRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Service}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobServiceRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Other}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobOtherRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_MPAUDA3P}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobMpaUda3PRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>{!$Label.DA_TotalRevenueDetail}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobTotalRList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </div>
+                                <!-- /.panel -->
+                            </div>
+                            <!-- /.col-lg-12 Overall Quote Revenue -->
+
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        {!$Label.DA_SystemStandardCost}
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{!$Label.DA_Description}</th>
+                                                        <th style="text-align:right;">{!$Label.DA_TotalContract}</th>
+                                                        <apex:repeat value="{!lobMap['TRADIH'].syearList}" var="val">
+                                                            <th style="text-align:right;">{!val}</th>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Reagents}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobReagentCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Consumables}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobConsumablesCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Equipment}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobEquipmentCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Accessories}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobAccessoryCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Service}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobServiceCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Other}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobOtherCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_MPAUDA3P}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobMpaUda3PCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>{!$Label.DA_TotalCostDetail}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobTotalCList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </div>
+                                <!-- /.panel -->
+                            </div>
+                            <!-- /.col-lg-12 Overall Quote Cost -->
+
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Gross Profit
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{!$Label.DA_Description}</th>
+                                                        <th style="text-align:right;">{!$Label.DA_TotalContract}</th>
+                                                        <apex:repeat value="{!lobMap['TRADIH'].syearList}" var="val">
+                                                            <th style="text-align:right;">{!val}</th>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Reagents}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobReagentGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}" /></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Consumables}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobConsumablesGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Equipment}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobEquipmentGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Accessories}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobAccessoryGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Service}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobServiceGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_Other}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobOtherGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!$Label.DA_MPAUDA3P}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobMpaUda3PGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>{!$Label.DA_TotalGrossProfitDetail}</td>
+                                                        <apex:repeat value="{!tradIHlob.tradIHlobTotalGPList}" var="val">
+                                                            <td style="text-align:right;"><c:OCD_Formatter amount="{!val.Currency__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/></td>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.panel-body -->
+                                    </div>
+                                </div>
+                                <!-- /.panel -->
+                            </div>
+                            <!-- /.col-lg-12 -->
+
+
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            </apex:outputPanel>
+
+
+
+
+            <!-- /.Minor Line of Business -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+
+
+
+    <!-- jQuery -->
+    <script src="{!URLFOR($Resource.DA, '/bower_components/jquery/dist/jquery.min.js')}"></script>
+    <!-- jQuery -->
+    <script src="{!URLFOR($Resource.DA, '/js/jquery-gauge.min.js')}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{!URLFOR($Resource.DA, '/bower_components/bootstrap/dist/js/bootstrap.min.js')}"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="{!URLFOR($Resource.DA, '/bower_components/metisMenu/dist/metisMenu.min.js')}"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="{!URLFOR($Resource.DA, '/bower_components/raphael/raphael-min.js')}"></script>
+    <script src="{!URLFOR($Resource.DA, '/bower_components/morrisjs/morris.min.js')}"></script>
+
+    <script>
+
+        // first example
+        //var gauge = new Gauge($('.gaugeDA'), {value: 70});
+
+
+    </script>
+
+</body>
+</apex:form>
+</html>
+</apex:page>

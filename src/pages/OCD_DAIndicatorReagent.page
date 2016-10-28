@@ -1,0 +1,95 @@
+<!-- --
+* @author Indra Lugina
+* @date 10/10/2016 
+*
+* @group Financial Assessment
+* @group-content ../../ApexDocContent/OCD_DAIndicatorReagent.htm 
+*
+* @description This is the VisualForce Page for Financial Assessment for Dial Gauge for Reagent GP
+* @Change History
+*
+*   Tag         Author              Date           Requested-BY      Description     
+* *****************************************************************************************************************              
+*   1.0.0       Indra Lugina        10/10/2016     N/A               Initial Version
+*                                                                               
+* *****************************************************************************************************************/-->
+<apex:page standardController="OCD_Deal_Assessment__c" extensions="OCD_DAIndicatorController" standardStylesheets="false" sidebar="false" showHeader="false" docType="html-5.0" 
+           applyHtmlTag="false" applyBodyTag="false" cache="false" action="{!initReagent}">
+
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="Deal Assessment Summary and Cash Flow"/>
+    <meta name="author" content="Ortho Clinical"/>
+    <title>Deal Assessment</title>
+    <link href="{!URLFOR($Resource.DA, '/js/jquery-gauge.css')}" type="text/css" rel="stylesheet"/>
+    <link href="{!URLFOR($Resource.DA, '/css/jquerysctipttop.css')}" type="text/css" rel="stylesheet"/>
+    
+    <!-- jQuery -->
+    <script src="{!URLFOR($Resource.DA, '/js/jquery_1_11_2.min.js')}"></script>
+    <script src="{!URLFOR($Resource.DA, '/js/jquery-gauge.min.js')}"></script>
+    <script src="{!URLFOR($Resource.DA, '/js/jquery.tempgauge.js')}"></script>
+
+    <style>
+        .dealIndicatorReagent {
+            position: relative;
+            width: 40vw;
+            height: 40vw;
+            box-sizing: border-box;
+            float: right;
+            margin:20px
+        }
+    </style>
+</head>
+<body>
+	<script>	
+		$(function(){
+			if(!(/^\?noconvert/gi).test(location.search)){
+				$(".tempGaugegreen").tempGauge({width:70, borderWidth:3, fillColor:"green"});
+				$(".tempGaugeyellow").tempGauge({width:70, borderWidth:3, fillColor:"yellow"});
+				$(".tempGaugered").tempGauge({width:70, borderWidth:3, fillColor:"red", showLabel:false});
+			}
+		});
+
+		
+		// Chrome 1+
+		var isChrome = !!window.chrome && !!window.chrome.webstore;
+		var output = '';
+		if(isChrome) {
+			output = '<center><div class="gaugeDAReagent dealIndicatorReagent"></div>';
+			document.body.innerHTML = output;		        
+		} else {
+			output ='<br/><center><div class="{!tempGaugeRGPColor}">{!svalue}</div></center>';
+			document.body.innerHTML = output;		        			
+		}   
+		
+        $('.gaugeDAReagent').gauge({
+            values: {
+                0 : '',
+                100: ''
+            },
+            colors: {
+                0 : '#f00',
+                {!syellow}: '#ffcc00',
+                {!sgreen}: '#00ff00'
+            },
+            angles: [
+                180,
+                360
+            ],
+            lineWidth: 10,
+            arrowWidth: 20,
+            arrowColor: '#ccc',
+            inset:true,
+
+            value: {!svalue}
+        });
+        
+        
+        
+    </script>    
+</body>
+</html>
+</apex:page>

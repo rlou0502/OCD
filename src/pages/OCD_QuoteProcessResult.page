@@ -1,0 +1,45 @@
+<apex:page standardController="REVVY__MnQuote__c" showHeader="false" sidebar="false">
+    <apex:includeScript value="{!URLFOR($Resource.CometD, 'js/jquery/jquery-1.5.1.js')}"/> 
+    <apex:includeScript value="{!URLFOR($Resource.CometD, 'js/jquery/json2.js')}"/> 
+    <apex:includeScript value="{!URLFOR($Resource.CometD, 'js/cometd.js')}"/> 
+    <apex:includeScript value="{!URLFOR($Resource.CometD, 'js/jquery/jquery.cometd.js')}"/> 
+    <script type="text/javascript">
+    (function($){
+        $(document).ready(function() {
+            // Connect to the CometD endpoint
+            $.cometd.init({
+               url: window.location.protocol+'//'+window.location.hostname+'/cometd/24.0/',
+               requestHeaders: { Authorization: 'OAuth {!$Api.Session_ID}'}
+           });
+
+           // Subscribe to a topic. JSON-encoded update will be returned
+           // in the callback
+           $.cometd.subscribe('/topic/IDNQuoteProcess', function(message) {
+               $('#content').append('<p>Notification: ' +
+                    'Channel: ' + JSON.stringify(message.channel) + '<br>' +
+                    'Record name: ' + JSON.stringify(message.data.sobject.Name) +
+                    '<br>' + 'ID: ' + JSON.stringify(message.data.sobject.Id) + 
+                    '<br>' + 'Event type: ' + JSON.stringify(message.data.event.type)+
+                    '<br>' + 'Start: ' + JSON.stringify(message.data.sobject.Start_Time__c) + 
+                    '<br>' + 'End: ' + JSON.stringify(message.data.sobject.End_Time__c) + 
+                    '<br>' + 'Parent_Quote_name__c: ' + JSON.stringify(message.data.sobject.Parent_Quote_name__c) +
+                    '<br>' + 'status: ' + JSON.stringify(message.data.sobject.status__c) +
+                    '<br>' + 'Note__c: ' + JSON.stringify(message.data.sobject.Short_Note__c) +
+                    '</p>');
+            });
+        });
+   })(jQuery)
+   function disconnect() {
+       $.cometd.disconnect();
+   }
+   window.onbeforeunload = disconnect;
+   </script>
+   <body>
+   <div id="content">
+   <h1>Streaming API Test Page</h1>
+   <p>This is a demonstration page for Streaming API. Notifications from the 
+       InvoiceStatementUpdates channel will appear here...</p>
+    
+   </div>
+   </body>
+</apex:page>

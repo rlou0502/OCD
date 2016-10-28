@@ -1,0 +1,12 @@
+<apex:page standardController="Opportunity" 
+rendered="{!Opportunity.Dates_in_Order__c=true}" 
+action="{!FlagFalse}"
+extensions="myOpportunityControllerExtension">
+<script>
+window.alert('About to hit refresh in popup2');
+window.top.location='/{!Opportunity.id}';
+</script>
+
+      
+
+</apex:page>

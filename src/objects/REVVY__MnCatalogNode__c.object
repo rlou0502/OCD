@@ -1,0 +1,1104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <fields>
+        <fullName>CalPt_Replicates__c</fullName>
+        <externalId>false</externalId>
+        <label>Cal Point Replicates</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CalPts_Levels__c</fullName>
+        <externalId>false</externalId>
+        <label>CalPoints/Levels</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CalsPerYr__c</fullName>
+        <externalId>false</externalId>
+        <label>Minimum Cals/Yr</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Discount_Category_Group__c</fullName>
+        <externalId>false</externalId>
+        <label>Discount Category Group</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Microtip</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Microslide</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Microwell</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CC Consumables</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IA Consumables</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cards - IDMTS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Red Blood Cells</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ortho AntiSera Tube</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Anti-Human Globulin</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Enhancement Media</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cassettes - BioVue</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IH Consumables</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>EC_Reportable_Result_Billing_Code__c</fullName>
+        <description>Europe Reportable Result Billing Code</description>
+        <externalId>false</externalId>
+        <label>EC Reportable Result Billing Code</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Group_Test_Name__c</fullName>
+        <description>The Reagents are grouped on the basis of Test name</description>
+        <externalId>false</externalId>
+        <label>Test Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOB__c</fullName>
+        <externalId>false</externalId>
+        <label>LOB</label>
+        <picklist>
+            <picklistValues>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CAT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Trad IH</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CC;IA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CAT;Trad IH</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Local_SKU_Id_CA__c</fullName>
+        <description>Local SKU Id for Canada</description>
+        <externalId>false</externalId>
+        <label>Local SKU Id CA</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MajorLOB__c</fullName>
+        <externalId>false</externalId>
+        <label>MajorLOB</label>
+        <picklist>
+            <picklistValues>
+                <fullName>CL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IH</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ALL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>MinLoadUnit__c</fullName>
+        <externalId>false</externalId>
+        <label>Minimum Load Unit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OAS__c</fullName>
+        <externalId>false</externalId>
+        <label>On Analyzer Stability Days</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Pricing_Conversion_Factor__c</fullName>
+        <externalId>false</externalId>
+        <label>Pricing Conversion Factor</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Reagent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Consumables</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equipment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Accessory</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Service</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Warranty</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Trade-In</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>QtyPerSalesUnit__c</fullName>
+        <externalId>false</externalId>
+        <label>Quantity/SalesUnit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__AllowPricing__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Defines whether price can be set</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Defines whether price can be set. Checking this box allows this node to be selectable in price list line.</inlineHelpText>
+        <label>Allow Pricing</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Billing_Frequency_Multiplier__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Gives multiplier value needed to derive actual value of product for any given year. For example, if product type is monthly, this field will return number 12. Similarly if product type is Weekly, this field will return number 52.</description>
+        <externalId>false</externalId>
+        <formula>CASE ( TEXT( REVVY__Billing_Frequency__c ) , &apos;One Time&apos; , 1 , &apos;Yearly&apos; , 1 , &apos;Monthly&apos; , 12 , &apos;Weekly&apos; , 52 , 1 )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Billing Frequency Multiplier</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Billing_Frequency__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Whether the product is charged on a recurring basis. A product can be charged one-time, weekly, monthly, or yearly.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Whether the product is charged on a recurring basis. A product can be charged one-time, weekly, monthly, or yearly.</inlineHelpText>
+        <label>Billing Freq.</label>
+        <picklist>
+            <controllingField>REVVY__Type__c</controllingField>
+            <picklistValues>
+                <fullName>One Time</fullName>
+                <default>true</default>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Product</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Weekly</fullName>
+                <default>false</default>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Product</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Product</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Yearly</fullName>
+                <default>false</default>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Product</controllingFieldValues>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Configurable__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Defines product as a configurable product.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Defines product as a configurable product. Checking this box means that the product is configurable.</inlineHelpText>
+        <label>Configurable</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Description_Catalog_Locale_Ext__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Unique Salesforce ID for the Description:Catalog Node Locale Extension.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Unique Salesforce ID for the Description:Catalog Node Locale Extension.</inlineHelpText>
+        <label>Description Catalog Locale Ext</label>
+        <referenceTo>REVVY__MnCatalogNodeLocaleExt__c</referenceTo>
+        <relationshipLabel>Catalog Nodes</relationshipLabel>
+        <relationshipName>CatalogNodesDesc</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Description__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Description of the product. The description is displayed in the end user catalog.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Description of the product. The description is displayed in the end user catalog.</inlineHelpText>
+        <label>Description</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>REVVY__Discountable__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Flag to allow/block Manual discount when product is added to the Quote.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Flag to allow/block Manual discount when product is added to the Quote.</inlineHelpText>
+        <label>Discountable</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Effective_End_Date__c</fullName>
+        <defaultValue>date ( year(today()) +  value($Label.REVVY__MnDefaultEffectiveEndDateInYears),
+                     month(today()),
+                     day(today()))</defaultValue>
+        <deprecated>false</deprecated>
+        <description>The last date that the product is available in the catalog.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The last date that the product is available in the catalog.</inlineHelpText>
+        <label>Effective End</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Effective_Start_Date__c</fullName>
+        <defaultValue>Today()</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Date when product becomes available in end user catalog.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Date when product becomes available in end user catalog.</inlineHelpText>
+        <label>Effective Start</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <deprecated>false</deprecated>
+        <description>Unique ID for each record that can be used as an external ID for importing and exporting data.</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Unique ID for this record.</inlineHelpText>
+        <label>ID</label>
+        <length>80</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__InventoryLevel__c</fullName>
+        <deprecated>false</deprecated>
+        <description>How much of the product is left in stock. Helpful for creating quotes.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>How much of the product is left in stock.</inlineHelpText>
+        <label>Inventory Level</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__IsInstallBase__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Defines whether a reg product, bundle, or config product is Install Base Relevant.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Defines whether a regular product, bundle, or config product is specified as Install Base Relevant.</inlineHelpText>
+        <label>Install Base Relevant</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__IsKit__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Defines product as physical bundle (i.e. Kit).</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Defines product as a physical bundle (kit). Checking this box means that the product is kit and all its components are for information only.</inlineHelpText>
+        <label>Is Kit?</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__LineType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Tracked On</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Not tracked on contract</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Service</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__LocaleDesc_RF__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Description of the product in Locale.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Description of the product in Locale.</inlineHelpText>
+        <label>Locale Description</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>REVVY__LocaleName_F__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>BLANKVALUE(CASE($User.REVVY__ul__c,&apos;L1&apos;,REVVY__Name_L1__c,&apos;L2&apos;,REVVY__Name_L2__c,&apos;L3&apos;,REVVY__Name_L3__c,&apos;L4&apos;,REVVY__Name_L4__c,&apos;L5&apos;,REVVY__Name_L5__c,&apos;L6&apos;,REVVY__Name_L6__c,&apos;L7&apos;,REVVY__Name_L7__c,&apos;L8&apos;,REVVY__Name_L8__c,&apos;L9&apos;,REVVY__Name_L9__c,&apos;L10&apos;,REVVY__Name_L10__c,&apos;L11&apos;,REVVY__Name_L11__c,&apos;L12&apos;,REVVY__Name_L12__c,&apos;L13&apos;,REVVY__Name_L13__c,&apos;L14&apos;,REVVY__Name_L14__c,&apos;L15&apos;,REVVY__Name_L15__c,&apos;L16&apos;,REVVY__Name_L16__c,&apos;L17&apos;,REVVY__Name_L17__c,&apos;L18&apos;,REVVY__Name_L18__c,&apos;L19&apos;,REVVY__Name_L19__c,&apos;L20&apos;,REVVY__Name_L20__c,Name),Name)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__LocaleTC_RF__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Terms and Conditions for a product</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Terms and Conditions for a product(Locale)</inlineHelpText>
+        <label>Locale Terms And Conditions</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>REVVY__Model__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Model used to configure product.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Model used to configure product.</inlineHelpText>
+        <label>Model</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>REVVY__MnConfigEngineModel__c.REVVY__User_id__c</field>
+                <operation>equals</operation>
+                <value></value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>REVVY__MnConfigEngineModel__c</referenceTo>
+        <relationshipLabel>Config Products</relationshipLabel>
+        <relationshipName>Products</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Name_L10__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Name(Language 10)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Name_L11__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Name(Language 11)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Name_L12__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Name(Language 12)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Name_L13__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Name(Language 13)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Name_L14__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Name(Language 14)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Name_L15__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Name(Language 15)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Name_L16__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Name(Language 16)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Name_L17__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Name(Language 17)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Name_L18__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Name(Language 18)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Name_L19__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Name(Language 19)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Name_L1__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Name(Language 1)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Name_L20__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Name(Language 20)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Name_L2__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Name(Language 2)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Name_L3__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Name(Language 3)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Name_L4__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Name(Language 4)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Name_L5__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Name(Language 5)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Name_L6__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Name(Language 6)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Name_L7__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Name(Language 7)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Name_L8__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Name(Language 8)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Name_L9__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Name(Language 9)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Parent__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Defines the parent category of a subcategory.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Defines the parent category of a subcategory.</inlineHelpText>
+        <label>Parent</label>
+        <referenceTo>REVVY__MnCatalogNode__c</referenceTo>
+        <relationshipLabel>Catalog Nodes</relationshipLabel>
+        <relationshipName>Children</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__ProductAvailability__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Admin can show the availability, delivery time, or backorder status for the product. Helpful for creating quotes.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Admin can show the availability, delivery time, or backorder status for the product.</inlineHelpText>
+        <label>Product Availability</label>
+        <picklist>
+            <controllingField>REVVY__Type__c</controllingField>
+            <picklistValues>
+                <fullName>Available</fullName>
+                <default>false</default>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Product</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Low Inventory</fullName>
+                <default>false</default>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Product</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Out of Inventory</fullName>
+                <default>false</default>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Product</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2 Week Lead Time</fullName>
+                <default>false</default>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Product</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3 Week Lead Time</fullName>
+                <default>false</default>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Product</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>1 Month Lead Time</fullName>
+                <default>false</default>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Product</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2 Month Lead Time</fullName>
+                <default>false</default>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Product</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>On Backorder</fullName>
+                <default>false</default>
+                <controllingFieldValues>Bundle</controllingFieldValues>
+                <controllingFieldValues>Product</controllingFieldValues>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__QuickSearchHelper__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Contains a formula field that supports catalog search.</description>
+        <externalId>false</externalId>
+        <formula>Name + REVVY__LocaleName_F__c + &apos;#&apos; +  REVVY__Id__c</formula>
+        <inlineHelpText>Contains a formula field that supports catalog search.</inlineHelpText>
+        <label>QuickSearchHelper</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__SapId__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <deprecated>false</deprecated>
+        <description>Unique ID for each record that comes from SAP (only for SAP products).</description>
+        <externalId>false</externalId>
+        <inlineHelpText>SAP ID for this record.</inlineHelpText>
+        <label>SAP ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__SapPricingFieldMap__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Field mapping from ConfigIT to Revvy. Format - configitdescription1:revvyfield1;configitdescription2:revvyfield2;</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Field mapping from ConfigIT to Revvy.</inlineHelpText>
+        <label>SAP Field Mapping</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__StandaloneSellable__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>This field determines whether a product can be sold alone. If this field is set to false, this product will not appear in product quick search results.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field determines whether a product can be sold alone. If this field is set to false, this product will not appear in product quick search results.</inlineHelpText>
+        <label>Sold By Itself</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Status__c</fullName>
+        <deprecated>false</deprecated>
+        <description>State of the product. The status can be either draft or active. If status is draft, then the product is not available in the catalog. If status is active, then product is available in the catalog.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>State of the product. The status can be either draft or active. If status is draft, then the product is not available in the catalog. If status is active, then product is available in the catalog.</inlineHelpText>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Draft</fullName>
+                <default>true</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__SubType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>SubType</label>
+        <picklist>
+            <controllingField>REVVY__Type__c</controllingField>
+            <picklistValues>
+                <fullName>None</fullName>
+                <default>false</default>
+                <controllingFieldValues>Product</controllingFieldValues>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__TC_Catalog_Locale_Ext__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Unique Salesforce ID for the Terms and Condition:Catalog Node Locale Extension.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Unique Salesforce ID for the Terms and Condition:Catalog Node Locale Extension.</inlineHelpText>
+        <label>TC Catalog Locale Ext</label>
+        <referenceTo>REVVY__MnCatalogNodeLocaleExt__c</referenceTo>
+        <relationshipLabel>Catalog Nodes (TC Catalog Locale Ext)</relationshipLabel>
+        <relationshipName>CatalogNodesTC</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__TermsAndConditions__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Terms and Conditions for a product</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Terms and Conditions for a product</inlineHelpText>
+        <label>Terms And Conditions</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>REVVY__Type__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Defines whether the node is a catalog, category, product, or  bundle.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Defines whether the node is a catalog, category, product, or  bundle.</inlineHelpText>
+        <label>Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Bundle</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Catalog</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Category</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Product</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Solution</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__VirtualSKU__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Virtual SKU</label>
+        <referenceTo>REVVY__MnVirtualSKu__c</referenceTo>
+        <relationshipLabel>Catalog Nodes</relationshipLabel>
+        <relationshipName>Catalog_Nodes</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Visible__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Determines whether a category is shown in the end user catalog.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Determines whether a category is shown in the end user catalog.</inlineHelpText>
+        <label>Visible to Sales Reps</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__image2__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Second image of product.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Second image of product.</inlineHelpText>
+        <label>Image 2</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__image3__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Third image of product.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Third image of product.</inlineHelpText>
+        <label>Image 3</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__image4__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Fourth image of product.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Fourth image of product.</inlineHelpText>
+        <label>Image 4</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__mainImage1__c</fullName>
+        <deprecated>false</deprecated>
+        <description>First image of product. This is the primary picture that is displayed.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>First image of product. This is the primary picture that is displayed.</inlineHelpText>
+        <label>Main Image 1</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__sortOrder__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Index to control the sorting of the product display through the Catalog interface. By default the sort is in ascending order.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Index to control the sorting of the product display through the Catalog interface. By default the sort is in ascending order. (i.e. 1, 5, 6, 20 as represented in the list.)</inlineHelpText>
+        <label>Sort Order</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>StandardCost__c</fullName>
+        <externalId>false</externalId>
+        <label>StandardCost</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>US_Reportable_Result_Billing_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>US Reportable Result Billing Code</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+</CustomObject>

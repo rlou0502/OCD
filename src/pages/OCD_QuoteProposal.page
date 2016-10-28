@@ -1,0 +1,2 @@
+<apex:page standardcontroller="REVVY__MnQuote__c" extensions="OCD_QuoteProposalController" action="{!init}">
+</apex:page>

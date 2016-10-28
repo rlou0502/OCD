@@ -1,0 +1,17 @@
+<!-- --
+* @author Indra Lugina
+* @date 10/10/2016 
+*
+* @group Financial Assessment
+* @group-content ../../ApexDocContent/OCD_DACalcController.htm 
+*
+* @description This is the VisualForce Page for Financial Assessment Calculation Controller
+* @Change History
+*
+*   Tag         Author              Date           Requested-BY      Description     
+* *****************************************************************************************************************              
+*   1.0.0       Indra Lugina        10/10/2016     N/A               Initial Version
+*                                                                               
+* *****************************************************************************************************************/-->
+<apex:page standardcontroller="REVVY__MnQuote__c" extensions="OCD_DACalcController" action="{!init}">
+</apex:page>

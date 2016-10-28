@@ -1,0 +1,258 @@
+<apex:page controller="OpportuntityForecastControllerShortPaged" sidebar="false">
+<apex:pageMessages />
+    <script>
+function setFocusOnLoad() {} 
+</script>
+    <style type="text/CSS">
+        .title {
+            font-weight: bold;
+            font-size:200%;
+            align:left;
+        }
+        .oppRow {
+            background: #7DC2D8;
+        }
+        .oppRow2 {
+            background: #E7ECFA;
+        }
+        .itemRow {
+        background: #F4F4F4;
+        }
+        .itemRow td{
+            
+            border-bottom: 0px white solid;
+            height:10px;
+        }
+        .itemRow:hover {
+            background: #FFFF99;
+        }
+        .oppRow2:hover {
+            background: #FFFF99;
+        }
+        #listTable td {
+    
+        }
+        #headerRow {
+            background: #C4CFF3;
+        }
+        #productheaderRow {
+            background: #DADADA   
+        }
+        #productheaderRow td {
+            font-weight: bold;
+            //border-bottom: 1px black solid;            
+            margin-left:120px;
+            //font-size:112%;        
+        }
+        #headerRow td {
+            //color: white;
+            font-weight: bold;
+            font-size:112%;
+            //border-bottom: 1px black solid;
+        }
+        .stage {
+            width: 120px;
+        }
+        .quantity {
+            width: 30px;
+        }
+        .account {
+            width: 80px;
+            margin-top: 1px;
+        }
+        .commitment {
+            width: 125px;
+        }
+        .currentsplit {
+            width: 80px;
+        }
+        .dateFormat {
+        width: 40px;
+       display: none;
+        }        
+        .unitPrice {
+            width: 80px;
+        }
+    </style>
+
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockButtons >    
+                <apex:commandButton action="{!save}" id="saveButton" value="Save All Changes"/>
+                <apex:commandButton action="{!cancel}" immediate="true" value="Cancel"/>
+            </apex:pageBlockButtons>
+            <table id="listTable4" cellspacing="2" width="1650px">
+            <tr>
+            <td>
+            <apex:outputtext StyleClass="title" value="Short Term Opportunity Forecast"/>
+            </td>
+            </tr>
+             <tr>
+            <td>
+            The Short Term Opportunity Forecast table will display all of the Opportunity records to which you have access and are in the Qualify, Quantify or Close Stage; or are in the Closed Won Stage, with the Date Opportunity Closed within the past year.
+            </td>
+            <td>
+            <apex:commandLink action="{!PreviousPage}" value="Previous Page"/>
+            <apex:outputLabel >Current Page: </apex:outputLabel>
+            <apex:outputText >{!pageNumber}  of {!maxPageNumber}</apex:outputText>
+            <apex:outputLabel > </apex:outputLabel>
+            <apex:commandLink action="{!NextPage}" value="Next Page"/>
+            </td>
+            
+    
+            </tr>
+             <tr>
+            <td>
+            Please note that the Account Territory filter will only include those Territories that have Accounts with Opportunity records that meet the criteria detailed above.
+            </td>
+            <td>
+            <apex:outputLabel >Number of product records per page </apex:outputLabel>
+            <apex:outputLabel > </apex:outputLabel>
+            <apex:inputText styleclass="quantity" value="{!pageSize}"/>
+            <apex:commandButton action="{!applyRecordsPerPage}" id="saveButton2" value="Apply"/>
+            </td>
+            </tr>
+            </table>
+            
+            <table id="mastertable" width="1410px" border="1" cellspacing="5">
+            <tr>
+                <td>
+                    <table width="300px">
+                    <tr>
+                    
+                    <td>
+                    Primary Sort
+                    <apex:selectList size="1" value="{!sortSelection}">
+                          <apex:selectOptions value="{!sortOptions}"/>
+                          <apex:actionSupport event="onchange" action="{!primarysortSelected}" status="StatusChange" rerender="ss" />
+                         </apex:selectList>
+                         <apex:actionStatus id="StatusChange">
+                         <apex:facet name="start">
+                          <apex:image height="12" width="12" value="{!$Resource.waiting}"/>
+                          </apex:facet>   
+                          </apex:actionStatus>
+                          <apex:selectRadio value="{!primaryDirection}">
+                        <apex:selectOptions value="{!sortDiections}"/>
+                        </apex:selectRadio>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td>
+                        Secondary Sort
+                         <apex:selectList id="ss" size="1" value="{!sortSelection2}">
+                          <apex:selectOptions value="{!sortOptions2}"/>
+                         </apex:selectList>
+                         <apex:selectRadio value="{!secondaryDirection}">
+                        <apex:selectOptions value="{!sortDiections}"/>
+                        </apex:selectRadio>
+                      <apex:commandButton action="{!applySort}" id="sortButton" value="Apply Sorts"/>
+                      </td>
+                      </tr>
+                    </table>
+                </td>
+                <td valign="top">
+                        <table id="listTable2" width="1100px">
+                        <tr>
+                        Stage
+                        <td rowspan="2">
+                             <apex:inputfield value="{!theOpportunityFilter.Shadow_Stage_for_Grid_Pages__c}"/>
+                         </td>
+                        <td>
+                            <apex:outputText styleClass="account" value="Product Type "/>
+                            <apex:selectList size="1" value="{!theProductFilter}">
+                              <apex:selectOptions value="{!typeOptions}"/>
+                             </apex:selectList>
+                         </td>
+                         <td>
+                         <apex:outputText styleClass="account" value=" Account Territory "/>
+                             <apex:selectList size="1" value="{!theAccountFilter}">
+                              <apex:selectOptions value="{!territoryOptions}"/>
+                             </apex:selectList>
+                         </td>
+                         
+                         </tr>
+                         <tr>  
+                          <td>
+                          
+                          <apex:outputText value="Date"/>
+                        <apex:selectList size="1" value="{!theOpportunityDateFilter}">
+                        <apex:selectOptions value="{!DateFilterOptions}"/>
+                        <apex:actionSupport event="onchange" rerender="panelID" action="{!DateFieldSelected}"/>
+                        </apex:selectList>
+                        </td>
+                        <td>
+                        <apex:outputpanel id="panelID">
+                        <apex:outputText value="From"/>
+                        <apex:inputText value="{!startDateRange}" size="10" id="sdr"    onfocus="DatePicker.pickDate(false, this , false);" />
+                        <apex:outputText value="To"/>
+                        <apex:inputText value="{!endDateRange}" size="10" id="edr"    onfocus="DatePicker.pickDate(false, this , false);" />
+                         <apex:outputText styleClass="account" value=" Commitment Type "/>
+                             <apex:selectList size="1" value="{!theCommitmentFilter}">
+                              <apex:selectOptions value="{!CommitmentOptions}"/>
+                             </apex:selectList>
+                             </apex:outputpanel>
+                         </td>
+                          </tr>
+                          <tr>
+                          <td>
+                          </td>
+                          
+                          <td align="right">
+                         <apex:commandButton action="{!applyFilter}" id="filterButton" value="Apply Filters"/>
+                         </td>
+                         </tr>     
+                    </table>
+                </td>
+            </tr>
+            </table>
+            
+            <table id="listTable" cellspacing="5">
+                <apex:repeat value="{!keys}" var="key">
+                    <tr id="headerRow" style="text-align:left;">
+                    <td>Opportunity Name</td>
+                    <td>Account Name</td>
+                    <td nowrap="true">Date Estimate Closed</td>
+                    <td>Stage</td>
+                    <td>Overall Acquisition Type</td>
+                    <td>Commitment Type</td>
+                    <td>Account Territory</td>
+                    <td>Distributor</td>
+                                       
+                </tr>
+                <tr class="oppRow2" >
+                    <td style="{!if(sOpp[key],'background-color:#FF4747', '')}" nowrap="true"><apex:outputLink value="/{!s2opp[key].id}">{!s2opp[key].name}</apex:outputLink></td>
+                    <td nowrap="true"><apex:outputField styleClass="account" value="{!s2opp[key].account.name}"/></td>
+                    <td><apex:inputField styleClass="Date" value="{!s2opp[key].closeDate}"/></td>
+                    <td><apex:outputField styleClass="stage" value="{!s2opp[key].StageName}"/></td>
+                    <td><apex:inputField styleClass="currentsplit" value="{!s2opp[key].Overall_Acquisition_Type__c}"/></td>
+                    <td><apex:inputField styleClass="commitment" value="{!s2opp[key].Commitment_Type__c}"/></td>
+                    <td><apex:outputField styleClass="account" value="{!s2opp[key].account.Territory__c}"/></td>
+                    <td><apex:outputField value="{!s2opp[key].Distributor__c}"/></td>
+                </tr>
+                    <tr id="productheaderRow" style="text-align:left;" >
+                        <td>Product</td>
+                        <td>Quantity</td>
+                        <td>Total Price</td>
+                        <td nowrap="true">Estimated Shipment Date</td>
+                        <td nowrap="true">Estimated Acceptance Date</td>
+                        <td>Acquisition Type</td>
+                        <td>Placement Type</td>
+                        <td nowrap="true">Installation Location</td>
+                    </tr>
+                    <apex:repeat value="{!s2oli[key]}" var="o">
+                        <tr class="itemRow"  >
+                            <td style="{!if(sOppprod[o.id],'background-color:#FF4747', '')}"><apex:outputField value="{!o.PricebookEntry.Product2.name}"/></td>
+                            <td>{!o.Quantity}</td>
+                            <td nowrap="True"><apex:outputField styleClass="unitPrice" value="{!o.TotalPrice}"/></td>
+                            <td><apex:inputField styleClass="Date" value="{!o.Estimated_Shipment_Date__c}"/></td>
+                            <td><apex:inputField styleClass="Date" value="{!o.Estimated_Acceptance_Date__c}"/></td>
+                            <td><apex:inputField styleClass="Acquisition" value="{!o.Acquisition_Type__c}"/></td>
+                            <td><apex:inputField styleClass="Placement" value="{!o.Placement_type__c}"/></td>
+                            <td><apex:inputField styleClass="account" value="{!o.Installation_Location__c}"/></td>                            
+                        </tr>    
+                    </apex:repeat>
+                </apex:repeat>
+            </table>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

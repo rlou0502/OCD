@@ -1,0 +1,12 @@
+<apex:page standardController="Opportunity" rendered="{!Opportunity.Dates_in_Order__c=true}" extensions="myOpportunityControllerExtension">
+
+    <script type="text/javascript">
+    {
+        window.alert('Please validate that the Estimated Shipment Date and the Estimated Acceptance Date are correct.');
+        
+                
+    }
+    </script>
+   
+
+</apex:page>

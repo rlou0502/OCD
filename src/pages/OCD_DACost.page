@@ -1,0 +1,71 @@
+<!-- --
+* @author Indra Lugina
+* @date 10/10/2016 
+*
+* @group Financial Assessment
+* @group-content ../../ApexDocContent/OCD_DACost.htm 
+*
+* @description This is the VisualForce Page for Financial Assessment Cost either one time or recurring
+* @Change History
+*
+*   Tag         Author              Date           Requested-BY      Description     
+* *****************************************************************************************************************              
+*   1.0.0       Indra Lugina        10/10/2016     N/A               Initial Version
+*                                                                               
+* *****************************************************************************************************************/-->
+<apex:page standardController="Deal_Assessment_Cost__c" extensions="OCD_DACostController" recordSetVar="DACost"> 
+
+	<apex:sectionHeader title="Other Cost" subtitle="One Time or Recurring Cost"/>
+    <apex:form >
+        <apex:pageBlock title="Other Cost - One Time or Recurring " mode="edit">
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!addDAC}" value="{!$Label.DA_Add}"/>
+                <apex:commandButton action="{!returnToDA}" value="{!$Label.DA_Return}" immediate="true"/>
+                <apex:commandButton action="{!cancelToDA}" value="{!$Label.DA_Cancel}" immediate="true"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!newDACost}" var="dac">
+             	<apex:column >
+            		<apex:facet name="header">{!$ObjectType.Deal_Assessment_Cost__c.Fields.Type__c.Label}</apex:facet>
+            		<apex:inputField value="{!dac.Type__c}" required="true"/>
+            	</apex:column>
+            	<apex:column >
+            		<apex:facet name="header">{!$ObjectType.Deal_Assessment_Cost__c.Fields.Name.Label}</apex:facet>
+            		<apex:inputField value="{!dac.name}" required="true"/>
+            	</apex:column>
+            	<apex:column >
+            		<apex:facet name="header">{!$ObjectType.Deal_Assessment_Cost__c.Fields.Product_Description__c.Label}</apex:facet>
+            		<apex:inputField value="{!dac.Product_Description__c}"/>
+            	</apex:column>
+             	<apex:column >
+            		<apex:facet name="header">{!$ObjectType.Deal_Assessment_Cost__c.Fields.Quantity__c.Label}</apex:facet>
+            		<apex:inputField value="{!dac.Quantity__c}"/>
+            	</apex:column>
+             	<apex:column >
+            		<apex:facet name="header">{!$ObjectType.Deal_Assessment_Cost__c.Fields.Cost__c.Label}</apex:facet>
+            		<apex:inputField value="{!dac.Cost__c}"/>
+            	</apex:column>
+            </apex:pageBlockTable>
+            
+            
+        </apex:pageBlock>
+
+
+        <apex:pageBlock title="Deal Assessment Cost " mode="edit">
+            <apex:pageBlockTable value="{!dacList}" var="dac">
+             	<apex:column >
+            		<apex:facet name="header">{!$Label.DA_Action}</apex:facet>
+            		<apex:commandLink action="{!deleteDAC}" value="Delete" immediate="true">
+            			<apex:param name="q" value="{!dac.Id}" assignTo="{!delDACId}"/>
+            		</apex:commandLink>
+            	</apex:column>
+            	<apex:column value="{!dac.Type__c}"/>
+            	<apex:column value="{!dac.Name}"/>
+            	<apex:column value="{!dac.Product_Description__c}"/>
+            	<apex:column value="{!dac.Quantity__c}"/>
+            	<apex:column value="{!dac.Cost__c}"/>
+            	<apex:column value="{!dac.Total_Cost__c}"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+
+    </apex:form>
+</apex:page>

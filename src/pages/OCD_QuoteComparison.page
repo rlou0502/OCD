@@ -1,0 +1,113 @@
+<!-- --
+* @author Roy Lou
+* @date 10/10/2016 
+*
+* @group Quote Comparison
+* @group-content ../../ApexDocContent/OCD_QuoteComparison.htm 
+*
+* @description This is the VisualForce Page handling "Comapre Quote" event
+* @Change History
+*
+*   Tag         Author              Date           Requested-BY      Description     
+* *****************************************************************************************************************              
+*   1.0.0       Roy Lou             10/10/2016     N/A               Initial Version
+*                                                                               
+* *****************************************************************************************************************/-->
+<apex:page standardController="REVVY__MnQuote__c"
+    recordSetVar="quotes"
+    extensions="OCD_QuoteComparisonController"
+    showHeader="true"
+    id="muopp" action="{!init}">
+    <head>
+       <apex:includeScript value="{!URLFOR($Resource.DA, '/bower_components/jquery/dist/jquery.min.js')}"/> 
+        <script type="text/javascript">
+        var quoteIds = [];
+        <apex:repeat value="{!quotes}" var="q">
+            quoteIds.push('{!q.Id}');
+        </apex:repeat>
+            
+        j$ = jQuery.noConflict();
+        
+        collectQuoteComparisonData = function(quoteId) {
+            var deferred = j$.Deferred();
+			Visualforce.remoting.Manager.invokeAction(
+		            '{!$RemoteAction.OCD_QuoteComparisonController.createQuoteComparisonRecord}',
+		            quoteId, 
+		            function(result, event){
+		                if (event.status) {
+                            if(result.success) {
+                                console.log(result);
+                                j$("#"+result.quoteId).html("&#x2705;");
+		                    	deferred.resolve({
+                                    	quoteId : result.quoteId,
+                                    	quoteCompareId : result.data,
+                                    	reportId : result.reportId
+                                    });
+                            } else {
+                                deferred.reject(result.data);
+                            }
+		                } else if (event.type === 'exception') {
+                            console.log(event.message);
+		                	deferred.reject("event.message");
+		                } else {
+		                    console.log(event.message);
+		                }
+		            }, 
+		            {escape: true,
+                    buffer: false}
+		        );
+            return deferred.promise();
+		}
+        
+        j$(document).ready(function() {
+            var promises = [];
+            var quoteComparisonData = [];
+            j$( "#startQuoteComaprison" ).click(function() {
+                j$('#contentLoading').show();
+            	quoteIds.forEach(function(entry) {
+                    promises.push(collectQuoteComparisonData(entry));
+                  }, this);  
+                j$.when.apply(j$, promises).then(function() {
+                    var reportId="";
+                    for (var i = 0; i < arguments.length; i++) {
+                        console.log("DONE", this, arguments[i]);  
+                        quoteComparisonData.push(arguments[i]);
+                        reportId = arguments[i].reportId;
+                       }
+                  	j$('#contentLoading').hide();
+					var url = "{!$Site.Prefix}" + "/apex/REVVY__PMnReportLink?repname=RMnQuoteComparison&isdtp=nv&mainobj=mnquote__c&pv0=" + reportId;
+                    window.open(url,"QuoteComparison","toolbar=no, scrollbars=yes, resizable=yes, top=100, left=100, width=800, height=600");
+                }, function(e) {
+                     console.log("My ajax failed " + e);
+                });
+            });
+        }); 
+        </script>
+    </head>
+    
+    <apex:form >
+    <apex:sectionHeader title="test" subtitle="test"/>
+    <apex:pageBlock title="Quote Comparison" >
+        <apex:pageBlockButtons >
+            <input type="button" id="startQuoteComaprison" class="btn" value="Start Quote Comparison" />
+            <div id="contentLoading" style="display:none;">
+                <div style="text-align: center;">
+                  <img src="/img/loading.gif" alt="Loading graphic" />
+                </div>
+            </div>
+        </apex:pageBlockButtons>
+        <apex:pageBlockTable value="{!quotes}" var="item" >
+				<apex:column value="{!item.REVVY__Id__c}"/>
+            	<apex:column value="{!item.Name}"/>	
+            	<apex:column >
+					<apex:facet name="header">Done</apex:facet>	
+                    <p id="{!item.Id}">
+						&#x2715;                       
+                    </p>
+				 </apex:column>
+			</apex:pageBlockTable>
+    </apex:pageBlock>
+	
+    </apex:form>
+    
+</apex:page>

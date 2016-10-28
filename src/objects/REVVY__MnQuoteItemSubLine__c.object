@@ -1,0 +1,1118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <fields>
+        <fullName>Credit_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Credit Amount</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Discount_Category_Group_QuoteLine__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( REVVY__Catalog_Node__r.Discount_Category_Group__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Discount Category Group</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Distributor_Modified_Field__c</fullName>
+        <externalId>false</externalId>
+        <label>Distributor Modified Field</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Margin</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Markup</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Final Transfer Price</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Local_SKU_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Local SKU Id</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Add_On_Price__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Add-On Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Attribute_Adjustment_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Attribute Adjustment Id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Below_Floor__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(OCD_Overridden_Price__c &lt; OCD_Price_Floor__c , &quot;Y&quot;, &quot;&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Below Floor</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Distributor_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Distributor Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Markup</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Margin</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>OCD_ExtId__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>for cloning only</description>
+        <externalId>true</externalId>
+        <label>OCD ExtID</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Final_Price__c</fullName>
+        <externalId>false</externalId>
+        <formula>OCD_Overridden_Price__c  +  OCD_Add_On_Price__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Final Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Final_Transfer_Price__c</fullName>
+        <description>Final Transfer Price to the Distributor</description>
+        <externalId>false</externalId>
+        <label>Final Transfer Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_IDN_Quote_Item_Sub_Line__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>IDN Quote Item Sub Line</label>
+        <referenceTo>REVVY__MnQuoteItemSubLine__c</referenceTo>
+        <relationshipLabel>Quote Item Sub Line</relationshipLabel>
+        <relationshipName>Quote_Item_Sub_Line</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Is_Package__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( BEGINS(REVVY__Catalog_Node__r.REVVY__Id__c, &apos;Classic&apos;), 1, 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Package</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_LOB__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( REVVY__Catalog_Node__r.LOB__c )</formula>
+        <label>LOB</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Line_Trade_In_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>OCD Line Trade In Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_List_Price_Override__c</fullName>
+        <externalId>false</externalId>
+        <label>List Price Override</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Managed_Service_Fee__c</fullName>
+        <externalId>false</externalId>
+        <label>Managed Service Fee</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Margin__c</fullName>
+        <description>Margin for Distributor based on Final End User Price</description>
+        <externalId>false</externalId>
+        <label>Margin</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Mark_Up__c</fullName>
+        <externalId>false</externalId>
+        <label>Mark Up</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Markup__c</fullName>
+        <description>Mark Up on Standard Transfer Price for Distributor</description>
+        <externalId>false</externalId>
+        <label>Mark Up</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Max_Behavioral_Disc__c</fullName>
+        <externalId>false</externalId>
+        <label>Max Behavioral Disc</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Max_Vol_Disc__c</fullName>
+        <externalId>false</externalId>
+        <label>Max Volume Disc</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Original_Unit_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Original Unit Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Overridden_Price__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Overridden Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Parent_Quote__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This lookup field is used to display quote sub-line on quote page as a related list.</description>
+        <externalId>false</externalId>
+        <label>Parent Quote</label>
+        <referenceTo>REVVY__MnQuote__c</referenceTo>
+        <relationshipLabel>Quote Item Sub Line</relationshipLabel>
+        <relationshipName>Quote_Item_Sub_Line</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Payment_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>As Per Quote Type</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No Charge</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cash Purchase Only</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>OCD_PmtTypeRO__c</fullName>
+        <externalId>false</externalId>
+        <label>PmtTypeRO</label>
+        <picklist>
+            <picklistValues>
+                <fullName>N</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Y</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Pr_Conversion_Factor__c</fullName>
+        <externalId>false</externalId>
+        <formula>REVVY__Catalog_Node__r.Pricing_Conversion_Factor__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>OCD Pr Conversion Factor</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Price_Floor__c</fullName>
+        <externalId>false</externalId>
+        <label>Price Floor</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Price_Override__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Price Override</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Pricing_Info__c</fullName>
+        <defaultValue>&quot;&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>OCD Pricing Info</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>OCD_Product_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>REVVY__Catalog_Node__r.REVVY__Id__c</formula>
+        <label>Product ID</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Product_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( REVVY__Catalog_Node__r.Product_Type__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Product Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_SKU__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISBLANK( Local_SKU_Id__c ) ,  OCD_Product_ID__c , Local_SKU_Id__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>SKU</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Site_Index__c</fullName>
+        <externalId>false</externalId>
+        <label>Site Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Standard_Transfer_Price__c</fullName>
+        <description>Standard Transfer Price to Distributor determined from Distributor Price Plan</description>
+        <externalId>false</externalId>
+        <label>Standard Transfer Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Trade_In_Equipment_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Trade In Equipment Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Trade_In_Name_Override__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISBLANK( OCD_Trade_In_Equipment_Name__c ) ,  REVVY__Catalog_Node__r.REVVY__LocaleName_F__c , OCD_Trade_In_Equipment_Name__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Trade In Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Trade_In_Serial_Number__c</fullName>
+        <description>Serial Number of traded in equipment</description>
+        <externalId>false</externalId>
+        <label>Trade In Serial Number</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Trade_In_Value__c</fullName>
+        <description>Trade In Value</description>
+        <externalId>false</externalId>
+        <label>Trade In Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Parent_Product_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>REVVY__QuoteItem__r.REVVY__Catalog_Node__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Parent Product Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Parent_Quote__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This lookup field is used to display quote sub-line on quote page as a related list.</description>
+        <externalId>false</externalId>
+        <label>Parent Quote</label>
+        <referenceTo>Quote</referenceTo>
+        <relationshipLabel>Quote Item Sub Line</relationshipLabel>
+        <relationshipName>Quote_Item_Sub_Line</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Product_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(  OCD_Product_ID__c = &apos;TI_CL_COMP&apos;  || OCD_Product_ID__c = &apos;TI_IH_COMP&apos;,  OCD_Trade_In_Name_Override__c , REVVY__Catalog_Node__r.REVVY__LocaleName_F__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Product Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Type__c</fullName>
+        <description>Product Type of Product. Used in Roll Up formulae.</description>
+        <externalId>false</externalId>
+        <label>Product Type</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Adjustment1Absolute__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Absolute value of Adjustment 1</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Absolute value of Adjustment 1</inlineHelpText>
+        <label>Mark-up (Abs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Adjustment1Type__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Determines whether the Adjustment 1 is based on percentage (e.g., 20%) or on an absolute amount (e.g., $100).</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Determines whether the Adjustment 1 is based on percentage (e.g., 20%) or on an absolute amount (e.g., $100).</inlineHelpText>
+        <label>Mark-up Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Percent</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Absolute</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Adjustment1__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Percent value of Adjustment 1</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Percent value of Adjustment 1</inlineHelpText>
+        <label>Mark-up (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Billing_Frequency_WF__c</fullName>
+        <deprecated>false</deprecated>
+        <description>How often the customer is charged for a product. Options are one-time, weekly, monthly, and yearly.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>How often the customer is charged for a product. Options are one-time, weekly, monthly, and yearly.</inlineHelpText>
+        <label>Billing Frequency</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Catalog_Node__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Unique Salesforce ID for the product that this price list line refers to.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Unique Salesforce ID for the product that this price list line refers to.</inlineHelpText>
+        <label>Product</label>
+        <referenceTo>REVVY__MnCatalogNode__c</referenceTo>
+        <relationshipLabel>QuoteItemSubLine</relationshipLabel>
+        <relationshipName>QuoteItemSubLine</relationshipName>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__CostPrice__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Cost Price of a product in quote sub line</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Cost Price of a product in quote sub line</inlineHelpText>
+        <label>Cost</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Discount_Absolute__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Value of the absolute discount that is applied to the product (e.g., $20 off).</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Value of the absolute discount that is applied to the product (e.g., $20 off).</inlineHelpText>
+        <label>Discount (Abs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Discount_Type__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Whether the discount is an absolute discount (e.g., $20 off) or a percentage discount (e.g., 20% off).</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Whether the discount is an absolute discount (e.g., $20 off) or a percentage discount (e.g., 20% off).</inlineHelpText>
+        <label>Discount Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Absolute</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Percent</fullName>
+                <default>true</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Discount__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Value of the percentage discount that is applied to the product (e.g., 20% off).</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Value of the percentage discount that is applied to the product (e.g., 20% off).</inlineHelpText>
+        <label>Man. Disc. (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Discountable__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Specifies If manual discount can be applied as defined in the Catalog.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Catalog_Node__r.REVVY__Discountable__c</formula>
+        <inlineHelpText>Specifies If manual discount can be applied as defined in the Catalog.</inlineHelpText>
+        <label>Discountable</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__ExtId__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <deprecated>false</deprecated>
+        <description>Unique ID for each record that can be used as an external ID for importing and exporting data.</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Unique ID for this record.</inlineHelpText>
+        <label>Quote Item Sub Line ID</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Extended_Price_Display_F__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>REVVY__Extended_Price_F__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Ext. Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Extended_Price_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Unit price of product multiplied by the quantity of products. (Unit price x quantity)</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Unit_Price__c * REVVY__Quantity__c</formula>
+        <inlineHelpText>Unit price of product multiplied by the quantity of products. (Unit price x quantity)</inlineHelpText>
+        <label>Ext. Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__FreezePricing__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Freezes the pricing and prevents manual discounts on this line.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Freezes the pricing and prevents manual discounts on this line</inlineHelpText>
+        <label>Freeze Pricing</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Frozen__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Controls if manual discount is allowed.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Controls if manual discount is allowed..</inlineHelpText>
+        <label>Frozen</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__GroupNumber__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The SectionNumber, OptionNumber, and GroupNumber fields are used internally to sort sub-lines of a configurable product.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The SectionNumber, OptionNumber, and GroupNumber fields are used internally to sort sub-lines of a configurable product.</inlineHelpText>
+        <label>Group Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Id__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Deprecated</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Deprecated</inlineHelpText>
+        <label>Deprecated</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__IsBelowLine__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Flag indicates whether the quote item is a below-the-line recommendation. Items flagged shouldn&apos;t be included with final calculations.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Flag indicates whether the quote item is a below-the-line recommendation. Items flagged shouldn&apos;t be included with final calculations.</inlineHelpText>
+        <label>Recommended</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__IsInstallBase__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Defines whether the subline Install Base Relevant. Copied from MnCatalogNode__c when quote item subline is created.</description>
+        <externalId>false</externalId>
+        <label>Install Base Relevant</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__IsSystemCostPrice__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>This attribute is to track if the Cost price was calculated by system or user entered. Value is false for user entered.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This attribute is to track if the Cost price was calculated by system or user entered. Value is false for user entered.</inlineHelpText>
+        <label>Is Cost Price System populated</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__IsSystemListPrice__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>This attribute is to track if the List price was calculated by system or user entered. Value is false for user entered.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This attribute is to track if the List price was calculated by system or user entered. Value is false for user entered.</inlineHelpText>
+        <label>Is List Price System populated</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__IsSystemUnitPrice__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>This attribute is to track if the Unit price was calculated by system or user entered. Value is false for user entered.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This attribute is to track if the Unit price was calculated by system or user entered. Value is false for user entered.</inlineHelpText>
+        <label>Is Unit Price System populated</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__LineType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Tracked On</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Not tracked on contract</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Service</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__MarginAbsolute__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Absolute value of the margin</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Absolute value of the margin</inlineHelpText>
+        <label>Margin (Abs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__MarginType__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Determines whether the Margin is based on percentage (e.g., 20%) or on an absolute amount(e.g., $100).</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Determines whether the Margin is based on percentage (e.g., 20%) or on an absolute amount(e.g., $100).</inlineHelpText>
+        <label>Margin Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Percent</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Absolute</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Margin__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Percent value of the margin</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Percent value of the margin</inlineHelpText>
+        <label>Margin ( % )</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__NeedsApproval__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>This flag is set by the system when the workflow suggests an approval is needed for the underlying quote.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This flag is set by the system when the workflow suggests an approval is needed for the underlying quote.</inlineHelpText>
+        <label>Needs Approval</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__OptionNumber__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The SectionNumber, OptionNumber, and GroupNumber fields are used internally to sort sub-lines of a configurable product.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The SectionNumber, OptionNumber, and GroupNumber fields are used internally to sort sub-lines of a configurable product.</inlineHelpText>
+        <label>Option Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__PriceDisplay_F__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>REVVY__Price__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Price Display</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__PriceListLine__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Unique ID of the Price List Line object used to derive the List Price for this product.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Unique ID of the Price List Line object used to derive the List Price for this product.</inlineHelpText>
+        <label>Price List Line</label>
+        <referenceTo>REVVY__MnPriceListLine__c</referenceTo>
+        <relationshipLabel>QuoteSubLineItem</relationshipLabel>
+        <relationshipName>QuoteSubLineItem</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Price__c</fullName>
+        <deprecated>false</deprecated>
+        <description>List price of product.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>List price of product.</inlineHelpText>
+        <label>List Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Quantity__c</fullName>
+        <defaultValue>1</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Quantity of products.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Quantity of products.</inlineHelpText>
+        <label>Qty</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__QuoteItem__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Unique ID of the line item (i.e., the quote item) in the quote.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Unique ID of the line item (i.e., the quote item) in the quote.</inlineHelpText>
+        <label>Quote Item</label>
+        <referenceTo>REVVY__MnQuoteItem__c</referenceTo>
+        <relationshipLabel>QuoteItemSubLine</relationshipLabel>
+        <relationshipName>QuoteItemSubLine</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>REVVY__SectionNumber__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The SectionNumber, OptionNumber, and GroupNumber fields  are used internally to sort sub-lines of a configurable product.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The SectionNumber, OptionNumber, and GroupNumber fields  are used internally to sort sub-lines of a configurable product.</inlineHelpText>
+        <label>Section Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__SourceContractItemSubLine__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Source Contract Item Sub Line</label>
+        <referenceTo>REVVY__MnContractItemSubLine__c</referenceTo>
+        <relationshipLabel>Quote Item Sub Line</relationshipLabel>
+        <relationshipName>Quote_Item_Sub_Line</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__TotalCostPrice__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Total Cost (taking quantity into account).</description>
+        <externalId>false</externalId>
+        <formula>IF (OR(ISNULL(REVVY__CostPrice__c), ISBLANK(REVVY__CostPrice__c)), null, (REVVY__CostPrice__c * REVVY__Quantity__c))</formula>
+        <inlineHelpText>Total Cost Price Including Quantity.</inlineHelpText>
+        <label>Total Cost</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Total_Price_Before_Discount__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate price before any discounts are applied.</description>
+        <externalId>false</externalId>
+        <formula>IF (OR(ISNULL(REVVY__Price__c) , ISBLANK(REVVY__Price__c), REVVY__Price__c &lt;= 0) ,
+0,
+(REVVY__Price__c * REVVY__Quantity__c))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Aggregate price before any discounts are applied.</inlineHelpText>
+        <label>Total List Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__UID__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Unique ID of the BOM from the Configuration Engine.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Unique ID of the BOM from the Configuration Engine.</inlineHelpText>
+        <label>UID Configured BOM</label>
+        <length>200</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__UISection__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Name of the UI section that is returned by the product configuration.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Name of the UI section that is returned by the product configuration.</inlineHelpText>
+        <label>Section</label>
+        <length>200</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Unit_Price_F__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>CASE( REVVY__Discount_Type__c , &apos;Absolute&apos;, (REVVY__Price__c - REVVY__Discount_Absolute__c) , REVVY__Price__c * (1 - REVVY__Discount__c))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>(Deprecated)Unit Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Unit_Price__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Unit price of product (list price less the discount)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Unit price of product (list price less the discount)</inlineHelpText>
+        <label>Unit Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__VolDiscAbsolute__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Total volume discount off of list price (e.g., $100 off).</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Total volume discount off of list price (e.g., $100 off).</inlineHelpText>
+        <label>Vol. Disc. (Abs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__VolDisc__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Percentage volume discount off of list price (e.g., 20% off).</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Percentage volumn discount off of list price (e.g., 20% off).</inlineHelpText>
+        <label>Vol. Disc. (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+</CustomObject>

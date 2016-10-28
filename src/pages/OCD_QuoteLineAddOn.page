@@ -1,0 +1,79 @@
+<apex:page controller="OCD_UpdatePriceUploadController" action="{!init}">
+<head>
+<apex:includeScript value="{!URLFOR($Resource.DA, '/bower_components/jquery/dist/jquery.min.js')}"/> 
+        
+</head>
+    <apex:sectionHeader title="Override Quote Items" subtitle="{!quote.Name}"/>
+    <apex:form >
+    <apex:pagemessages />
+    <apex:pageBlock title="Override Quote Items" mode="edit" >
+        <apex:pageBlockButtons >
+            
+            <apex:commandButton action="{!returnToQuotePage}" value="Return To Quote"/>
+        </apex:pageBlockButtons>
+        
+        <apex:repeat value="{!reagentQILList}" var="reagentQIL" >
+            <apex:pageBlockSection title="Reagents {!reagentQIL.lob}" columns="1" rendered="{!reagentQIL.qiList.size > 0}">
+                <apex:pageBlockTable value="{!reagentQIL.qiList}" var="item" >
+                    <apex:column value="{!item.qi.Local_SKU_Id__c}"/>
+                    <apex:column value="{!item.qi.OCD_Product_Type__c}"/>
+                    <apex:column value="{!item.qi.REVVY__Product_Name_F__c}"/>
+                    <apex:column rendered="{!IF(quote.OCD_Quote_Type__c ='CPRR' ,true,false)}">  
+                        <apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_CPRR_Base_Price__c.Label}</apex:facet>
+                        <apex:outputText value="{0, number, #0.0000}">
+                              <apex:param value="{!item.qi.OCD_CPRR_Base_Price__c}" />
+                        </apex:outputText>
+                    </apex:column> 
+                    <apex:column rendered="{!IF(quote.OCD_Quote_Type__c ='CPT'  || quote.OCD_Quote_Type__c ='Reagent Rental',true,false)}" >  
+                        <apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Overridden_Price__c.Label}</apex:facet>
+                        <apex:outputText value="{0, number, #0.0000}">
+                              <apex:param value="{!item.qi.OCD_Overridden_Price__c}" />
+                        </apex:outputText>
+                    </apex:column>   
+                    <apex:column >  
+                        <apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Service_Add_On__c.Label}</apex:facet>
+                        <apex:outputText value="{0, number, #0.0000}">
+                              <apex:param value="{!item.qi.OCD_Service_Add_On__c}" />
+                        </apex:outputText>
+                    </apex:column>  
+                    <apex:column >  
+                        <apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Other_Add_On__c.Label}</apex:facet>                
+                        <apex:outputText value="{0, number, #0.0000}">
+                              <apex:param value="{!item.qi.OCD_Other_Add_On__c}" />
+                        </apex:outputText>
+                     </apex:column>
+                    <apex:column >    
+                        <apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Consumable_Add_On__c.Label}</apex:facet>              
+                        <apex:outputText value="{0, number, #0.0000}">
+                              <apex:param value="{!item.qi.OCD_Consumable_Add_On__c}" />
+                        </apex:outputText>
+                     </apex:column>
+                     <apex:column >         
+                         <apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Capital_Add_On__c.Label}</apex:facet>        
+                         <apex:outputText value="{0, number, #0.0000}">
+                              <apex:param value="{!item.qi.OCD_Capital_Add_On__c}" />
+                        </apex:outputText>
+                     </apex:column>
+                    <apex:column >    
+                        <apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Accessory_Add_On__c.Label}</apex:facet>              
+                        <apex:outputText value="{0, number, #0.0000}">
+                              <apex:param value="{!item.qi.OCD_Accessory_Add_On__c}" />
+                        </apex:outputText>
+                     </apex:column>     
+                     <apex:column >    
+                        <apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_CPRR_Price__c.Label}</apex:facet>              
+                        <apex:outputText value="{0, number, #0.0000}">
+                              <apex:param value="{!item.qi.OCD_CPRR_Price__c}" />
+                        </apex:outputText>
+                     </apex:column> 
+                        
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+        </apex:repeat>
+        
+        
+        
+    </apex:pageBlock>
+    </apex:form>
+
+</apex:page>

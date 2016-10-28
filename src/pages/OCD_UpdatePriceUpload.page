@@ -1,0 +1,1189 @@
+<!-- --
+* @author Roy Lou
+* @date 10/10/2016 
+*
+*
+* @group Quote Override
+* @group-content ../../ApexDocContent/OCD_UpdatePriceUpload.htm 
+*
+* @description This is the VisualForce Page handling "Quote Override" event
+* @Change History
+*
+*   Tag         Author              Date           Requested-BY      Description     
+* *****************************************************************************************************************              
+*   1.0.0       Roy Lou             10/10/2016     N/A               Initial Version
+*                                                                               
+* *****************************************************************************************************************/-->
+<apex:page controller="OCD_UpdatePriceUploadController" action="{!init}">
+<head>
+	<style>
+			* {
+				margin:0; 
+				padding:0;
+			}
+
+			#overlay {
+				position:fixed; 
+				top:0;
+				left:0;
+				width:100%;
+				height:100%;
+				background:#000;
+				opacity:0.5;
+				filter:alpha(opacity=50);
+			}
+
+			#modal {
+				position:absolute;
+				background:url(tint20.png) 0 0 repeat;
+				background:rgba(0,0,0,0.2);
+				border-radius:14px;
+				padding:8px;
+			}
+
+			#content {
+				border-radius:8px;
+				background:#fff;
+				padding:20px;
+			}
+
+			#close {
+				position:absolute;
+				background:url(close.png) 0 0 no-repeat;
+				width:24px;
+				height:27px;
+				display:block;
+				text-indent:-9999px;
+				top:-7px;
+				right:-7px;
+			}
+	</style>
+<apex:includeScript value="{!URLFOR($Resource.DA, '/bower_components/jquery/dist/jquery.min.js')}"/> 
+<apex:includeScript value="{!URLFOR($Resource.REVVY__jquery, '/js/jquery-ui-1.8.18.custom.min.js')}"/>
+	
+    <script type="text/javascript">
+    	var userLocale = "{!userLocale}";
+    	userLocale = userLocale.replace("_","-");
+    	var currentQuoteId = "{!quoteId}";
+    	var retUrl = "{!retURL}";
+    	//console.log('retUrl = ' + retUrl);
+    	j$ = jQuery.noConflict();
+    	var parseLocalizedFloat = function(strNumber) {
+    		var pattern = "[^\\d\\" + whatDecimalSeparator() + "]";
+    		var sRegExInput = new RegExp(pattern, "g"); 
+    		var pattern2 = "\\" + whatDecimalSeparator();
+			var sRegExInput2 = new RegExp(pattern2, "g");
+			//console.log('strNumber=' + strNumber);
+			//console.log('sRegExInput=' + sRegExInput);
+			//console.log('sRegExInput2=' + sRegExInput2);
+			//console.log('strNumber 2=' + strNumber.replace(sRegExInput, "").replace(sRegExInput2, ".") );
+			return parseFloat( strNumber.replace(sRegExInput, "").replace(sRegExInput2, ".")  );
+    	};
+    	var formatPrice = function(num) {
+    	//console.log('-1--' + userLocale);
+    	//console.log('-1.5--' + num);
+    		var strPrice = num.toLocaleString( userLocale, {});
+    		//console.log('-userLocale--' + userLocale);
+    		if(userLocale == 'en-US') {
+    			strPrice = num.toLocaleString( userLocale, {minimumFractionDigits : 4});
+    		} else if(userLocale == 'ja-JP') {
+    			num = Math.floor(num);
+    			strPrice = num.toLocaleString( userLocale, {});
+    		}
+    		if(strPrice.indexOf( whatDecimalSeparator() != -1) ) {
+    			var pattern1 = "(\\" + whatDecimalSeparator()+"[0-9]*?)0+$";
+				var sRegExInput1 = new RegExp(pattern1, "g");
+	    		strPrice = strPrice.replace(sRegExInput1, "$1"); // remove trailing zeros
+	    		var pattern2 = "\\" + whatDecimalSeparator()+"$";
+				var sRegExInput2 = new RegExp(pattern2, "g");
+				strPrice = strPrice.replace(sRegExInput2, "");              // remove trailing dot
+			}
+			//console.log('str price=' + strPrice);
+			return strPrice;
+    	};
+    	
+    	var whatDecimalSeparator = function() {
+		    var n = 1.1;
+		    n = n.toLocaleString(userLocale).substring(1, 2);
+		   return n;
+		}
+		
+		var whatThousandsSeparator = function() {
+		    var n = 1001;
+		    n = n.toLocaleString(userLocale).substring(1, 2);
+		   return n;
+		}
+	
+    	j$.fn.currencyInput = function() {
+    		var pattern = "[^\\d\\" + whatDecimalSeparator() + "]";
+    		var sRegExInput = new RegExp(pattern, "g"); 
+    		var pattern2 = "\\" + whatDecimalSeparator();
+			var sRegExInput2 = new RegExp(pattern2, "g");
+			//console.log('pattern = ' + pattern);
+			//console.log('pattern2 = ' + pattern2);
+		    this.each(function() {
+		    //console.log('value = ' + this.value);
+		     var value = parseFloat( this.value.replace(/[^\d\.]/g,'') );
+	         if(value != undefined) {
+	        	j$(this).val(formatPrice(value)); 
+	          }
+	          
+		      j$(this).change(function() {
+		        var value = parseFloat( this.value.replace(sRegExInput, "").replace(sRegExInput2, ".")  );
+		        if(value != undefined) {
+		        	j$(this).siblings('input:hidden').val(value);
+		        	j$(this).closest('td').siblings('td').find("input[class *= 'PriceOverride']").prop("checked",true);
+			    	var sku = j$(this).data('sku');
+			    	var v = j$(this).val();
+			    	//console.log('onchange=' + v);
+			    	j$(this).closest('tr').siblings('tr').find("input[class *= '" + sku + "']").val(v).each(function() {
+			    		j$(this).val(formatPrice(value));
+			    		j$(this).siblings('input:hidden').val(value);
+	       				j$(this).closest('td').siblings('td').find("input[class *= 'PriceOverride']").prop("checked",true);
+				    });
+			    
+		        	j$(this).val(formatPrice(value)); 
+		        }
+		      });
+		      
+		    });
+		  };
+			  
+    	j$.fn.enableDisableMarginMarkup = function (type, lob) {
+    		if(!this.val()) {
+    			return;
+    		}
+		    if(this.val() == 'Markup') {
+       			j$("input[class *= '" + type + "Markup" + lob + "']").prop('disabled', false).each(function() {
+       				j$(this).closest('td').siblings('td').find('input[id $= "distType"]').val("Markup");
+			    });
+       			j$("input[class *= '" + type + "Margin" + lob + "']").prop('disabled', true).val('');
+       			j$("input[class *= 'stdTransferPrice']").each(function() {
+       				var originalValue = parseFloat(j$(this).data('stdtransferprice'));
+       				if(!isNaN(originalValue)) {
+			    		j$(this).val(originalValue);
+       				}
+       				
+			    });
+       		} else if(this.val() == 'Margin') {
+       			j$("input[class *= '" + type + "Markup" + lob + "']").prop('disabled', true).val('');
+       			j$("input[class *= '" + type + "Margin" + lob + "']").prop('disabled', false).each(function() {
+       				j$(this).closest('td').siblings('td').find('input[id $= "distType"]').val("Margin");
+			    });
+       			j$("input[class *= '" + type + "finalPrice"+ lob + "']").each(function() {
+       				//finalprice is in standard price format
+       				console.log('enableDisableMarginMarkup before finalprice =' + j$(this).data('finalprice'));
+       				var originalValue = parseFloat(j$(this).data('finalprice'));
+       				console.log('enableDisableMarginMarkup after finalprice =' + originalValue);
+       				if(!isNaN(originalValue)) {
+			    		j$(this).val(formatPrice(originalValue));
+			    		//j$(this).closest('td').siblings('td').find("input[class *= 'PriceOverride']").prop("checked",false);
+			    	}
+			    });
+			    //j$("input[class *= '" + type + "finalTransferPrice" + lob + "']").val('');
+       		} else {
+       			j$("input[class *= '" + type + "Markup" + lob + "']").prop('disabled', true).val('');
+       			j$("input[class *= '" + type + "Margin" + lob + "']").prop('disabled', true).val('');
+       		}
+       		j$(this).siblings("input[class *= '" + type + "Override" + lob + "']").val('');
+            //j$("input[class *= '" + type + "finalTransferPrice" + lob + "']").val('');
+		};
+		
+		j$.fn.setMarkupMarginValues = function (type, lob) {
+		    if(j$("select[class *= '" + type + "Distributor"+lob + "']").val() == 'Markup') {
+       			j$("input[class *= '" + type + "Markup"+lob + "']").val(j$(this).val()).trigger('change');
+       		} else if(j$("select[class *= '" + type + "Distributor"+lob + "']").val() == 'Margin')  {
+       			j$("input[class *= '" + type + "Margin"+lob + "']").val(j$(this).val()).trigger('change');
+       		}
+		};
+		
+		setUpHandler = function (type) {
+       		j$("input[class *= '" + type + "NAO']").change(function() {
+        		j$("input[class *= '" + type + "NoAddOn' ]").prop("checked", j$(this).prop("checked"));
+		      });  
+		    j$("select[class *= '" + type + "PT']").change(function() { //payment type 
+        		j$("select[class *= '" + type + "PaymentType' ]").val( j$(this).val() ).trigger("change");
+		      });
+		    j$("input[class *= '" + type + "PO']").change(function() { //price override flag
+        		j$("input[class *= '" + type + "PriceOverride' ]").prop("checked", j$(this).prop("checked"));
+		      }); 
+		    j$("input[class *= '" + type + "Override']").change(function() { //price override flag
+        		j$(this).setMarkupMarginValues(type, "");
+		      });
+		    j$("input[class *= '" + type + "Distributor']").change(function() { //price override flag
+        		j$(this).enableDisableMarginMarkup(type, "");
+		      });
+		};
+		
+		setUpLOBHandler = function (type, lob) {
+       		j$("input[class *= '" + type + "NAO"+ lob + "']").change(function() {
+        		j$("input[class *= '" + type + "NoAddOn"+ lob + "']").prop("checked", j$(this).prop("checked"));
+		      });  
+		    j$("select[class *= '" + type + "PT"+ lob + "']").change(function() { //payment type 
+        		j$("select[class *= '" + type + "PaymentType"+ lob + "']").val( j$(this).val() ).trigger("change");
+		      });
+		    j$("input[class *= '" + type + "PO"+ lob + "']").change(function() { //price override flag
+        		j$("input[class *= '" + type + "PriceOverride"+ lob + "']").prop("checked", j$(this).prop("checked"));
+		      });  
+		    j$("input[class *= '" + type + "Override"+ lob + "']").change(function() {
+        		j$(this).setMarkupMarginValues(type, lob);
+		      });
+		    j$("select[class *= '" + type + "Distributor"+ lob + "']").change(function() {
+        		j$(this).enableDisableMarginMarkup(type, lob);
+		      });
+		};
+		
+		retrieveValue = function (thisObj) {
+			var fieldName = j$(thisObj).data('fieldname');
+			var value = j$(thisObj).val();
+      		if(fieldName) {
+    			switch(fieldName) {
+    				case 'final_price' :
+    					if(value) {
+   							//value = parseLocalizedFloat(value);//value.replace(/\,/g,"");
+   							value = parseFloat(value);//value.replace(/\,/g,"");
+     					}
+     					//console.log('value = ' + value);
+     					break;
+    				case 'std_transfer_price' :
+    				case 'markup' :
+   					case 'margin' :
+   					case 'final_transfer_price' :
+    				//case 'final_price' :
+     					if(value) {
+   							value = parseLocalizedFloat(value);//value.replace(/\,/g,"");
+     					}
+     					//console.log('value = ' + value);
+     					break;
+    				case 'price_override' :
+    				case 'no_add_on' :
+    					value = j$(thisObj).prop('checked') ? "true" : "false";
+    					//console.log('field name ' + fieldName + ' value= ' + value);
+    					break;
+    				default:
+    					break;
+     					
+     			}
+      		}
+      		return value;
+		}
+		
+		updateQuoteLines = function(quoteLineArray, quoteSublineArray, batchSize) {
+			if(quoteLineArray.length > 0) {
+				var oneBatch = quoteLineArray.splice(0, batchSize);
+				Visualforce.remoting.Manager.invokeAction(
+		            '{!$RemoteAction.OCD_UpdatePriceUploadController.updateQuoteLines}',
+		            oneBatch, 
+		            function(result, event){
+		                if (event.status) {
+		                    updateQuoteLines(quoteLineArray, quoteSublineArray, batchSize);
+		                } else if (event.type === 'exception') {
+		                	j$("body").css("cursor", "default");
+		                	//console.log('exception=' + event.message);
+		                	modal.open({content: "Exception: " + event.message });
+		                	setInterval(function(){ modal.close(); }, 12000);
+		                } else {
+		                	j$("body").css("cursor", "default");
+		                    modal.open({content: "Unknow error: " + event.message });
+		                	setInterval(function(){ modal.close(); }, 12000);
+		                }
+		            }, 
+		            {escape: true}
+		        );
+			} else {
+				updateQuoteSublines(quoteSublineArray, batchSize);
+			}
+		}
+		
+		updateQuoteSublines = function(quoteSublineArray, batchSize) {
+			if(quoteSublineArray.length > 0) {
+				var oneBatch = quoteSublineArray.splice(0, batchSize);
+				Visualforce.remoting.Manager.invokeAction(
+		            '{!$RemoteAction.OCD_UpdatePriceUploadController.updateQuoteSublines}',
+		            oneBatch, 
+		            function(result, event){
+		                if (event.status) {
+		                    updateQuoteSublines(quoteSublineArray, batchSize);
+		                } else if (event.type === 'exception') {
+		                	j$("body").css("cursor", "default");
+		                	//console.log('exception=' + event.message);
+		                	modal.open({content: "Exception: " + event.message });
+		                	setInterval(function(){ modal.close(); }, 12000);
+		                } else {
+		                    j$("body").css("cursor", "default");
+		                    modal.open({content: "Unknow error: " + event.message });
+		                	setInterval(function(){ modal.close(); }, 12000);
+		                }
+		            }, 
+		            {escape: true}
+		        );
+			} else {
+				if(currentQuoteId) {
+					getPrice(currentQuoteId);
+					
+				}
+			}
+		}
+		
+		getPrice = function(quoteId) {
+			Visualforce.remoting.Manager.invokeAction(
+		            '{!$RemoteAction.OCD_UpdatePriceUploadController.getPrice}',
+		            quoteId, 
+		            function(result, event){
+		                if (event.status) {
+		                    //console.log("getPrice result = " + result);
+		                    modal.close();
+		                    if(retUrl) {
+								window.top.location = retUrl;
+							} else {
+			        			window.top.location = '/apex/revvy__PMnUIShell#mnquote/detail/'+quoteId;
+			        		}
+		                    
+		                } else if (event.type === 'exception') {
+		                	j$("body").css("cursor", "default");
+		                	//console.log('exception=' + event.message);
+		                	modal.open({content: "Exception: " + event.message });
+		                	setInterval(function(){ modal.close(); }, 12000);
+		                } else {
+		                    j$("body").css("cursor", "default");
+		                    modal.open({content: "Unknow error: " + event.message });
+		                	setInterval(function(){ modal.close(); }, 12000);
+		                }
+		            }, 
+		            {escape: true}
+		        );
+		}
+		var modal = (function($){
+				var 
+				method = {},
+				$overlay,
+				$modal,
+				$content,
+				$close;
+
+				// Center the modal in the viewport
+				method.center = function () {
+					var top, left;
+					top = Math.max($(window).height() - $modal.outerHeight(true), 0) / 2;
+					left = Math.max($(window).width() - $modal.outerWidth(true), 0) / 2;
+					//console.log('top:' + top + ' scrollTop=' + $(window).scrollTop());
+					//console.log('left:' + left + ' scrollLeft=' + $(window).scrollLeft());
+					$modal.css({
+						top:top + $(window).scrollTop(), 
+						left:left + $(window).scrollLeft()
+					});
+				};
+
+				// Open the modal
+				method.open = function (settings) {
+					$content.empty().append(settings.content);
+
+					$modal.css({
+						width: settings.width || 'auto', 
+						height: settings.height || 'auto'
+					});
+
+					method.center();
+					$(window).bind('resize.modal', method.center);
+					$modal.show();
+					$overlay.show();
+				};
+
+				// Close the modal
+				method.close = function () {
+					$modal.hide();
+					$overlay.hide();
+					$content.empty();
+					$(window).unbind('resize.modal');
+				};
+
+				// Generate the HTML and add it to the document
+				$overlay = $('<div id="overlay"></div>');
+				$modal = $('<div id="modal"></div>');
+				$content = $('<div id="content"></div>');
+				$close = $('<a id="close" href="#">close</a>');
+
+				$modal.hide();
+				$overlay.hide();
+				$modal.append($content, $close);
+
+				$(document).ready(function(){
+					$('body').append($overlay, $modal);						
+				});
+
+				$close.click(function(e){
+					e.preventDefault();
+					method.close();
+				});
+
+				return method;
+			}(j$));
+	
+        j$(document).ready(function() {
+			j$('form').bind("keypress", function(e) {
+        		if(e.keyCode == 13) {
+        			e.preventDefault();
+        			return false;
+        		}
+        	});
+			var subLineMap = {}
+			var lineMap = {}
+			j$( ".updateQuote" ).click(function(e) {
+				modal.open({content: "Please wait..."});
+				e.preventDefault();
+        		j$("[data-lineType='qSubLine']").each(function() {
+        			var sfdcId = j$(this).data('sfdcid');
+        			if(!subLineMap[sfdcId]) {
+        				subLineMap[sfdcId]= {sfdc_id : sfdcId};
+        			}
+        			var currentSubLine = subLineMap[sfdcId];
+        			var fieldName = j$(this).data('fieldname');
+        			var curValue = retrieveValue(this);
+        			if(curValue) {
+        				currentSubLine[fieldName] = curValue;
+        			}
+			    });
+			    
+			    j$("[data-lineType='qLine']").each(function() {
+        			var sfdcId = j$(this).data('sfdcid');
+        			if(!lineMap[sfdcId]) {
+        				lineMap[sfdcId]= {sfdc_id : sfdcId};
+        			}
+        			var currentLine = lineMap[sfdcId];
+        			var fieldName = j$(this).data('fieldname');
+        			var curValue = retrieveValue(this);
+        			if(curValue) {
+        				currentLine[fieldName] = curValue;
+        				//console.log(fieldName + ' = ' +curValue);
+        			}
+			    });
+			    
+			    var lineArray = [];
+			    var subLineArray = [];
+			    
+			    for (var prop in lineMap) {
+			        // skip loop if the property is from prototype
+			        if(!lineMap.hasOwnProperty(prop)) continue;
+			
+			        // your code
+			        //console.log("line --" + prop);
+			        lineArray.push(lineMap[prop]);
+			    }
+			    
+			    for (var prop in subLineMap) {
+			        // skip loop if the property is from prototype
+			        if(!subLineMap.hasOwnProperty(prop)) continue;
+			        subLineArray.push(subLineMap[prop]);
+			    }
+			    //console.log(lineArray);
+			    //console.log(subLineArray);
+			    var size = 200;
+			    j$("body").css("cursor", "wait");
+				updateQuoteLines(lineArray, subLineArray, size);
+        
+			});
+			
+  
+			j$( "#returnToQuote" ).click(function() {
+				if(retUrl) {
+					window.top.location = retUrl;
+				} else {
+        			window.top.location = '/apex/revvy__PMnUIShell#mnquote/detail/'+currentQuoteId;
+        		}
+			});
+        	//j$("input[class *= 'stdTransferPrice']").prop('disabled', true);
+        	j$('select[class *= "equipmentDistributor"]').enableDisableMarginMarkup("equipment", "");
+        	j$('select[class *= "buyoutDistributor"]').enableDisableMarginMarkup("buyout", "");
+        	j$('select[class *= "onsiteDistributor"]').enableDisableMarginMarkup("onsite", "");
+        	j$('select[class *= "otherDistributor"]').enableDisableMarginMarkup("other", "");
+        	//j$('select[id$=reagentDistributor]').toggleMarginMarkup();
+        	j$('select[class *= "reagentDistributorCC"]').enableDisableMarginMarkup("reagent", "CC");
+        	j$('select[class *= "reagentDistributorIA"]').enableDisableMarginMarkup("reagent", "IA");
+        	j$('select[class *= "reagentDistributorCAT"]').enableDisableMarginMarkup("reagent", "CAT");
+        	j$('select[class *= "reagentDistributorTradIH"]').enableDisableMarginMarkup("reagent", "TradIH");
+		    j$('select[class *= "consumablesDistributorCC"]').enableDisableMarginMarkup("consumables", "CC");
+        	j$('select[class *= "consumablesDistributorIA"]').enableDisableMarginMarkup("consumables", "IA");
+        	j$('select[class *= "consumablesDistributorCAT"]').enableDisableMarginMarkup("consumables", "CAT");
+        	j$('select[class *= "consumablesDistributorTradIH"]').enableDisableMarginMarkup("consumables", "TradIH");
+        	
+        	j$('select[class *= "thirdPartiesDistributorCC"]').enableDisableMarginMarkup("thirdParties", "CC");
+        	j$('select[class *= "thirdPartiesDistributorIA"]').enableDisableMarginMarkup("thirdParties", "IA");
+        	j$('select[class *= "thirdPartiesDistributorCAT"]').enableDisableMarginMarkup("thirdParties", "CAT");
+        	j$('select[class *= "thirdPartiesDistributorTradIH"]').enableDisableMarginMarkup("thirdParties", "TradIH");
+        	
+        	
+		    j$('input[class *= "finalTransferPrice"]').change(function() {
+		    //console.log('onchange of final transfer price ...' + j$(this).val());
+		    	if(j$(this).val()) {
+			    	var marginElm = j$(this).closest('td').siblings('td').find('input[class *= "Margin"]');
+			    	if(!marginElm.prop('disabled')) {
+				    	var finalPrice = parseLocalizedFloat(j$(this).closest('td').siblings('td').find('input[class *= "finalPrice"]').val());
+				    	var stdTransferPrice = parseLocalizedFloat(j$(this).closest('td').siblings('td').find('input[class *= "stdTransferPrice"]').val());
+				    	if(finalPrice) {
+                        	var finalTransferPrice = parseLocalizedFloat(j$(this).val());
+                        	if(finalTransferPrice > stdTransferPrice) {
+                        		finalTransferPrice = stdTransferPrice;
+                        	}
+                        	//console.log('finalPrice=' + finalPrice);
+                        	//console.log('stdTransferPrice=' + stdTransferPrice);
+                        	//console.log('finalTransferPrice=' + finalTransferPrice);
+		        			marginElm.val(formatPrice(((finalPrice/finalTransferPrice)-1)*100));
+		        			j$(this).val(formatPrice(finalTransferPrice));
+		        			j$(this).closest('td').siblings('td').find('input[id $= "distributorModifiedFile"]').val("Final Transfer Price");
+                        }
+	        		}
+        		}
+		      });   
+		     
+		     j$('input[class *= "Margin"]').change(function() {
+		    	if(j$(this).val()) {
+		    		var margin = parseLocalizedFloat(j$(this).val());
+		    		//console.log('margin=' + margin);
+			    	var finalPrice = parseLocalizedFloat(j$(this).closest('td').siblings('td').find('input[class *= "finalPrice"]').val());
+			    	//console.log('finalPrice=' + finalPrice);
+			    	var finalTransferPrice = finalPrice/(1+margin/100);
+			    	//console.log('finalTransferPrice=' + finalTransferPrice);
+			    	if(!isNaN(finalTransferPrice)) {
+			    		var stdTransferPrice = parseLocalizedFloat(j$(this).closest('td').siblings('td').find('input[class *= "stdTransferPrice"]').val());
+			    		//console.log('stdTransferPrice=' + stdTransferPrice);
+			    		if(finalTransferPrice > stdTransferPrice) {
+                       		finalTransferPrice = stdTransferPrice;
+                       		j$(this).val(formatPrice(((finalPrice/finalTransferPrice)-1)*100));
+                       	}
+                       	
+			    		j$(this).closest('td').siblings('td').find('input[class *= "finalTransferPrice"]').val(formatPrice(finalTransferPrice));
+			    	}
+	        		
+	        		j$(this).closest('td').siblings('td').find('input[id $= "distributorModifiedFile"]').val("Margin");
+	        		//j$(this).closest('td').siblings('td').find('input[class *= "stdTransferPrice"]').val("");
+        		}
+		      }); 
+		      
+		      
+		      j$('select[class *= "PaymentType"]').change(function() {
+		      	if(j$(this).val() === 'No Charge') {
+		      		j$(this).closest('td').siblings('td').find('input[class *= "finalPrice"]:visible').val(0.0);
+		      		j$(this).closest('td').siblings('td').find('input[class *= "finalPrice"]:hidden').val(0.0);
+		      	} else {
+		      		//restore the finalprice stored in inputfield as data-finalprice
+		      		var fp = j$(this).closest('td').siblings('td').find('input[class *= "finalPrice"]:visible');
+		      		//use parseFloat because data-finalprice is in decimal point format
+		      		var vFinlaPrice = parseFloat(fp.data('finalprice'));
+		      		fp.val(formatPrice(vFinlaPrice));
+		      		j$(this).closest('td').siblings('td').find('input[class *= "finalPrice"]:hidden').val(vFinlaPrice);
+		      	}
+		      	j$(this).closest('td').siblings('td').find("input[class *= 'PriceOverride']").prop("checked",false);
+		      });
+		     j$('input[class *= "Markup"]').change(function() {
+		    	if(j$(this).val()) {
+		    		var markup = parseLocalizedFloat(j$(this).val());
+		    		//console.log('markup=' + markup);
+		    		var stdTransferPrice = parseLocalizedFloat(j$(this).closest('td').siblings('td').find('input[class *= "stdTransferPrice"]').val());
+			    	//console.log('stdTransferPrice=' + stdTransferPrice);
+			    	var finalTransferPrice = stdTransferPrice;
+			    	//console.log('finalTransferPrice=' + finalTransferPrice);
+			    	var finalPrice = finalTransferPrice*(1 + markup/100);
+			    	if(!isNaN(stdTransferPrice)) {
+	        			j$(this).closest('td').siblings('td').find('input[class *= "finalTransferPrice"]').val(formatPrice(stdTransferPrice));
+	        		}
+	        		if(!isNaN(finalPrice)) {
+	        			j$(this).closest('td').siblings('td').find('input[class *= "finalPrice"]:visible').val(formatPrice(finalPrice));
+	        			j$(this).closest('td').siblings('td').find('input[class *= "finalPrice"]:hidden').val(finalPrice);
+	        			//console.log("1----" + j$(this).closest('td').siblings('td').find('input[class *= "finalPrice"]:visible').val());
+	        			//console.log("2----" + j$(this).closest('td').siblings('td').find('input[class *= "finalPrice"]:hidden').val());
+	        			j$(this).closest('td').siblings('td').find("input[class *= 'PriceOverride']").prop("checked",true);
+	        		}
+	        		j$(this).closest('td').siblings('td').find('input[id $= "distributorModifiedFile"]').val("Markup");
+        		}
+		      });  
+		    
+		    //j$("input[class *= '" + type + "Override"+ lob + "']")
+		    
+		    j$('input[class *= "finalPrice"]').change(function(event) {
+		    	j$(this).closest('td').siblings('td').find("input[class *= 'PriceOverride']").prop("checked",true);
+		    	event.stopPropagation();
+		    	var sku = j$(this).data('sku');
+		    	var v = j$(this).val();
+		    	
+		    	/*
+		    	j$(this).closest('tr').siblings('tr').find("input[class *= '" + sku + "']").val(v).each(function() {
+		    		j$(this).val(v);
+       				j$(this).closest('td').siblings('td').find("input[class *= 'PriceOverride']").prop("checked",true);
+			    });
+		    	*/
+		    	var finalPrice = parseLocalizedFloat(j$(this).val());
+		    	
+		    	//set hidden final price with standard format such as 123.4
+		    	j$(this).closest('td').siblings('td').find('input[class *= "finalPrice"]:hidden').val(finalPrice);
+			    if(j$(this).closest('td').siblings('td').find('input[class *= "finalTransferPrice"]').val()) {
+			    	var finalTransferPrice = parseLocalizedFloat(j$(this).closest('td').siblings('td').find('input[class *= "finalTransferPrice"]').val());
+			    	//console.log('finalTransferPrice=' + finalTransferPrice);
+			    	if(!isNaN(finalTransferPrice)) {
+			    		var stdTransferPrice = parseLocalizedFloat(j$(this).closest('td').siblings('td').find('input[class *= "stdTransferPrice"]').val());
+			    		//console.log('stdTransferPrice=' + stdTransferPrice);
+			    		
+	                    var marginElm = j$(this).closest('td').siblings('td').find('input[class *= "Margin"]');
+	                    marginElm.val(formatPrice(((finalPrice/finalTransferPrice)-1)*100));
+			    	}
+			    }	  	
+		    	//var originalValue = parseFloat(j$(this).data('stdtransferprice'));
+		      });   
+		        
+		    setUpLOBHandler('reagent', 'CC');
+		    setUpLOBHandler('reagent', 'IA');
+		    setUpLOBHandler('reagent', 'CAT');
+		    setUpLOBHandler('reagent', 'TradIH');
+		    setUpLOBHandler('consumables', 'CC');
+		    setUpLOBHandler('consumables', 'IA');
+		    setUpLOBHandler('consumables', 'CAT');
+		    setUpLOBHandler('consumables', 'TradIH'); 
+		    setUpLOBHandler('thirdParties', 'CC');
+		    setUpLOBHandler('thirdParties', 'IA');
+		    setUpLOBHandler('thirdParties', 'CAT');
+		    setUpLOBHandler('thirdParties', 'TradIH');
+		    setUpHandler('equipment');
+		    setUpHandler('buyout');
+		    setUpHandler('onsite');
+		    setUpHandler('other'); 
+			j$('input.currency').currencyInput();
+        });
+   </script>
+   
+</head>
+	<apex:sectionHeader title="Override Quote Items" subtitle="{!quote.Name}"/>
+	<apex:form >
+	<apex:pagemessages />
+	<apex:pageBlock title="Override Quote Items" mode="edit" >
+		<apex:pageBlockButtons >
+		<!--  
+			<apex:commandButton action="{!updateQuote}" value="Update" rendered="{!isEditable}" />
+			<apex:commandButton action="{!returnToQuote}" value="Return To Quote"/>
+			-->
+			<input type="button" id="returnToQuote" class="btn" value="Return To Quote" />
+			<input type="button" id="updateQuote" class="btn updateQuote" value="{!$Label.Save_Update_Quote}" />
+			
+		</apex:pageBlockButtons>
+		
+		<apex:pageBlockSection title="Equipment, Accessory, Service, Warranty, Other" columns="1">
+			<apex:outputPanel >
+				<apex:OutputText value="Distributor Type:  " rendered="{!isDistributor}" /><apex:selectList value="{!defaultDistributorType}" rendered="{!isDistributor}" styleClass="equipmentDistributor" multiselect="false" size="1"><apex:selectOptions value="{!distributorTypes}"/></apex:selectList>
+				<apex:inputText rendered="{!isDistributor}"  styleClass="equipmentOverride" value="{!dreagentType}" style="width:50px;text-align:right;"></apex:inputText> &nbsp;&nbsp;<apex:outputText value="|  " rendered="{!isDistributor}"/>
+				{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Payment_Type__c.Label} &nbsp; <apex:inputField styleClass="equipmentPT" value="{!reagentQI.OCD_Payment_Type__c}"/> &nbsp;&nbsp;|&nbsp;&nbsp;
+				{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Price_Override__c.Label} &nbsp; <apex:inputField styleClass="equipmentPO" value="{!reagentQI.OCD_Price_Override__c}"/>  &nbsp;			
+			</apex:outputPanel>
+			
+		</apex:pageBlockSection>
+		<apex:repeat value="{!equipmentQIList}" var="objEq" >
+		<apex:pageBlockSection title="Equipment - {!objEq.qi.REVVY__Product_Name_F__c}" columns="1">
+			<apex:pageBlockTable value="{!objEq.qi}" var="item">
+				<apex:column value="{!item.Local_SKU_Id__c}"/>
+				<apex:column style="text-align:center" rendered="{!isIDNQuote}">
+						<apex:facet name="header"><div align="center">{!$Label.QO_Child_Quote_Name}</div></apex:facet>	
+						<apex:outputField value="{!item.OCD_IDN_Quote_Item__r.Revvy__Quote__r.Name}" />
+					</apex:column>
+				<apex:column value="{!item.OCD_Product_Type__c}"/>
+				<apex:column value="{!item.REVVY__Product_Name_F__c}"/>
+				<!-- apex:column style="text-align:center">
+					<apex:facet name="header" ><div align="center">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_No_Add_On__c.Label}</div>					
+					</apex:facet>					
+				 	<apex:inputField value="{!item.OCD_No_Add_On__c}" />
+				 </apex:column-->
+				<apex:column >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Payment_Type__c.Label}
+					</apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.Id}" html-data-lineType="qLine" html-data-fieldName="payment_type" styleClass="equipmentPaymentType" value="{!item.OCD_Payment_Type__c}" />
+				 	<apex:inputHidden html-data-sfdcId="{!item.Id}" html-data-lineType="qLine" html-data-fieldName="modified_field" value="{!item.Distributor_Modified_Field__c}" id="distributorModifiedFile"/> 
+					<apex:inputHidden html-data-sfdcId="{!item.Id}" html-data-lineType="qLine" html-data-fieldName="distributor_type" value="{!item.OCD_Distributor_Type__c}" id="distType"/>
+				 </apex:column>
+				<!-- 
+The QuoteItem and the QuoteItem Sub Line objects have these fields:
+1. Standard Transfer Price (OCD_Standard_Transfer_Price__c)
+2. Mark-up (%) (REVVY__Adjustment1__c) OOB field
+3. Margin ( % ) (REVVY__Margin__c)
+4. Final Transfer Price (OCD_Final_Transfer_Price__c)
+5. Final Price (OCD_Overridden_Price__c)				
+				 -->
+				<apex:column style="text-align:center" rendered="{!isDistributor}" >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Standard_Transfer_Price__c.Label}</apex:facet>					
+				 	<apex:inputHidden html-data-sfdcId="{!item.Id}" html-data-lineType="qLine" html-data-fieldName="std_transfer_price" html-class="stdTransferPrice" html-data-stdTransferprice="{!item.OCD_Standard_Transfer_Price__c}" value="{!item.OCD_Standard_Transfer_Price__c}" />
+				 	<apex:outputField value="{!item.OCD_Standard_Transfer_Price__c}" />
+				 </apex:column>				
+				<apex:column style="text-align:center" rendered="{!isDistributor}" >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Mark_Up__c.Label}</apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.Id}" html-data-lineType="qLine" html-data-fieldName="markup" styleClass="equipmentMarkup" value="{!item.OCD_Mark_Up__c}" />
+				 </apex:column>				 
+				<apex:column style="text-align:center" rendered="{!isDistributor}" >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Margin__c.Label}</apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.Id}" html-data-lineType="qLine" html-data-fieldName="margin" styleClass="equipmentMargin" value="{!item.OCD_Margin__c}" />
+				 </apex:column>
+				<apex:column style="text-align:center" rendered="{!isDistributor}" >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Final_Transfer_Price__c.Label}</apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.Id}" html-data-lineType="qLine" html-data-fieldName="final_transfer_price" styleClass="equipmentfinalTransferPrice" value="{!item.OCD_Final_Transfer_Price__c}" />
+				 </apex:column>
+				<apex:column >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Overridden_Price__c.Label}</apex:facet>					
+				 	<apex:inputHidden html-data-sfdcId="{!item.Id}" html-data-lineType="qLine" html-data-fieldName="final_price" html-class="equipmentfinalPrice {!item.Local_SKU_Id__c}" html-data-sku="{!item.Local_SKU_Id__c}" html-data-finalprice="{!item.OCD_Overridden_Price__c}" value="{!item.OCD_Overridden_Price__c}" />
+				 	<input type="text" class="equipmentfinalPrice {!item.Local_SKU_Id__c} currency" data-sku="{!item.Local_SKU_Id__c}" data-finalprice="{!item.OCD_Overridden_Price__c}" value="{!item.OCD_Overridden_Price__c}" />
+				 </apex:column>
+				<apex:column style="text-align:center">
+					<apex:facet name="header"><div align="center">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Price_Override__c.Label}</div></apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.Id}" html-data-lineType="qLine" html-data-fieldName="price_override" styleClass="equipmentPriceOverride" value="{!item.OCD_Price_Override__c}" />
+				 </apex:column>				 
+			</apex:pageBlockTable>
+
+			<apex:pageBlockTable value="{!objEq.qislList}" var="item">
+				<apex:column value="{!item.Local_SKU_Id__c}"/>
+				<apex:column value="{!item.REVVY__Catalog_Node__r.Product_Type__c}"/>
+				<apex:column value="{!item.REVVY__Catalog_Node__r.REVVY__LocaleName_F__c}"/>
+				<!-- apex:column style="text-align:center">
+					<apex:facet name="header" >{!$ObjectType.REVVY__MnQuoteItemSubLine__c.Fields.OCD_No_Add_On__c.Label}<br/><input type="checkbox"/>						
+					</apex:facet>					
+				 	<apex:inputField value="{!item.OCD_No_Add_On__c}" />
+				 </apex:colum-->
+				<apex:column >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItemSubLine__c.Fields.OCD_Payment_Type__c.Label}
+					</apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.Id}" html-data-lineType="qSubLine" html-data-fieldName="payment_type" styleClass="equipmentPaymentType" value="{!item.OCD_Payment_Type__c}" />
+				 	<apex:inputHidden html-data-sfdcId="{!item.Id}" html-data-lineType="qSubLine" html-data-fieldName="modified_field" value="{!item.Distributor_Modified_Field__c}" id="distributorModifiedFile"/>
+					<apex:inputHidden html-data-sfdcId="{!item.Id}" html-data-lineType="qSubLine" html-data-fieldName="distributor_type" value="{!item.OCD_Distributor_Type__c}" id="distType"/>
+				 </apex:column>
+				<apex:column style="text-align:center" rendered="{!isDistributor}" >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItemSubLine__c.Fields.OCD_Standard_Transfer_Price__c.Label}</apex:facet>					
+				 	<apex:inputHidden html-data-sfdcId="{!item.Id}" html-data-lineType="qSubLine" html-data-fieldName="std_transfer_price" html-class="stdTransferPrice" html-data-stdTransferprice="{!item.OCD_Standard_Transfer_Price__c}" value="{!item.OCD_Standard_Transfer_Price__c}" />
+				 	<apex:outputField value="{!item.OCD_Standard_Transfer_Price__c}" />
+				 </apex:column>				
+				<apex:column style="text-align:center" rendered="{!isDistributor}" >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItemSubLine__c.Fields.OCD_Mark_Up__c.Label}</apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.Id}" html-data-lineType="qSubLine" html-data-fieldName="markup" styleClass="equipmentMarkup" value="{!item.OCD_Mark_Up__c}" />
+				 </apex:column>				 
+				<apex:column style="text-align:center" rendered="{!isDistributor}" >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItemSubLine__c.Fields.OCD_Margin__c.Label}</apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.Id}" html-data-lineType="qSubLine" html-data-fieldName="margin" styleClass="equipmentMargin" value="{!item.OCD_Margin__c}" />
+				 </apex:column>
+				<apex:column style="text-align:center" rendered="{!isDistributor}"  >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItemSubLine__c.Fields.OCD_Final_Transfer_Price__c.Label}</apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.Id}" html-data-lineType="qSubLine" html-data-fieldName="final_transfer_price" styleClass="equipmentfinalTransferPrice" value="{!item.OCD_Final_Transfer_Price__c}" />
+				 </apex:column>
+				 <apex:column >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItemSubLine__c.Fields.OCD_Overridden_Price__c.Label}</apex:facet>					
+				 	<apex:inputHidden html-data-sfdcId="{!item.Id}" html-data-lineType="qSubLine" html-data-fieldName="final_price" html-class="equipmentfinalPrice {!item.Local_SKU_Id__c}" html-data-sku="{!item.Local_SKU_Id__c}" html-data-finalprice="{!item.OCD_Overridden_Price__c}" value="{!item.OCD_Overridden_Price__c}" />
+				 	<input type="text" class="equipmentfinalPrice {!item.Local_SKU_Id__c} currency" data-sku="{!item.Local_SKU_Id__c}" data-finalprice="{!item.OCD_Overridden_Price__c}" value="{!item.OCD_Overridden_Price__c}" />
+				 </apex:column>
+				<apex:column style="text-align:center">
+					<apex:facet name="header"><div align="center">{!$ObjectType.REVVY__MnQuoteItemSubLine__c.Fields.OCD_Price_Override__c.Label}</div></apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.Id}" html-data-lineType="qSubLine" html-data-fieldName="price_override" styleClass="equipmentPriceOverride" value="{!item.OCD_Price_Override__c}" />
+				 </apex:column>			 
+
+			</apex:pageBlockTable>
+		</apex:pageBlockSection>		
+		</apex:repeat>		
+		
+		
+		<apex:pageBlockSection title="Buyouts" columns="1" rendered="{!buyoutQIList.size > 0}">
+			<apex:outputPanel >
+			<apex:OutputText value="Distributor Type:  " rendered="{!isDistributor}" /><apex:selectList value="{!defaultDistributorType}" rendered="{!isDistributor}" styleClass="buyoutDistributor" multiselect="false" size="1"><apex:selectOptions value="{!distributorTypes}"/></apex:selectList>
+			<apex:inputText styleClass="buyoutOverride" value="{!dreagentType}" style="width:50px;text-align:right;" rendered="{!isDistributor}"></apex:inputText> &nbsp;&nbsp;<apex:outputText value="|  " rendered="{!isDistributor}"/>
+			{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Payment_Type__c.Label} &nbsp; <apex:inputField styleClass="buyoutPT" value="{!reagentQI.OCD_Payment_Type__c}"/> &nbsp;&nbsp;|&nbsp;&nbsp;
+			{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Price_Override__c.Label} &nbsp; <apex:inputField styleClass="buyoutPO" value="{!reagentQI.OCD_Price_Override__c}"/>  &nbsp;			
+			</apex:outputPanel>
+		
+			<apex:pageBlockTable value="{!buyoutQIList}" var="item" >
+				<apex:column value="{!item.qi.Local_SKU_Id__c}"/>
+				<apex:column style="text-align:center" rendered="{!isIDNQuote}">
+						<apex:facet name="header"><div align="center">{!$Label.QO_Child_Quote_Name}</div></apex:facet>	
+						<apex:outputField value="{!item.qi.OCD_IDN_Quote_Item__r.Revvy__Quote__r.Name}" />
+					</apex:column>
+				<apex:column value="{!item.qi.OCD_Product_Type__c}"/>
+				<apex:column value="{!item.qi.REVVY__Product_Name_F__c}"/>
+				<apex:column style="text-align:center">
+					<apex:facet name="header"><div align="center">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_No_Add_On__c.Label}</div></apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="no_add_on" styleClass="buyoutNoAddOn" value="{!item.qi.OCD_No_Add_On__c}" />
+				 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="modified_field" value="{!item.qi.Distributor_Modified_Field__c}" id="distributorModifiedFile"/>
+				 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="distributor_type" value="{!item.qi.OCD_Distributor_Type__c}" id="distType"/>
+				 </apex:column>
+				<apex:column >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Payment_Type__c.Label}
+					
+					</apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="payment_type" styleClass="buyoutPaymentType" value="{!item.qi.OCD_Payment_Type__c}" />
+				 </apex:column>
+				<apex:column style="text-align:center" rendered="{!isDistributor}" >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Standard_Transfer_Price__c.Label}</apex:facet>					
+				 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="std_transfer_price" html-class="stdTransferPrice" html-data-stdTransferprice="{!item.qi.OCD_Standard_Transfer_Price__c}" value="{!item.qi.OCD_Standard_Transfer_Price__c}" />
+				 	<apex:outputField value="{!item.qi.OCD_Standard_Transfer_Price__c}" />
+				 </apex:column>				
+				<apex:column style="text-align:center"  rendered="{!isDistributor}" >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Mark_Up__c.Label}</apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="markup" styleClass="buyoutMarkup" value="{!item.qi.OCD_Mark_Up__c}" />
+				 </apex:column>				 
+				<apex:column style="text-align:center"  rendered="{!isDistributor}" >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Margin__c.Label}</apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="margin" styleClass="buyoutMargin" value="{!item.qi.OCD_Margin__c}" />
+				 </apex:column>
+				<apex:column style="text-align:center" rendered="{!isDistributor}" >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Final_Transfer_Price__c.Label}</apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="final_transfer_price" styleClass="buyoutfinalTransferPrice" value="{!item.qi.OCD_Final_Transfer_Price__c}" />
+				 </apex:column>				 
+				 <apex:column >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Overridden_Price__c.Label}</apex:facet>					
+				 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="final_price" html-class="buyoutfinalPrice {!item.qi.Local_SKU_Id__c}" html-data-sku="{!item.qi.Local_SKU_Id__c}" html-data-finalprice="{!item.qi.OCD_Overridden_Price__c}" value="{!item.qi.OCD_Overridden_Price__c}" />
+				 	<input type="text" class="buyoutfinalPrice {!item.qi.Local_SKU_Id__c} currency" data-sku="{!item.qi.Local_SKU_Id__c}" data-finalprice="{!item.qi.OCD_Overridden_Price__c}" value="{!item.qi.OCD_Overridden_Price__c}" />
+				 </apex:column>
+				<apex:column style="text-align:center">
+					<apex:facet name="header"><div align="center">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Price_Override__c.Label}</div></apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="price_override" styleClass="buyoutPriceOverride" value="{!item.qi.OCD_Price_Override__c}" />
+				 </apex:column>			 
+			</apex:pageBlockTable>
+		</apex:pageBlockSection>
+		
+		<apex:pageBlockSection title="On-Site" columns="1" rendered="{!onsiteQIList.size > 0}">
+			<apex:outputPanel >
+			<apex:OutputText value="Distributor Type:  " rendered="{!isDistributor}" /><apex:selectList value="{!defaultDistributorType}" rendered="{!isDistributor}" styleClass="onsiteDistributor" multiselect="false" size="1"><apex:selectOptions value="{!distributorTypes}"/></apex:selectList>
+			<apex:inputText styleClass="onsiteOverride" value="{!dreagentType}" style="width:50px;text-align:right;" rendered="{!isDistributor}"></apex:inputText> &nbsp;&nbsp;<apex:outputText value="|  " rendered="{!isDistributor}"/>
+			{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Payment_Type__c.Label} &nbsp; <apex:inputField styleClass="onsitePT" value="{!reagentQI.OCD_Payment_Type__c}"/> &nbsp;&nbsp;|&nbsp;&nbsp;
+			{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Price_Override__c.Label} &nbsp; <apex:inputField styleClass="onsitePO" value="{!reagentQI.OCD_Price_Override__c}"/>  &nbsp;			
+			</apex:outputPanel>
+		
+			<apex:pageBlockTable value="{!onsiteQIList}" var="item" >
+				<apex:column value="{!item.qi.Local_SKU_Id__c}"/>
+				<apex:column style="text-align:center" rendered="{!isIDNQuote}">
+						<apex:facet name="header"><div align="center">{!$Label.QO_Child_Quote_Name}</div></apex:facet>	
+						<apex:outputField value="{!item.qi.OCD_IDN_Quote_Item__r.Revvy__Quote__r.Name}" />
+					</apex:column>
+				<apex:column value="{!item.qi.OCD_Product_Type__c}"/>
+				<apex:column value="{!item.qi.REVVY__Product_Name_F__c}"/>
+				<apex:column style="text-align:center">
+					<apex:facet name="header"><div align="center">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_No_Add_On__c.Label}</div></apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="no_add_on" styleClass="onsiteNoAddOn" value="{!item.qi.OCD_No_Add_On__c}" />
+				 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="modified_field" value="{!item.qi.Distributor_Modified_Field__c}" id="distributorModifiedFile"/>
+				 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="distributor_type" value="{!item.qi.OCD_Distributor_Type__c}" id="distType"/>
+				 </apex:column>
+				<apex:column >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Payment_Type__c.Label}
+					
+					</apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="payment_type" styleClass="onsitePaymentType" value="{!item.qi.OCD_Payment_Type__c}" />
+				 </apex:column>
+				<apex:column style="text-align:center" rendered="{!isDistributor}" >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Standard_Transfer_Price__c.Label}</apex:facet>					
+				 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="std_transfer_price" html-class="stdTransferPrice" html-data-stdTransferprice="{!item.qi.OCD_Standard_Transfer_Price__c}" value="{!item.qi.OCD_Standard_Transfer_Price__c}" />
+				 	<apex:outputField value="{!item.qi.OCD_Standard_Transfer_Price__c}" />
+				 </apex:column>				
+				<apex:column style="text-align:center"  rendered="{!isDistributor}" >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Mark_Up__c.Label}</apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="markup" styleClass="onsiteMarkup" value="{!item.qi.OCD_Mark_Up__c}" />
+				 </apex:column>				 
+				<apex:column style="text-align:center"  rendered="{!isDistributor}" >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Margin__c.Label}</apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="margin" styleClass="onsiteMargin" value="{!item.qi.OCD_Margin__c}" />
+				 </apex:column>
+				<apex:column style="text-align:center" rendered="{!isDistributor}" >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Final_Transfer_Price__c.Label}</apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="final_transfer_price" styleClass="onsitefinalTransferPrice" value="{!item.qi.OCD_Final_Transfer_Price__c}" />
+				 </apex:column>				 
+				 <apex:column >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Overridden_Price__c.Label}</apex:facet>					
+				 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="final_price" html-class="onsitefinalPrice  {!item.qi.Local_SKU_Id__c}" html-data-sku="{!item.qi.Local_SKU_Id__c}" html-data-finalprice="{!item.qi.OCD_Overridden_Price__c}" value="{!item.qi.OCD_Overridden_Price__c}" />
+				 	<input type="text" class="onsitefinalPrice {!item.qi.Local_SKU_Id__c} currency" data-sku="{!item.qi.Local_SKU_Id__c}" data-finalprice="{!item.qi.OCD_Overridden_Price__c}" value="{!item.qi.OCD_Overridden_Price__c}" />
+				 </apex:column>
+				<apex:column style="text-align:center">
+					<apex:facet name="header"><div align="center">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Price_Override__c.Label}</div></apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="price_override" styleClass="onsitePriceOverride" value="{!item.qi.OCD_Price_Override__c}" />
+				 </apex:column>		 
+			</apex:pageBlockTable>
+		</apex:pageBlockSection>
+		
+		<apex:pageBlockSection title="Other" columns="1" rendered="{!otherQIList.size > 0}">
+			<apex:outputPanel >
+			<apex:OutputText value="Distributor Type:  " rendered="{!isDistributor}" /><apex:selectList value="{!defaultDistributorType}" rendered="{!isDistributor}" styleClass="otherDistributor" multiselect="false" size="1"><apex:selectOptions value="{!distributorTypes}"/></apex:selectList>
+			<apex:inputText styleClass="otherOverride" value="{!dreagentType}" style="width:50px;text-align:right;" rendered="{!isDistributor}"></apex:inputText> &nbsp;&nbsp;<apex:outputText value="|  " rendered="{!isDistributor}"/>
+			{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Payment_Type__c.Label} &nbsp; <apex:inputField styleClass="otherPT" value="{!reagentQI.OCD_Payment_Type__c}"/> &nbsp;&nbsp;|&nbsp;&nbsp;
+			{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Price_Override__c.Label} &nbsp; <apex:inputField styleClass="otherPO" value="{!reagentQI.OCD_Price_Override__c}"/>  &nbsp;			
+			</apex:outputPanel>
+		
+			<apex:pageBlockTable value="{!otherQIList}" var="item" >
+				<apex:column value="{!item.qi.Local_SKU_Id__c}"/>
+				<apex:column style="text-align:center" rendered="{!isIDNQuote}">
+						<apex:facet name="header"><div align="center">{!$Label.QO_Child_Quote_Name}</div></apex:facet>	
+						<apex:outputField value="{!item.qi.OCD_IDN_Quote_Item__r.Revvy__Quote__r.Name}" />
+					</apex:column>
+				<apex:column value="{!item.qi.OCD_Product_Type__c}"/>
+				<apex:column value="{!item.qi.REVVY__Product_Name_F__c}"/>
+				<apex:column >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Payment_Type__c.Label}
+					</apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="payment_type" styleClass="otherPaymentType" value="{!item.qi.OCD_Payment_Type__c}" />
+				 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="modified_field" value="{!item.qi.Distributor_Modified_Field__c}" id="distributorModifiedFile"/>
+				 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="distributor_type" value="{!item.qi.OCD_Distributor_Type__c}" id="distType"/>
+				 </apex:column>
+				<apex:column style="text-align:center" rendered="{!isDistributor}" >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Standard_Transfer_Price__c.Label}</apex:facet>					
+				 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="std_transfer_price" html-class="stdTransferPrice" html-data-stdTransferprice="{!item.qi.OCD_Standard_Transfer_Price__c}" value="{!item.qi.OCD_Standard_Transfer_Price__c}" />
+				 	<apex:outputField value="{!item.qi.OCD_Standard_Transfer_Price__c}" />
+				 </apex:column>				
+				<apex:column style="text-align:center"  rendered="{!isDistributor}" >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Mark_Up__c.Label}</apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="markup" styleClass="otherMarkup" value="{!item.qi.OCD_Mark_Up__c}" />
+				 </apex:column>				 
+				<apex:column style="text-align:center"  rendered="{!isDistributor}" >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Margin__c.Label}</apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="margin" styleClass="otherMargin" value="{!item.qi.OCD_Margin__c}" />
+				 </apex:column>
+				<apex:column style="text-align:center" rendered="{!isDistributor}" >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Final_Transfer_Price__c.Label}</apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="final_transfer_price" styleClass="otherfinalTransferPrice" value="{!item.qi.OCD_Final_Transfer_Price__c}" />
+				 </apex:column>	
+				<apex:column >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Overridden_Price__c.Label}</apex:facet>					
+				 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="final_price" html-class="otherfinalPrice  {!item.qi.Local_SKU_Id__c}" html-data-sku="{!item.qi.Local_SKU_Id__c}" html-data-finalprice="{!item.qi.OCD_Overridden_Price__c}" value="{!item.qi.OCD_Overridden_Price__c}" />
+				 	<input type="text" class="otherfinalPrice {!item.qi.Local_SKU_Id__c} currency" data-sku="{!item.qi.Local_SKU_Id__c}" data-finalprice="{!item.qi.OCD_Overridden_Price__c}" value="{!item.qi.OCD_Overridden_Price__c}" />
+				 </apex:column>
+				<apex:column style="text-align:center">
+					<apex:facet name="header"><div align="center">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Price_Override__c.Label}</div></apex:facet>					
+				 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="price_override" styleClass="otherPriceOverride" value="{!item.qi.OCD_Price_Override__c}" />
+				 </apex:column>				 
+			</apex:pageBlockTable>
+		</apex:pageBlockSection>
+		
+		<apex:repeat value="{!reagentQILList}" var="reagentQIL" >
+			<apex:pageBlockSection title="Reagents {!reagentQIL.lob}" columns="1" rendered="{!reagentQIL.qiList.size > 0}">
+				<apex:outputPanel >
+				<apex:OutputText value="Distributor Type:  " rendered="{!isDistributor}" /><apex:selectList value="{!reagentQIL.defaultDistributorType}" rendered="{!isDistributor}" styleClass="reagentDistributor{!reagentQIL.lob}" multiselect="false" size="1"><apex:selectOptions value="{!distributorTypes}"/></apex:selectList>
+				<apex:inputText styleClass="reagentOverride{!reagentQIL.lob}" value="{!dreagentType}" style="width:50px;text-align:right;" rendered="{!isDistributor}"></apex:inputText> &nbsp;&nbsp;<apex:outputText value="|  " rendered="{!isDistributor}"/>
+				{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_No_Add_On__c.Label} &nbsp; <apex:inputField styleClass="reagentNAO{!reagentQIL.lob}" value="{!reagentQI.OCD_No_Add_On__c}"/> &nbsp;&nbsp;|&nbsp;&nbsp;
+				{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Payment_Type__c.Label} &nbsp; <apex:inputField styleClass="reagentPT{!reagentQIL.lob}" value="{!reagentQI.OCD_Payment_Type__c}"/> &nbsp;&nbsp;|&nbsp;&nbsp;
+				{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Price_Override__c.Label} &nbsp; <apex:inputField styleClass="reagentPO{!reagentQIL.lob}" value="{!reagentQI.OCD_Price_Override__c}"/>  &nbsp;			
+				<!--  <apex:commandButton action="{!applyReagent}" value="Apply"/> -->
+				</apex:outputPanel>
+			
+				<apex:pageBlockTable value="{!reagentQIL.qiList}" var="item" >
+					<apex:column value="{!item.qi.Local_SKU_Id__c}"/>
+					<apex:column style="text-align:center" rendered="{!isIDNQuote}">
+						<apex:facet name="header"><div align="center">{!$Label.QO_Child_Quote_Name}</div></apex:facet>	
+						<apex:outputField value="{!item.qi.OCD_IDN_Quote_Item__r.Revvy__Quote__r.Name}" />
+					</apex:column>
+					<apex:column value="{!item.qi.OCD_Product_Type__c}"/>
+					<apex:column value="{!item.qi.REVVY__Product_Name_F__c}"/>
+					<apex:column style="text-align:center">
+						<apex:facet name="header"><div align="center">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_No_Add_On__c.Label}</div></apex:facet>					
+					 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="no_add_on" styleClass="reagentNoAddOn{!reagentQIL.lob}" value="{!item.qi.OCD_No_Add_On__c}" />
+					 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="modified_field" value="{!item.qi.Distributor_Modified_Field__c}" id="distributorModifiedFile"/>
+					 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="distributor_type" value="{!item.qi.OCD_Distributor_Type__c}" id="distType"/>
+					 </apex:column>
+					<apex:column >
+						<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Payment_Type__c.Label}
+						
+						</apex:facet>					
+					 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="payment_type" styleClass="reagentPaymentType{!reagentQIL.lob}" value="{!item.qi.OCD_Payment_Type__c}" />
+					 </apex:column>
+					<apex:column style="text-align:center" rendered="{!isDistributor}" >
+						<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Standard_Transfer_Price__c.Label}</apex:facet>					
+					 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="std_transfer_price" html-class="stdTransferPrice" html-data-stdTransferprice="{!item.qi.OCD_Standard_Transfer_Price__c}" value="{!item.qi.OCD_Standard_Transfer_Price__c}" />
+					 	<apex:outputField value="{!item.qi.OCD_Standard_Transfer_Price__c}" />
+					 </apex:column>				
+					<apex:column style="text-align:center"  rendered="{!isDistributor}" >
+						<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Mark_Up__c.Label}</apex:facet>					
+					 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="markup" styleClass="reagentMarkup{!reagentQIL.lob}" value="{!item.qi.OCD_Mark_Up__c}" />
+					 </apex:column>				 
+					<apex:column style="text-align:center"  rendered="{!isDistributor}" >
+						<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Margin__c.Label}</apex:facet>					
+					 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="margin" styleClass="reagentMargin{!reagentQIL.lob}" value="{!item.qi.OCD_Margin__c}" />
+					 </apex:column>
+					<apex:column style="text-align:center" rendered="{!isDistributor}" >
+						<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Final_Transfer_Price__c.Label}</apex:facet>					
+					 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="final_transfer_price" styleClass="reagentfinalTransferPrice{!reagentQIL.lob}" value="{!item.qi.OCD_Final_Transfer_Price__c}" />
+					 </apex:column>				 
+					 <apex:column >
+						<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Overridden_Price__c.Label}</apex:facet>					
+					 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="final_price" html-class="reagentfinalPrice{!reagentQIL.lob} {!item.qi.Local_SKU_Id__c}" html-data-sku="{!item.qi.Local_SKU_Id__c}" html-data-finalprice="{!item.qi.OCD_Overridden_Price__c}" value="{!item.qi.OCD_Overridden_Price__c}" />
+					 	<input type="text" class="reagentfinalPrice{!reagentQIL.lob} {!item.qi.Local_SKU_Id__c} currency" data-sku="{!item.qi.Local_SKU_Id__c}" data-finalprice="{!item.qi.OCD_Overridden_Price__c}" value="{!item.qi.OCD_Overridden_Price__c}" />
+					 </apex:column>
+					<apex:column style="text-align:center">
+						<apex:facet name="header"><div align="center">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Price_Override__c.Label}</div></apex:facet>					
+					 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="price_override" styleClass="reagentPriceOverride{!reagentQIL.lob}" value="{!item.qi.OCD_Price_Override__c}" />
+					 </apex:column>			 
+				</apex:pageBlockTable>
+			</apex:pageBlockSection>
+		</apex:repeat>
+		
+		<apex:repeat value="{!consumablesQILList}" var="consumablesQIL" >
+			<apex:pageBlockSection title="Consumables {!consumablesQIL.lob}" columns="1" rendered="{!consumablesQIL.qiList.size > 0}">
+				<apex:outputPanel >
+				<apex:OutputText value="Distributor Type:  " rendered="{!isDistributor}" /><apex:selectList value="{!consumablesQIL.defaultDistributorType}" rendered="{!isDistributor}" styleClass="consumablesDistributor{!consumablesQIL.lob}" multiselect="false" size="1"><apex:selectOptions value="{!distributorTypes}"/></apex:selectList>
+				<apex:inputText styleClass="consumablesOverride{!consumablesQIL.lob}" value="{!dconsumablesType}" style="width:50px;text-align:right;" rendered="{!isDistributor}"/> &nbsp;&nbsp;<apex:outputText value="|  " rendered="{!isDistributor}"/>
+				{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Payment_Type__c.Label} &nbsp; <apex:inputField styleClass="consumablesPT{!consumablesQIL.lob}" value="{!consumablesQI.OCD_Payment_Type__c}"/> &nbsp;&nbsp;|&nbsp;&nbsp;
+				{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Price_Override__c.Label} &nbsp; <apex:inputField styleClass="consumablesPO{!consumablesQIL.lob}" value="{!consumablesQI.OCD_Price_Override__c}"/>  &nbsp;			
+				<!-- <apex:commandButton action="{!applyConsumables}" value="Apply"/>  -->
+				</apex:outputPanel>
+	
+				<apex:pageBlockTable value="{!consumablesQIL.qiList}" var="item">
+					<apex:column value="{!item.qi.Local_SKU_Id__c}"/>
+					<apex:column style="text-align:center" rendered="{!isIDNQuote}">
+						<apex:facet name="header"><div align="center">{!$Label.QO_Child_Quote_Name}</div></apex:facet>	
+						<apex:outputField value="{!item.qi.OCD_IDN_Quote_Item__r.Revvy__Quote__r.Name}" />
+					</apex:column>
+					<apex:column value="{!item.qi.OCD_Product_Type__c}"/>
+					<apex:column value="{!item.qi.REVVY__Product_Name_F__c}"/>
+					<!-- apex:column style="text-align:center">
+						<apex:facet name="header"><div align="center">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_No_Add_On__c.Label}</div></apex:facet>					
+					 	<apex:inputField value="{!item.qi.OCD_No_Add_On__c}" />
+					 </apex:column-->
+					<apex:column >
+						<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Payment_Type__c.Label}</apex:facet>					
+					 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="payment_type" styleClass="consumablesPaymentType{!consumablesQIL.lob}" value="{!item.qi.OCD_Payment_Type__c}" />
+					 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="modified_field" value="{!item.qi.Distributor_Modified_Field__c}" id="distributorModifiedFile"/>
+					 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="distributor_type" value="{!item.qi.OCD_Distributor_Type__c}" id="distType"/>
+					 </apex:column>
+					<apex:column style="text-align:center" rendered="{!isDistributor}" >
+						<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Standard_Transfer_Price__c.Label}</apex:facet>					
+					 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="std_transfer_price" html-class="stdTransferPrice" html-data-stdTransferprice="{!item.qi.OCD_Standard_Transfer_Price__c}" value="{!item.qi.OCD_Standard_Transfer_Price__c}" />
+				 		<apex:outputField value="{!item.qi.OCD_Standard_Transfer_Price__c}" />
+					 </apex:column>				
+					<apex:column style="text-align:center" rendered="{!isDistributor}" >
+						<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Mark_Up__c.Label}</apex:facet>					
+					 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="markup" styleClass="consumablesMarkup{!consumablesQIL.lob}" value="{!item.qi.OCD_Mark_Up__c}" />
+					 </apex:column>				 
+					<apex:column style="text-align:center" rendered="{!isDistributor}" >
+						<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Margin__c.Label}</apex:facet>					
+					 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="margin" styleClass="consumablesMargin{!consumablesQIL.lob}" value="{!item.qi.OCD_Margin__c}" />
+					 </apex:column>
+					<apex:column style="text-align:center" rendered="{!isDistributor}" >
+						<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Final_Transfer_Price__c.Label}</apex:facet>					
+					 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="final_transfer_price" styleClass="consumablesfinalTransferPrice{!consumablesQIL.lob}" value="{!item.qi.OCD_Final_Transfer_Price__c}" />
+					 </apex:column>				 
+					<apex:column >
+						<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Overridden_Price__c.Label}</apex:facet>					
+					 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="final_price" html-class="consumablesfinalPrice{!consumablesQIL.lob} {!item.qi.Local_SKU_Id__c}" html-data-finalprice="{!item.qi.OCD_Overridden_Price__c}" html-data-sku="{!item.qi.Local_SKU_Id__c}" value="{!item.qi.OCD_Overridden_Price__c}" />
+					 	<input type="text" class="consumablesfinalPrice{!consumablesQIL.lob} {!item.qi.Local_SKU_Id__c} currency" data-sku="{!item.qi.Local_SKU_Id__c}" data-finalprice="{!item.qi.OCD_Overridden_Price__c}" value="{!item.qi.OCD_Overridden_Price__c}" />
+					 </apex:column>
+					<apex:column style="text-align:center">
+						<apex:facet name="header"><div align="center">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Price_Override__c.Label}
+						</div></apex:facet>					
+					 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="price_override" styleClass="consumablesPriceOverride{!consumablesQIL.lob}" value="{!item.qi.OCD_Price_Override__c}" />
+					 </apex:column>				 
+				</apex:pageBlockTable>
+			</apex:pageBlockSection>
+		</apex:repeat>
+		
+		<apex:repeat value="{!thirdPartiesQILList}" var="thirdPartiesQIL" >
+			<apex:pageBlockSection title="{!thirdPartiesQIL.lob} MPA/UDA/3P" columns="1" rendered="{!thirdPartiesQIL.qiList.size > 0}">
+				<apex:outputPanel >
+				<apex:OutputText value="Distributor Type:  " rendered="{!isDistributor}" /><apex:selectList value="{!thirdPartiesQIL.defaultDistributorType}" rendered="{!isDistributor}" styleClass="thirdPartiesDistributor{!thirdPartiesQIL.lob}" multiselect="false" size="1"><apex:selectOptions value="{!distributorTypes}"/></apex:selectList>
+				<apex:inputText styleClass="thirdPartiesOverride{!thirdPartiesQIL.lob}" value="{!dconsumablesType}" style="width:50px;text-align:right;" rendered="{!isDistributor}"/> &nbsp;&nbsp;<apex:outputText value="|  " rendered="{!isDistributor}"/>
+				{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Payment_Type__c.Label} &nbsp; <apex:inputField styleClass="thirdPartiesPT{!thirdPartiesQIL.lob}" value="{!thirdPartiesQI.OCD_Payment_Type__c}"/> &nbsp;&nbsp;|&nbsp;&nbsp;
+				{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Price_Override__c.Label} &nbsp; <apex:inputField styleClass="thirdPartiesPO{!thirdPartiesQIL.lob}" value="{!thirdPartiesQI.OCD_Price_Override__c}"/>  &nbsp;			
+				<!-- <apex:commandButton action="{!applyConsumables}" value="Apply"/>  -->
+				</apex:outputPanel>
+	
+				<apex:pageBlockTable value="{!thirdPartiesQIL.qiList}" var="item">
+					<apex:column value="{!item.qi.Local_SKU_Id__c}"/>
+					<apex:column style="text-align:center" rendered="{!isIDNQuote}">
+						<apex:facet name="header"><div align="center">{!$Label.QO_Child_Quote_Name}</div></apex:facet>	
+						<apex:outputField value="{!item.qi.OCD_IDN_Quote_Item__r.Revvy__Quote__r.Name}" />
+					</apex:column>
+					<apex:column value="{!item.qi.OCD_Product_Type__c}"/>
+					<apex:column value="{!item.qi.REVVY__Product_Name_F__c}"/>
+					<!-- apex:column style="text-align:center">
+						<apex:facet name="header"><div align="center">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_No_Add_On__c.Label}</div></apex:facet>					
+					 	<apex:inputField value="{!item.qi.OCD_No_Add_On__c}" />
+					 </apex:column-->
+					<apex:column >
+						<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Payment_Type__c.Label}</apex:facet>					
+					 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="payment_type" styleClass="thirdPartiesPaymentType{!thirdPartiesQIL.lob}" value="{!item.qi.OCD_Payment_Type__c}" />
+					 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="modified_field" value="{!item.qi.Distributor_Modified_Field__c}" id="distributorModifiedFile"/>
+					 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="distributor_type" value="{!item.qi.OCD_Distributor_Type__c}" id="distType"/>
+					 </apex:column>
+					<apex:column style="text-align:center" rendered="{!isDistributor}" >
+						<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Standard_Transfer_Price__c.Label}</apex:facet>					
+					 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="std_transfer_price" html-class="stdTransferPrice" html-data-stdTransferprice="{!item.qi.OCD_Standard_Transfer_Price__c}" value="{!item.qi.OCD_Standard_Transfer_Price__c}" />
+				 		<apex:outputField value="{!item.qi.OCD_Standard_Transfer_Price__c}" />
+					 </apex:column>				
+					<apex:column style="text-align:center" rendered="{!isDistributor}" >
+						<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Mark_Up__c.Label}</apex:facet>					
+					 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="markup" styleClass="thirdPartiesMarkup{!thirdPartiesQIL.lob}" value="{!item.qi.OCD_Mark_Up__c}" />
+					 </apex:column>				 
+					<apex:column style="text-align:center" rendered="{!isDistributor}" >
+						<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Margin__c.Label}</apex:facet>					
+					 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="margin" styleClass="thirdPartiesMargin{!thirdPartiesQIL.lob}" value="{!item.qi.OCD_Margin__c}" />
+					 </apex:column>
+					<apex:column style="text-align:center" rendered="{!isDistributor}" >
+						<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Final_Transfer_Price__c.Label}</apex:facet>					
+					 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="final_transfer_price" styleClass="thirdPartiesfinalTransferPrice{!thirdPartiesQIL.lob}" value="{!item.qi.OCD_Final_Transfer_Price__c}" />
+					 </apex:column>				 
+					<apex:column >
+						<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Overridden_Price__c.Label}</apex:facet>					
+					 	<apex:inputHidden html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="final_price" html-class="thirdPartiesfinalPrice{!thirdPartiesQIL.lob}" html-data-finalprice="{!item.qi.OCD_Overridden_Price__c}" value="{!item.qi.OCD_Overridden_Price__c}" />
+					 	<input type="text" class="thirdPartiesfinalPrice{!thirdPartiesQIL.lob} {!item.qi.Local_SKU_Id__c} currency" data-sku="{!item.qi.Local_SKU_Id__c}" data-finalprice="{!item.qi.OCD_Overridden_Price__c}" value="{!item.qi.OCD_Overridden_Price__c}" />
+					 </apex:column>
+					<apex:column style="text-align:center">
+						<apex:facet name="header"><div align="center">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Price_Override__c.Label}
+						</div></apex:facet>					
+					 	<apex:inputField html-data-sfdcId="{!item.qi.Id}" html-data-lineType="qLine" html-data-fieldName="price_override" styleClass="thirdPartiesPriceOverride{!thirdPartiesQIL.lob}" value="{!item.qi.OCD_Price_Override__c}" />
+					 </apex:column>				 
+				</apex:pageBlockTable>
+			</apex:pageBlockSection>
+		</apex:repeat>
+		
+		<!-- 
+		<apex:pageBlockSection title="Accessories" columns="1" rendered="{!accessoryQIList.size > 0}">
+			<apex:pageBlockTable value="{!accessoryQIList}" var="item">
+				<apex:column value="{!item.qi.Local_SKU_Id__c}"/>
+				<apex:column value="{!item.qi.OCD_Product_Type__c}"/>
+				<apex:column value="{!item.qi.REVVY__Product_Name_F__c}"/>
+				<apex:column >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_No_Add_On__c.Label}</apex:facet>					
+				 	<apex:inputField value="{!item.qi.OCD_No_Add_On__c}" />
+				 </apex:column>
+				<apex:column >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Payment_Type__c.Label}</apex:facet>					
+				 	<apex:inputField value="{!item.qi.OCD_Payment_Type__c}" />
+				 </apex:column>
+				<apex:column >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Price_Override__c.Label}</apex:facet>					
+				 	<apex:inputField value="{!item.qi.OCD_Price_Override__c}" />
+				 </apex:column>
+				<apex:column >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Overridden_Price__c.Label}</apex:facet>					
+				 	<apex:inputField value="{!item.qi.OCD_Overridden_Price__c}" />
+				 </apex:column>
+				<apex:column >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Serial_Number__c.Label}</apex:facet>					
+				 	<apex:inputField value="{!item.qi.OCD_Serial_Number__c}" />
+				 </apex:column>
+				<apex:column value="{!item.qi.OCD_Pricing_Info__c}"/>				 
+			</apex:pageBlockTable>
+		</apex:pageBlockSection>
+		
+		<apex:pageBlockSection title="Other" columns="1" rendered="{!otherQIList.size > 0}">
+			<apex:pageBlockTable value="{!otherQIList}" var="item">
+				<apex:column value="{!item.qi.Local_SKU_Id__c}"/>
+				<apex:column value="{!item.qi.OCD_Product_Type__c}"/>
+				<apex:column value="{!item.qi.REVVY__Product_Name_F__c}"/>
+				<apex:column >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_No_Add_On__c.Label}</apex:facet>					
+				 	<apex:inputField value="{!item.qi.OCD_No_Add_On__c}" />
+				 </apex:column>
+				<apex:column >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Payment_Type__c.Label}</apex:facet>					
+				 	<apex:inputField value="{!item.qi.OCD_Payment_Type__c}" />
+				 </apex:column>
+				<apex:column >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Price_Override__c.Label}</apex:facet>					
+				 	<apex:inputField value="{!item.qi.OCD_Price_Override__c}" />
+				 </apex:column>
+				<apex:column >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Overridden_Price__c.Label}</apex:facet>					
+				 	<apex:inputField value="{!item.qi.OCD_Overridden_Price__c}" />
+				 </apex:column>
+				<apex:column >
+					<apex:facet name="header">{!$ObjectType.REVVY__MnQuoteItem__c.Fields.OCD_Serial_Number__c.Label}</apex:facet>					
+				 	<apex:inputField value="{!item.qi.OCD_Serial_Number__c}" />
+				 </apex:column>
+				<apex:column value="{!item.qi.OCD_Pricing_Info__c}"/>				 
+			</apex:pageBlockTable>
+		</apex:pageBlockSection>		
+		-->
+	</apex:pageBlock>
+	</apex:form>
+
+</apex:page>

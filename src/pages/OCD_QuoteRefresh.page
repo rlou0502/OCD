@@ -1,0 +1,48 @@
+<apex:page standardController="REVVY__MnQuote__c" extensions="OCD_DACalcController" showHeader="false" sidebar="false">
+<html>
+<apex:outputPanel rendered="{!REVVY__MnQuote__c.REVVY__Current_Status__c == 'Cloning in progress...'}">
+<body>
+	<center>
+	    <span id="countdown"></span> 
+	</center>
+	<script>
+function countdown( elementName, minutes, seconds )
+{
+    var element, endTime, hours, mins, msLeft, time;
+
+    function twoDigits( n )
+    {
+        return (n <= 9 ? "0" + n : n);
+    }
+
+    function updateTimer()
+    {
+        msLeft = endTime - (+new Date);
+        if ( msLeft < 1000 ) {
+            var vurl = '{!URLLocation}';
+            element.innerHTML = "Please refresh the page!";
+            var vconfirm = confirm('Do you want to refresh the page?');
+            if(vconfirm) {
+	            window.top.location.href = vurl;
+            }
+        } else {
+            time = new Date( msLeft );
+            hours = time.getUTCHours();
+            mins = time.getUTCMinutes();
+            element.innerHTML = 'Refresh in ' + (hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()) + ' seconds!';
+            setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
+        }
+    }
+
+    element = document.getElementById( elementName );
+    endTime = (+new Date) + 1000 * (60*minutes + seconds) + 500;
+    updateTimer();
+}
+
+countdown( "countdown", 0, 60 );
+	
+	</script>
+</body>
+</apex:outputPanel>
+</html>
+</apex:page>

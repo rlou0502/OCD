@@ -1,0 +1,293 @@
+<!-- --
+* @author Roy Lou
+* @date 10/10/2016 
+*
+* @group Network Quote
+* @group-content ../../ApexDocContent/OCD_QuoteCloneDirect.htm 
+*
+* @description This is the VisualForce Page handling "Clone Quote" event
+* @Change History
+*
+*   Tag         Author              Date           Requested-BY      Description     
+* *****************************************************************************************************************              
+*   1.0.0       Roy Lou             10/10/2016     N/A               Initial Version
+*                                                                               
+* *****************************************************************************************************************/-->
+<apex:page standardController="REVVY__MnQuote__c" extensions="OCD_QuoteCloneDirectCtrl" action="{!init}">
+<link href="{!URLFOR($Resource.REVVY__jquery, '/css/smoothness/jquery-ui-1.8.18.custom.css')}" rel="stylesheet" type="text/css"/>
+<apex:includeScript value="{!URLFOR($Resource.DA, '/bower_components/jquery/dist/jquery.min.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.REVVY__jquery, '/js/jquery-ui-1.8.18.custom.min.js')}"/>
+<script type="text/javascript"> 
+	j$ = jQuery.noConflict(); 
+	var quoteId = "{!origQuoteId}";
+	var batchSize = {!attachmentBatchSize};
+    var limitSize = {!attachmentLimitSize};
+    var stepSize = {!stepSize};
+    var updateProgressBar = function(selector, myPer) {
+            j$(selector)
+    			.progressbar({ value: myPer })
+    			.children('.ui-progressbar-value')
+    			.html(myPer + '%')
+    			.css("display", "block");
+        }
+        var updateProgressBarWithSteps = function(selector, stepSize) {
+        	var progressSoFar = j$( selector ).progressbar( "value" ) + stepSize;
+            if(progressSoFar > 100) {
+            	progressSoFar = 100;
+            }
+            updateProgressBar(selector, progressSoFar);    
+        }
+        //showErrorAndReturn("#progressbar", "err");
+        var showErrorAndReturn = function(selector, errorMsg) {
+            j$(selector)
+    			.progressbar({ value: 100 })
+    			.children('.ui-progressbar-value')
+    			.html(errorMsg)
+    			.css("display", "block");
+    		j$("body").css("cursor", "default");
+            window.top.location = '/'+quoteId;
+            setTimeout(function() { window.top.location = '/'+quoteId; }, 5000);
+        }
+        
+        var OCDMediator = (function ($) {
+	        var remoteAction = function() {
+	        	var deferred = j$.Deferred();
+	            var args = Array.prototype.slice.call(arguments);
+	            var that = this;
+	            var handler = function(result, event) {
+	            	//console.log('remoteAction status=' + event.status + ' event =' + event.type);
+	                if (event.status) {
+	                	if(result.success) {
+	                        //console.log(result);
+	                        //updateProgressBarWithSteps("#progressbar", stepSize);
+	                        deferred.resolve(result.data);
+	                    } else {
+	                        deferred.reject(result.data);
+	                    }
+	                } else if (event.type === 'exception') {
+	                    console.log(event.message);
+	                    deferred.reject(event.message);
+	                } else {
+	                    console.log(event.message);
+	                    deferred.reject(event.message);
+	                }
+	            }
+	            var options = {
+	                escape: true,
+	                buffer: false,
+	                timeout: 120000
+	            }
+	            args.push(handler);
+	            args.push(options);
+	            Visualforce.remoting.Manager.invokeAction.apply(Visualforce.remoting.Manager, args);
+	            return deferred.promise();
+	        }
+        
+	        var _cloneQuoteRemote = function(quoteId,quoteName, quoteAccount, opportunity, contact, ccPriceList, iaPriceList, catPriceList, tradIHPriceList) {
+	            return remoteAction('{!$RemoteAction.OCD_QuoteCloneDirectCtrl.cloneQuoteRemote}',
+	                            quoteId, quoteName, quoteAccount, opportunity, contact, ccPriceList, iaPriceList, catPriceList, tradIHPriceList);
+	        }
+	        
+	        var _saveAttachmentsAsQuote = function(quoteId, offset, limit) {
+	            return remoteAction('{!$RemoteAction.OCD_QuoteCloneDirectCtrl.saveAttachmentsAsQuote}',
+	                quoteId, offset, limit);
+	        }
+        
+		    var _cloneQuoteRemoteDeferred  = $.Deferred();
+		    var _saveAttachmentsAsQuoteDeferred = $.Deferred();
+		    
+			var _setupDeferredHandler = function() {
+				var deferredObj = Array.prototype.shift.call(arguments);
+				return $.when(deferredObj).then.apply(null, Array.prototype.slice.call(arguments, 0));
+			};
+			var _cloneQuoteRemoteDeferredHandler = function() {	
+				return _setupDeferredHandler.apply(null, [_cloneQuoteRemoteDeferred].concat(
+			      Array.prototype.slice.call(arguments, 0)
+			    ));	
+			};
+			var _saveAttachmentsAsQuoteDeferredHandler = function() {	
+				return _setupDeferredHandler.apply(null, [_saveAttachmentsAsQuoteDeferred].concat(
+			      Array.prototype.slice.call(arguments, 0)
+			    ));	
+			};
+			
+		    return {
+		    	//remote actions
+		        saveAttachmentsAsQuote : _saveAttachmentsAsQuote,
+		        cloneQuoteRemote : _cloneQuoteRemote,
+		    	//deferred flags
+		        cloneQuoteRemoteDeferred : _cloneQuoteRemoteDeferred,
+		        saveAttachmentsAsQuoteDeferred : _saveAttachmentsAsQuoteDeferred,
+		        //handlers
+		        cloneQuoteRemoteDeferredHandler : _cloneQuoteRemoteDeferredHandler,
+		        saveAttachmentsAsQuoteDeferredHandler : _saveAttachmentsAsQuoteDeferredHandler
+		    };
+		})(j$);
+		
+		var handleCloneQuote = function(quoteId, quoteName, quoteAccount, opportunity, contact, ccPriceList, iaPriceList, catPriceList, tradIHPriceList) {
+        	console.log("inside handleCloneQuote " + quoteName + ' step size = ' + stepSize);
+        		updateProgressBar("#progressbar", stepSize);
+       			j$("#progressbar").show();
+        		j$("body").css("cursor", "progress");
+        	
+        	j$.when(OCDMediator.cloneQuoteRemote(quoteId , quoteName, quoteAccount, opportunity, contact, ccPriceList, iaPriceList, catPriceList, tradIHPriceList)).then(function(data) {
+                
+                //console.log("IDN Type ---=" + idnType);
+                //console.log("step size ---- =" + stepSize);
+                OCDMediator.cloneQuoteRemoteDeferred.resolve(data);
+            }, function(e) {
+            	OCDMediator.cloneQuoteRemoteDeferred.reject(e);
+            	//showErrorAndReturn("#progressbar", e);
+                console.log("My ajax failed " + e);
+                 
+            });
+            
+        }
+        
+        var handleSaveAttachmentsAsQuote = function(clonedQuoteId, offset, limit) {
+            console.log(clonedQuoteId + " offset=" + offset + " limit=" + limit);
+            j$.when(OCDMediator.saveAttachmentsAsQuote(clonedQuoteId, offset, limit)).then(function(status) {
+            	console.log(status);
+                if(status === 'continue') {
+                	updateProgressBarWithSteps("#progressbar", stepSize);
+                    handleSaveAttachmentsAsQuote(clonedQuoteId, offset+limit, limit);
+                } else {
+                	updateProgressBar("#progressbar", 100);
+                    OCDMediator.saveAttachmentsAsQuoteDeferred.resolve(clonedQuoteId);
+                }
+                //updateProgressBarWithSteps("#progressbar", stepSize);
+            },
+            function(status) {
+            	console.log(status);
+            	//showErrorAndReturn("#progressbar", status);
+            });
+        }
+        
+	j$(document).ready(function() {
+		console.log("hello world");
+        OCDMediator.saveAttachmentsAsQuoteDeferredHandler(function(data) {
+        	console.log("save attachment as quote done");
+        	window.top.location = '/'+data;
+        	//handleUpdateTradeInValue(quoteId);
+        }, function(status){
+        	showErrorAndReturn("#progressbar", status);
+        });
+        
+        OCDMediator.cloneQuoteRemoteDeferredHandler(function(data) {
+        console.log(data);
+        console.log(data.saveQuoteAsAttachment);
+        console.log(data.quote.Id);
+        	if(data.saveQuoteAsAttachment) {
+        		console.log("calling handleSaveAttachmentsAsQuote...");
+        		handleSaveAttachmentsAsQuote(data.quote.Id, 0, limitSize);
+        	} else {
+        		window.top.location = '/'+data.quote.Id;
+        	}
+        }, function(status){
+        	//showErrorAndReturn("#progressbar", status);
+        });
+            
+       
+		j$(".cloneQuoteDirect").click(function() {
+			handleCloneQuote(quoteId);
+		});
+	});
+</script>   
+
+<apex:outputPanel id="cloneData">
+<script type="text/javascript">
+	console.log("re-render");
+	var quoteName = "{!quoteName}";	  
+	var quoteAccount = "{!currentQuote.REVVY__Account__c}";	
+	var opportunity = "{!currentQuote.REVVY__Opportunity__c}";	
+	var contact = "{!currentQuote.REVVY__Contact__c}";	
+	var ccPriceList = "{!currentQuote.OCD_CC_Price_List__c}";	
+	var iaPriceList = "{!currentQuote.OCD_IA_Price_List__c}";	
+	var catPriceList = "{!currentQuote.OCD_CAT_Price_List__c}";	
+	var tradIHPriceList = "{!currentQuote.OCD_TradIH_Price_List__c}";
+	stepSize = {!stepSize};
+	cloneCurrentQuote = function() {
+		handleCloneQuote(quoteId, quoteName, quoteAccount, opportunity, contact, ccPriceList, iaPriceList, catPriceList, tradIHPriceList);
+	}      	
+	        	
+</script>
+</apex:outputPanel>
+
+<apex:form >
+   <apex:pageMessages id="msgs"/>
+   <apex:outputPanel >
+    	<div id="progressbar"></div>
+    </apex:outputPanel>
+   <apex:pageBlock title="Clone Quote" mode="edit">
+      <apex:pageBlockSection title="Quote Information">
+      <apex:pageBlockSectionItem >
+         	<apex:outputLabel value="Quote Name" />
+            <apex:inputText value="{!quoteName}" styleClass="quoteNameText"/> 
+         </apex:pageBlockSectionItem>
+      </apex:pageBlockSection>
+         <apex:pageBlockSection id="quoteInfo" columns="2" >
+         <apex:inputField value="{!currentQuote.REVVY__Account__c}" styleClass="quoteAccount">
+            <apex:actionSupport event="onchange" action="{!populateOpportunityContact}" rerender="quoteInfo, msgs"/> 
+         </apex:inputField> 
+         
+         <apex:pageBlockSectionItem >
+         	<apex:outputLabel value="Opportunities" />
+            <apex:selectList value="{!currentQuote.REVVY__Opportunity__c}" multiselect="false" size="1" styleClass="opportunitySelect">
+	            <apex:selectOptions value="{!opportunityOptions}"/>
+	        </apex:selectList>
+         </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem >
+         	<apex:outputLabel value="Account Contacts" />
+            <apex:selectList value="{!currentQuote.REVVY__Contact__c}" multiselect="false" size="1" styleClass="contactSelect">
+            <apex:selectOptions value="{!contactOptions}"/>
+        </apex:selectList>
+         </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem >
+         </apex:pageBlockSectionItem>
+         <!--  
+         <apex:inputHidden value="{!currentQuote.OCD_CC_Price_List__c}" rendered="{!showCCPricePlan}" html-class="ccPriceList">
+         </apex:inputHidden> 
+         <apex:inputHidden value="{!currentQuote.OCD_IA_Price_List__c}" rendered="{!showIAPricePlan}" html-class="iaPriceList">
+         </apex:inputHidden> 
+         <apex:inputHidden value="{!currentQuote.OCD_CAT_Price_List__c}" rendered="{!showCATPricePlan}" html-class="catPriceList">
+         </apex:inputHidden> 
+         <apex:inputHidden value="{!currentQuote.OCD_TradIH_Price_List__c}" rendered="{!showTradIHPricePlan}" html-class="tradIHPriceList">
+         </apex:inputHidden> 
+         -->
+         <apex:inputField value="{!currentQuote.OCD_CC_Price_List__c}" rendered="{!showCCPricePlan}" styleClass="ccPriceList">
+         </apex:inputField> 
+         <apex:inputField value="{!currentQuote.OCD_IA_Price_List__c}" rendered="{!showIAPricePlan}" styleClass="iaPriceList">
+         </apex:inputField> 
+         <apex:inputField value="{!currentQuote.OCD_CAT_Price_List__c}" rendered="{!showCATPricePlan}" styleClass="catPriceList">
+         </apex:inputField> 
+         <apex:inputField value="{!currentQuote.OCD_TradIH_Price_List__c}" rendered="{!showTradIHPricePlan}" styleClass="tradIHPriceList">
+         </apex:inputField>  
+        </apex:pageBlockSection>
+      <apex:pageBlockButtons >
+      	<apex:outputPanel layout="inline" rendered="{!useRemoteAction}" > 
+        <apex:commandButton value="Clone" action="{!cloneQuote2}" onComplete="cloneCurrentQuote();" reRender="cloneData"/>
+        </apex:outputPanel>
+        <apex:commandButton value="Clone" action="{!cloneQuote}" status="actStatusId" rerender=" msgs" rendered="{!NOT(useRemoteAction)}"/>
+        <apex:actionStatus id="actStatusId" >
+                <apex:facet name="start" >
+                  <img src="/img/loading.gif" />                     
+                </apex:facet>
+            </apex:actionStatus>
+        
+        <apex:commandButton value="Return to Quote" action="{!returnToQuote}"/>
+      </apex:pageBlockButtons>
+   </apex:pageBlock>
+  </apex:form>
+  <style type="text/css">
+        
+		.ui-progressbar-value {
+            font-size: 13px;
+            font-weight: normal;
+            line-height: 18px;
+            color: white;
+            padding-left: 10px;
+        	background: Gray;
+        	text-align: right
+        }
+    </style>
+</apex:page>

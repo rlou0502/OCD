@@ -1,0 +1,70 @@
+<apex:page controller="OCD_ModelPPController" action="{!init}">
+
+	<apex:sectionHeader title="Comparison Models vs Price Plan" />
+	<apex:form >
+	<apex:pagemessages />
+	<apex:pageBlock title="Compare Models with Price Plan" mode="edit" >
+		<apex:pageBlockButtons >
+			<apex:commandButton action="{!executeCompare}" value="Compare Product"/>
+		</apex:pageBlockButtons>
+		
+		<apex:pageBlockSection title="Information" columns="2">
+			<apex:selectList value="{!selectedModelId}" multiselect="true" label="Model Name">
+				<apex:selectOptions value="{!modelOptionList}"/>
+			</apex:selectList>
+			<apex:selectList value="{!selectedPriceId}" multiselect="true" label="Price Plan Name">
+				<apex:selectOptions value="{!priceOptionList}"/>
+			</apex:selectList>
+		</apex:pageBlockSection>
+	</apex:pageBlock>
+	</apex:form>
+	
+	<apex:pageBlock title="Products exist in Model and in Price Plan" >
+	 	<apex:pageBlockTable value="{!optionList}" var="item" >
+	 		<apex:column value="{!item.SKU}">
+	 			<apex:facet name="header">SKU</apex:facet>
+	 		</apex:column>
+	 		<apex:column value="{!item.productType}">
+	 			<apex:facet name="header">Product Type</apex:facet>
+	 		</apex:column>
+	 		<apex:column value="{!item.optionName}">
+	 			<apex:facet name="header">Option Name</apex:facet>
+	 		</apex:column>
+	 		<apex:column value="{!item.optionGroupList}">
+	 			<apex:facet name="header">Option Group</apex:facet>
+	 		</apex:column>
+	 	</apex:pageBlockTable>
+	
+	</apex:pageBlock>
+	
+	<apex:pageBlock title="Products exist in Price Plan but not in Model" >
+	<!-- 
+	public List<String> missingSKUinModelList {get;set;}
+	public List<String> missingSKUinPPList {get;set;}
+	
+	 -->
+	 	<apex:pageBlockTable value="{!missingSKUinModelList}" var="item" rendered="{!missingSKUinModelList.size>0}">
+	 		<apex:column value="{!item.sku}">
+	 			<apex:facet name="header">SKU</apex:facet>
+	 		</apex:column>
+	 		<apex:column value="{!item.productName}">
+	 			<apex:facet name="header">Product Name</apex:facet>
+	 		</apex:column>
+	 	</apex:pageBlockTable>
+	</apex:pageBlock>
+
+	<apex:pageBlock title="Products exist in Model but not in Price Plan" >
+	 	<apex:pageBlockTable value="{!missingSKUinPPList}" var="item" rendered="{!missingSKUinPPList.size>0}">
+	 		<apex:column value="{!item.sku}">
+	 			<apex:facet name="header">SKU</apex:facet>
+	 		</apex:column>
+	 		<apex:column value="{!item.productName}">
+	 			<apex:facet name="header">Product Name</apex:facet>
+	 		</apex:column>
+	 	</apex:pageBlockTable>
+	
+	</apex:pageBlock>
+	
+	
+	
+</apex:page>

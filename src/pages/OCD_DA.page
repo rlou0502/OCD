@@ -1,0 +1,606 @@
+<!-- --
+* @author Indra Lugina
+* @date 10/10/2016 
+*
+* @group Financial Assessment
+* @group-content ../../ApexDocContent/OCD_DACashFlow.htm 
+*
+* @description This is the VisualForce Page for Financial Assessment Dashboard
+* @Change History
+*
+*   Tag         Author              Date           Requested-BY      Description     
+* *****************************************************************************************************************              
+*   1.0.0       Indra Lugina        10/10/2016     N/A               Initial Version
+*                                                                               
+* *****************************************************************************************************************/-->
+<apex:page standardcontroller="OCD_Deal_Assessment__c" extensions="OCD_DAController" standardStylesheets="false" sidebar="false" showHeader="false" docType="html-5.0" 
+           applyHtmlTag="false" applyBodyTag="false" language="{!userLocale}">
+
+<html class="no-js">
+
+<head>
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="Deal Assessment Summary and Cash Flow"/>
+    <meta name="author" content="Ortho Clinical"/>
+
+    <title>{!da.Quote__r.Name} ({!da.Quote__r.REVVY__Id__c})</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{!URLFOR($Resource.DA, '/bower_components/bootstrap/dist/css/bootstrap.min.css')}" rel="stylesheet"/>
+
+    <!-- MetisMenu CSS -->
+    <link href="{!URLFOR($Resource.DA, '/bower_components/metisMenu/dist/metisMenu.min.css')}" rel="stylesheet"/>
+
+    <!-- Timeline CSS -->
+    <link href="{!URLFOR($Resource.DA, '/dist/css/timeline.css')}" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link href="{!URLFOR($Resource.DA, '/dist/css/sb-admin-2.css')}" rel="stylesheet"/>
+
+    <!-- Morris Charts CSS -->
+    <link href="{!URLFOR($Resource.DA, '/bower_components/morrisjs/morris.css')}" rel="stylesheet"/>
+
+    <!-- Custom Fonts -->
+    <link href="{!URLFOR($Resource.DA, '/bower_components/font-awesome/css/font-awesome.min.css')}" rel="stylesheet" type="text/css"/>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+
+</head>
+<apex:form >
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><strong>{!da.Quote__r.Name} ({!da.Quote__r.REVVY__Id__c})</strong></a>
+            </div>
+            <!-- /.navbar-header -->
+    
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <apex:commandLink action="{!redirectToDashboard}"><i class="fa fa-dashboard fa-fw"></i>{!$Label.DA_Dashboard}</apex:commandLink> 
+                        </li>
+                        <li>
+                            <apex:commandLink action="{!redirectToSummary}"><i class="fa fa-table fa-fw"></i> {!$Label.DA_Summary}</apex:commandLink> 
+                        </li>
+                        <li>
+                            <apex:commandLink action="{!redirectToCashFlow}"><i class="fa  fa-money fa-fw"></i> {!$Label.DA_Cash_Flow}</apex:commandLink> 
+                        </li>
+                        <li>
+                            <apex:commandLink action="{!redirectToQuote}"><i class="fa  fa-sign-out fa-fw"></i> {!$Label.DA_Quote}</apex:commandLink> 
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">{!$Label.DA_Dashboard}</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-info">
+                        <div class="panel-heading" style="min-height:115px;">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-line-chart fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" style="font-size: 25px;"><apex:outputField value="{!da.Quote__r.OCD_Total_Annual_Usage_Volume_All__c}"/></div>
+                                    <div>{!$Label.DA_AnnualReagentVolumes}</div>
+                                </div>
+                            </div>
+                        </div>                        
+                        <!--apex:commandLink action="{!redirectToQuote}">
+                            <div class="panel-footer">
+                                <span class="pull-left"><apex:commandLink action="{!redirectToSummary}">View Details</apex:commandLink></span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </apex:commandLink--> 
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-info">
+                        <div class="panel-heading" style="min-height:115px;">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-money fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" style="font-size: 25px;vertical-align:bottom;">
+                                    <c:OCD_Formatter amount="{!da.Total_Revenue__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/>
+                                    </div>
+                                    <div>{!$Label.DA_TotalRevenue} 
+                                    [<apex:outputText value="{!selectedCurrency}"/>]
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left"><apex:commandLink action="{!redirectToSummary}">View Details</apex:commandLink></span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a-->
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel {!overallGPBGColor}">
+                        <div class="panel-heading" style="min-height:115px;">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-university fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" style="font-size: 25px;vertical-align:bottom;"><apex:outputField value="{!da.Overall_GP__c}"/></div>
+                                    <div>{!$Label.DA_OveralGPPCT}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left"><apex:commandLink action="{!redirectToSummary}">View Details</apex:commandLink></span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a-->
+                    </div>
+                </div>                
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel {!reagentGPBGColor}">
+                        <div class="panel-heading" style="min-height:115px;">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-cog fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" style="font-size: 25px;vertical-align:bottom;"><apex:outputField value="{!da.Reagents_GP__c}"/></div>
+                                    <div>{!$Label.DA_ReagentGPPCT}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left"><apex:commandLink action="{!redirectToSummary}">View Details</apex:commandLink></span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a-->
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-8">
+                	<apex:outputPanel rendered="{!da.Quote__r.REVVY__Description__c!=''}">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-sticky-note-o fa-fw"></i><strong>{!$Label.DA_InternalNotes}</strong>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover table-striped" style="min-height:100px;">
+                                            <tbody>
+                                                <tr>
+                                                    <td><apex:outputText value="{!da.Quote__r.REVVY__Description__c}"/></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.table-responsive -->
+                                </div>
+                                <!-- /.col-lg-4 (nested) -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>                
+					<!-- /.panel -->             
+					</apex:outputPanel>   
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-angle-double-right fa-fw"></i> <strong>{!$Label.DA_RevenueGP}</strong>
+							&nbsp;							
+							<select onchange="changeChart(this.value)">
+							  <option value="Area">{!$Label.DA_Area}</option>
+							  <option value="Line">{!$Label.DA_Line}</option>
+							</select>							
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div id="ocd-morris-chart-rgp-Area"></div>
+                            <div id="ocd-morris-chart-rgp-Line"></div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                    <!-- div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> <strong>Revenue by Product Type</strong>
+                        </div>
+                        <div class="panel-body">
+                            <div id="ocd-morris-bar-chart"></div>
+                        </div>
+                    </div-->
+                    <!-- /.panel -->
+                    
+                    <!-- div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i><strong>{!$Label.DA_RevenueByProductType}</strong>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>{!$Label.DA_ProductType}</th>
+                                                    <th style="text-align:right">{!$Label.DA_Amount}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+				                            	<apex:repeat value="{!revenueTypeMap}" var="rev">
+                                                <tr>
+                                                    <td><apex:outputText value="{!rev}"/></td>
+                                                    <td style="text-align:right">
+													<apex:outputText value="{0, number, ###,##0}">
+														<apex:param value="{!revenueTypeMap[rev]}" />
+													</apex:outputText>                                                    
+                                                    </td>
+                                                </tr>
+				                            	</apex:repeat>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                <div id="ocd-morris-donut-chart"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div-->
+                    
+                    <!-- /.panel -->
+                    <apex:outputPanel rendered="{!priceViolationList.size>0}">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i><strong>{!$Label.DA_PriceViolation}</strong>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Product Type</th>
+                                                    <th>{!$Label.DA_ProductName}</th>
+                                                    <th style="text-align:right">{!$Label.DA_Quantity}</th>
+                                                    <th style="text-align:right">{!$Label.DA_FinalPrice}</th>
+                                                    <th style="text-align:right">{!$Label.DA_PriceFloor}</th>
+                                                    <th style="text-align:right">{!$Label.DA_PCTBelowFloor}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+				                            	<apex:repeat value="{!priceViolationList}" var="pv">
+                                                <tr>
+                                                    <td>
+                                                    	<apex:outputText value="{!pv.OCD_Product_Type__c}"/>
+                                                    </td>
+                                                    <td><apex:outputText value="{!pv.REVVY__Catalog_Node__r.Name}"/> (<apex:outputText value="{!pv.REVVY__Catalog_Node__r.REVVY__Id__c}"/>)</td>
+                                                    <td style="text-align:right">{!pv.REVVY__Quantity__c}</td>
+                                                    <td style="text-align:right">
+                                                    	<c:OCD_FormatterDecimal amount="{!pv.OCD_Final_Price__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!da.Quote__r.CurrencyIsoCode}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/>
+                                                    </td>
+                                                    <td style="text-align:right">
+                                                    	<c:OCD_FormatterDecimal amount="{!pv.OCD_Price_Floor__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!da.Quote__r.CurrencyIsoCode}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/>
+                                                    </td>
+                                                    <td style="text-align:right;text-color:red;"> {!pv.OCD_Floor_PCT__c}{!$Label.DA_PCT}
+                                                    </td>
+                                                </tr>
+				                            	</apex:repeat>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.table-responsive -->
+                                </div>
+                                <!-- /.col-lg-4 (nested) -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    </apex:outputPanel>                    
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-8 -->
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bell fa-fw"></i> <strong>{!$Label.DA_OfferEvaluation}</strong>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_ReagentGPPCT}
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.Reagents_GP__c}"/>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_OveralGPPCT}
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.Overall_GP__c}"/>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_NPV}
+                                    <span class="pull-right text-muted">
+                                    <c:OCD_Formatter amount="{!da.NPV__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_PaybackYrs}
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.Payback_Yrs__c}"/>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_EBITDAAVGYR}
+                                    <span class="pull-right text-muted">
+                                    <c:OCD_Formatter amount="{!da.EBITDA_Avg_Yr__c}" isRendered="{!displayCurrency}" orgCurrencyDisplay="{!displayOrgCurrency}" currencyCode="{!selectedCurrency}" exchangeRate="{!da.Exchange_Rate__c}" selectedExchangeRate="{!selectedCurrencyRate}"/>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_EBITDAPCTSales}
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.EBITDA_Sales__c}"/>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_CountryHurdle}
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.Country_Hurdle__c}"/>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-folder-open fa-fw"></i> <strong>{!$Label.DA_ReagentVolumes}</strong>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <apex:outputPanel rendered="{!da.Quote__r.OCD_Total_Annual_Usage_Volume_CC__c>0}">
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> <apex:outputText value="{!$Label.DA_ClinicalChemistry}"/>
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.Quote__r.OCD_Total_Annual_Usage_Volume_CC__c}"/>
+                                    </span>
+                                </a>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!da.Quote__r.OCD_Total_Annual_Usage_Volume_IA__c>0}">
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> <apex:outputText value="{!$Label.DA_ImmunoAssay}"/>
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.Quote__r.OCD_Total_Annual_Usage_Volume_IA__c}"/>
+                                    </span>
+                                </a>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!da.Quote__r.OCD_Total_Annual_Usage_Volume_CAT__c>0}">
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> <apex:outputText value="{!$Label.DA_CardCassette}"/>
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.Quote__r.OCD_Total_Annual_Usage_Volume_CAT__c}"/>
+                                    </span>
+                                </a>
+                                </apex:outputPanel>
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> <apex:outputText value="{!$Label.DA_TotalVolumes}"/>
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.Quote__r.OCD_Total_Annual_Usage_Volume_All__c}"/>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->                    
+
+
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-folder-open fa-fw"></i> <strong>{!$Label.DA_CustomerContactInfo}</strong>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_CustomerName}
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.Quote__r.REVVY__Account__r.Name}"/>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_OppClosedDate}
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.Quote__r.REVVY__Opportunity__r.CloseDate}"/>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_Type}
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.Quote__r.OCD_Quote_Type__c}"/>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_ContractLengthMonths}
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.Contract_Length_months__c}"/>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_Currency}
+                                    <span class="pull-right text-muted">
+		                                <apex:actionFunction action="{!changeCurrency}" name="changeCurrencyJS">
+		                                	<apex:param name="q" value="" assignTo="{!selectedCurrency}"/>
+		                                </apex:actionFunction>
+                                    	<apex:selectList value="{!selectedCurrency}" size="1" multiselect="false" onchange="javascript:changeCurrencyJS(this.value);">
+                                    		<apex:selectOptions value="{!currencyOptionList}"/>                                    		
+                                    	</apex:selectList>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> {!$Label.DA_Country}
+                                    <span class="pull-right text-muted"><apex:outputField value="{!da.Quote__r.REVVY__Account__r.BillingCountry}"/>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                    
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-folder-open fa-fw"></i> <strong>{!$Label.DA_Equipment}</strong>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <apex:repeat value="{!equipmentList}" var="eq">
+                                <a href="#" class="list-group-item" onclick="return false;">
+                                    <i class="fa fa-fw"></i> <apex:outputText value="{!eq.equipmentName}"/>
+                                    <span class="pull-right text-muted"><apex:outputText value="{!eq.icount}"/>
+                                    </span>
+                                </a>
+                                </apex:repeat>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->                    
+                    
+                </div>
+                <!-- /.col-lg-4 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->    
+    <!-- jQuery -->
+    <script src="{!URLFOR($Resource.DA, '/bower_components/jquery/dist/jquery.min.js')}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{!URLFOR($Resource.DA, '/bower_components/bootstrap/dist/js/bootstrap.min.js')}"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="{!URLFOR($Resource.DA, '/bower_components/metisMenu/dist/metisMenu.min.js')}"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="{!URLFOR($Resource.DA, '/bower_components/raphael/raphael-min.js')}"></script>
+    <script src="{!URLFOR($Resource.DA, '/bower_components/morrisjs/morris.min.js')}"></script>
+    <!-- script src="{!URLFOR($Resource.DA, '/js/morris-data.js')}"></script-->
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js')}"></script>
+
+    <script>
+
+
+    new Morris.Line({
+        element: 'ocd-morris-chart-rgp-Line',
+        data: [{!morrisAreaChart}],
+        xkey: 'year',
+        ykeys: ['GP', 'Revenue'],
+        labels: ['Gross Profit','Revenue'],
+        lineColors: ['#2577B5','#7CB47C'],
+        fillOpacity: 0.6,
+        behaveLikeLine: true,
+        pointFillColors:['#ffffff'],
+        pointStrokeColors: ['black'],
+        pointSize: 1,
+        hideHover: 'auto',
+        resize: true
+    });
+
+
+
+    new Morris.Area({
+        element: 'ocd-morris-chart-rgp-Area',
+        data: [{!morrisAreaChart}],
+        xkey: 'year',
+        ykeys: ['GP', 'Revenue'],
+        labels: ['Gross Profit','Revenue'],
+        lineColors: ['#2577B5','#7cb47c'],
+        pointFillColors : ['#2577B5','#7cb47c'],
+        pointStrokeColors: ['#fff'],
+        pointSize: 1,
+        hideHover: 'auto',
+        resize: true
+        
+    });
+
+    //Morris.Bar({
+    //    element: 'ocd-morris-bar-chart',
+    //    data: [{!morrisBarChart}],
+    //    xkey: 'Type',
+    //    ykeys: ['Value'],
+    //    labels: ['Total:'],
+    //    hideHover: 'auto',
+    //    resize: true,
+    //    xLabelAngle:60
+    //});
+
+    //new Morris.Donut({
+    //    element: 'ocd-morris-donut-chart',
+    //    data: [{!morrisDonutChart}],
+    //    resize: true
+    //});
+    
+    function changeChart(ivalue) {
+       document.getElementById("ocd-morris-chart-rgp-Line").style.display = "none";
+       document.getElementById("ocd-morris-chart-rgp-Area").style.display = "none";
+       if(ivalue=='Area') {
+	       document.getElementById("ocd-morris-chart-rgp-Line").style.display = "none";
+	       document.getElementById("ocd-morris-chart-rgp-Area").style.display = "block";       
+       } else if(ivalue=='Line') {
+	       document.getElementById("ocd-morris-chart-rgp-Area").style.display = "none";
+	       document.getElementById("ocd-morris-chart-rgp-Line").style.display = "block";
+       }
+    }
+    changeChart('Area');
+    </script>    
+</body>
+</apex:form>
+</html>
+</apex:page>

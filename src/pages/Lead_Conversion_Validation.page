@@ -1,0 +1,47 @@
+<!--
+Version        : 1.0
+Company        : Websolo Inc. (websolo.ca)
+Date           : 07/2014
+Update History :
+-->
+<apex:page standardController="Lead" showHeader="false" sidebar="false" extensions="LeadConversionValidation">
+<style>
+h2
+{
+  width: 300% !important;
+}
+</style>
+   <script>
+window.onload = function(){
+window.onblur = function(){window.close();}
+     if(document.getElementById('sd').innerHTML == "")
+     {
+
+      var ids = document.getElementById('ids').innerHTML;
+      //window.opener.location.href="/lead/leadconvert.jsp?retURL=%2F" + ids + "&id=" + ids;
+      window.opener.location.href="/apex/leadConvertPage?id=" + ids;
+      window.top.close();
+     }
+     /* alert goodbye and then auto close in 10 seconds
+     else
+     {
+         alert('goodbye');
+         setTimeout(function(){
+          window.close();
+        }, 10000);   
+     }
+     */
+};
+   </script>
+      <div id="sd" style="display: none;">{!reft}</div>
+      <div id="ids" style="display: none;">{!leadobjid}</div> 
+ <apex:pageBlock title="Lead Conversion Validation">
+      <apex:pageMessage severity="error" strength="1">
+          <apex:outputText value="{!error}" escape="false" />
+          <apex:outputText value="{!sterrmsg}" escape="false" rendered="{!sterr}"/><br />         
+      </apex:pageMessage>
+      <apex:form >
+      <apex:commandButton value="Close" onclick="javascript:window.close();"/>
+      </apex:form>
+  </apex:pageBlock>
+</apex:page>

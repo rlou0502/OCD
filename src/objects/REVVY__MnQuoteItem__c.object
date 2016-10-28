@@ -1,0 +1,3797 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <fields>
+        <fullName>Abbrev__c</fullName>
+        <externalId>false</externalId>
+        <label>Abbrev</label>
+        <length>10</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Annual_Cal__c</fullName>
+        <externalId>false</externalId>
+        <label>Annual Cal</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Annual_Patient_Volumes__c</fullName>
+        <externalId>false</externalId>
+        <label>Annual Patient Volumes</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Annual_QC__c</fullName>
+        <externalId>false</externalId>
+        <label>Annual QC</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Annual_Usage_Panel__c</fullName>
+        <externalId>false</externalId>
+        <label>Annual Usage Panel</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Annual_Usage_Volumes__c</fullName>
+        <externalId>false</externalId>
+        <label>Annual Usage Volumes</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cal_Point_Replicates__c</fullName>
+        <externalId>false</externalId>
+        <label>Cal Point Replicates</label>
+        <precision>1</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cal_Points__c</fullName>
+        <externalId>false</externalId>
+        <label>Cal Points</label>
+        <precision>1</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CalsPerYr__c</fullName>
+        <externalId>false</externalId>
+        <label>Cals/Yr</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Discount_Category_Group_Quote__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( REVVY__Catalog_Node__r.Discount_Category_Group__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Discount Category Group</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Distributor_Modified_Field__c</fullName>
+        <description>Indicate which field(markup, Margin, or Final Transfer Price) distributor modifies in Override page</description>
+        <externalId>false</externalId>
+        <label>Distributor Modified Field</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Margin</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Markup</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Final Transfer Price</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Local_SKU_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Local SKU Id</label>
+        <length>80</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Max_Discount__c</fullName>
+        <externalId>false</externalId>
+        <label>Max Discount</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MinTestsPerYear__c</fullName>
+        <externalId>false</externalId>
+        <label>MinTests/Year</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Min_Discount__c</fullName>
+        <externalId>false</externalId>
+        <label>Min Discount</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NumberOfAnalyzers__c</fullName>
+        <externalId>false</externalId>
+        <label># Analyzers</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NumberOfQCPerRun__c</fullName>
+        <externalId>false</externalId>
+        <label>#QC/Run</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OASDays__c</fullName>
+        <externalId>false</externalId>
+        <label>OASDays</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Accessory_Add_On__c</fullName>
+        <description>Accessory Add On</description>
+        <externalId>false</externalId>
+        <label>Accessory Add On</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Add_On_Price__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Add-On Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Annual_Reportable_Result_Volume__c</fullName>
+        <externalId>false</externalId>
+        <formula>Annual_Patient_Volumes__c  +  Annual_Usage_Panel__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Annual Reportable Result Volume</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Attribute_Adjustment_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Attribute Adjustment Id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Below_Floor__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(OCD_Overridden_Price__c  &lt;  OCD_Price_Floor__c/ OCD_Pr_Conversion_Factor_F__c , &quot;Y&quot;, &quot;&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Below Floor</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_CPRR_Base_Price__c</fullName>
+        <externalId>false</externalId>
+        <formula>OCD_Overridden_Price__c * ( Annual_Usage_Volumes__c / OCD_Annual_Reportable_Result_Volume__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>CPRR Base Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_CPRR_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Price with Add Ons</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Capital_Add_On__c</fullName>
+        <description>Capital Add On</description>
+        <externalId>false</externalId>
+        <label>Capital Add On</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Consumable_Add_On__c</fullName>
+        <description>Consumable Add On</description>
+        <externalId>false</externalId>
+        <label>Consumable Add On</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_CostPrice_Override__c</fullName>
+        <externalId>false</externalId>
+        <label>Cost Override</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Distributor_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Distributor Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Markup</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Margin</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Equipment_Has_Accessories__c</fullName>
+        <description>Indicates that equipment has Accessories if the value of this field is &gt; 0</description>
+        <externalId>false</externalId>
+        <label>Equipment_Has_Accessories</label>
+        <summaryFilterItems>
+            <field>REVVY__MnQuoteItemSubLine__c.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>Accessory</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>REVVY__MnQuoteItemSubLine__c.REVVY__Price__c</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
+        </summaryFilterItems>
+        <summaryForeignKey>REVVY__MnQuoteItemSubLine__c.REVVY__QuoteItem__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Equipment_Has_Credits__c</fullName>
+        <description>Indicates that equipment has Credits if the value of this field is &gt;0</description>
+        <externalId>false</externalId>
+        <label>Equipment_Has_Credits</label>
+        <summarizedField>REVVY__MnQuoteItemSubLine__c.Credit_Amount__c</summarizedField>
+        <summaryForeignKey>REVVY__MnQuoteItemSubLine__c.REVVY__QuoteItem__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Equipment_Has_Others__c</fullName>
+        <description>Indicates that equipment has Others if the value of this field is &gt; 0</description>
+        <externalId>false</externalId>
+        <label>Equipment_Has_Others</label>
+        <summaryFilterItems>
+            <field>REVVY__MnQuoteItemSubLine__c.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>Other</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>REVVY__MnQuoteItemSubLine__c.REVVY__Price__c</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
+        </summaryFilterItems>
+        <summaryForeignKey>REVVY__MnQuoteItemSubLine__c.REVVY__QuoteItem__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Equipment_Has_Service__c</fullName>
+        <description>Indicates that equipment has Service if the value of this field is &gt; 0</description>
+        <externalId>false</externalId>
+        <label>Equipment_Has Service</label>
+        <summaryFilterItems>
+            <field>REVVY__MnQuoteItemSubLine__c.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>Service</value>
+        </summaryFilterItems>
+        <summaryForeignKey>REVVY__MnQuoteItemSubLine__c.REVVY__QuoteItem__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Equipment_Has_TradeIns__c</fullName>
+        <description>Indicates that equipment has Trade-Ins if the value of this field is &gt; 0</description>
+        <externalId>false</externalId>
+        <label>Equipment_Has_TradeIns</label>
+        <summaryFilterItems>
+            <field>REVVY__MnQuoteItemSubLine__c.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>Trade-In</value>
+        </summaryFilterItems>
+        <summaryForeignKey>REVVY__MnQuoteItemSubLine__c.REVVY__QuoteItem__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Equipment_Has_Warranty__c</fullName>
+        <description>Indicates that equipment has Warranty if the value of this field is &gt; 0</description>
+        <externalId>false</externalId>
+        <label>Equipment_Has_Warranty</label>
+        <summaryFilterItems>
+            <field>REVVY__MnQuoteItemSubLine__c.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>Warranty</value>
+        </summaryFilterItems>
+        <summaryForeignKey>REVVY__MnQuoteItemSubLine__c.REVVY__QuoteItem__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Equipment_Includes_Accessories__c</fullName>
+        <description>Indicates that equipment price includes free accessories if the value of this field is &gt; 0</description>
+        <externalId>false</externalId>
+        <label>Equipment Includes Accessories</label>
+        <summaryFilterItems>
+            <field>REVVY__MnQuoteItemSubLine__c.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>Accessory</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>REVVY__MnQuoteItemSubLine__c.REVVY__Unit_Price__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>REVVY__MnQuoteItemSubLine__c.REVVY__Price__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </summaryFilterItems>
+        <summaryForeignKey>REVVY__MnQuoteItemSubLine__c.REVVY__QuoteItem__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Equipment_Includes_Others__c</fullName>
+        <description>Indicates that equipment price includes free others if the value of this field is &gt; 0</description>
+        <externalId>false</externalId>
+        <label>Equipment Includes Others</label>
+        <summaryFilterItems>
+            <field>REVVY__MnQuoteItemSubLine__c.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>Other</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>REVVY__MnQuoteItemSubLine__c.REVVY__Unit_Price__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>REVVY__MnQuoteItemSubLine__c.REVVY__Price__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </summaryFilterItems>
+        <summaryForeignKey>REVVY__MnQuoteItemSubLine__c.REVVY__QuoteItem__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>OCD_ExtId__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>Used for cloning</description>
+        <externalId>true</externalId>
+        <label>OCD_ExtId</label>
+        <length>80</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Final_Price__c</fullName>
+        <externalId>false</externalId>
+        <formula>OCD_Overridden_Price__c  +  OCD_Add_On_Price__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Final Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Final_Transfer_Price__c</fullName>
+        <description>Final Transfer Price to the Distributor</description>
+        <externalId>false</externalId>
+        <label>Final Transfer Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Floor_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>Floor %</label>
+        <precision>14</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>OCD_IDN_Member_Account_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>OCD_IDN_Quote_Item__r.REVVY__Quote__r.REVVY__Account__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IDN Member Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_IDN_Quote_Item__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>IDN Quote Item</label>
+        <referenceTo>REVVY__MnQuoteItem__c</referenceTo>
+        <relationshipLabel>Quote Line Items (IDN Quote Item)</relationshipLabel>
+        <relationshipName>Quote_Line_Items</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>OCD_LOB__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( REVVY__Catalog_Node__r.LOB__c )</formula>
+        <label>LOB</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_List_Price_Override__c</fullName>
+        <externalId>false</externalId>
+        <label>List Price Override</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Managed_Service_Fee__c</fullName>
+        <externalId>false</externalId>
+        <label>Managed Service Fee</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Margin__c</fullName>
+        <description>Margin for Distributor based on Final End User Price</description>
+        <externalId>false</externalId>
+        <label>Margin</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Mark_Up__c</fullName>
+        <description>Mark Up on Standard Transfer Price for Distributor</description>
+        <externalId>false</externalId>
+        <label>Mark Up</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Markup__c</fullName>
+        <externalId>false</externalId>
+        <label>OCD_Markup</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Max_Beh_Disc__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Max Behavioral Disc</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Max_Discount_Allowed__c</fullName>
+        <externalId>false</externalId>
+        <label>OCD Max Discount Allowed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Max_Vol_Disc__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Max Volume Disc</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Min_Beh_Disc__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>OCD Min Beh Disc</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Min_Discounted_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>OCD Min Discounted Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Min_Vol_Disc__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>OCD Min Vol Disc</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Name_Misc__c</fullName>
+        <externalId>false</externalId>
+        <label>Name Misc</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Name_Override__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISBLANK( OCD_Name_Misc__c ) ,   REVVY__Catalog_Node__r.REVVY__LocaleName_F__c , OCD_Name_Misc__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Product Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_No_Add_On__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If this Checkbox has a check mark for any reagent, then that reagent is not considered for Add on costs.</description>
+        <externalId>false</externalId>
+        <label>No Add On</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Original_Override_Price__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Original Override Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Original_Unit_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Original Unit Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Other_Add_On__c</fullName>
+        <description>Other Add On</description>
+        <externalId>false</externalId>
+        <label>Other Add On</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Overridden_Price__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Final Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Payment_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>As Per Quote Type</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No Charge</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cash Purchase Only</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>OCD_PmtTypeRO__c</fullName>
+        <externalId>false</externalId>
+        <label>PmtTypeRO</label>
+        <picklist>
+            <picklistValues>
+                <fullName>N</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Y</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Pr_Conversion_Factor_F__c</fullName>
+        <externalId>false</externalId>
+        <formula>OCD_Pr_Conversion_Factor__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Conversion Factor</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Pr_Conversion_Factor__c</fullName>
+        <externalId>false</externalId>
+        <formula>REVVY__Catalog_Node__r.Pricing_Conversion_Factor__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Pricing Conversion Factor</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Price_Floor__c</fullName>
+        <externalId>false</externalId>
+        <label>Price Floor</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Price_Override__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Price Override</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Price_Violation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Price Violation</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Pricing_Info__c</fullName>
+        <defaultValue>&quot;Deductions:&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Pricing Info</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>OCD_Product_Group__c</fullName>
+        <externalId>false</externalId>
+        <formula>REVVY__Catalog_Node__r.Group_Test_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>OCD Product Group</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Product_LOB__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Line of Business</label>
+        <length>50</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Product_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( REVVY__Catalog_Node__r.Product_Type__c )</formula>
+        <label>Product Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Reagent_Base_Price__c</fullName>
+        <description>Reagent Base Price = Final Price * (Usage Volume)/(Patient Volume)</description>
+        <externalId>false</externalId>
+        <label>Reagent Base Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_SKU__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISBLANK( Local_SKU_Id__c ) ,  REVVY__Product_ID_F__c , Local_SKU_Id__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>SKU</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Serial_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Serial Number</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Service_Add_On__c</fullName>
+        <description>Service Add On</description>
+        <externalId>false</externalId>
+        <label>Service Add On</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Site_Index__c</fullName>
+        <externalId>false</externalId>
+        <label>Site Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Standard_Transfer_Price__c</fullName>
+        <description>Standard Transfer Price to Distributor determined from Distributor Price Plan</description>
+        <externalId>false</externalId>
+        <label>Standard Transfer Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Term_Disc__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>OCD Term Disc</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Total_Price__c</fullName>
+        <description>Total Price including sub-lines</description>
+        <externalId>false</externalId>
+        <formula>REVVY__One_Time_Extended_Price_F__c *  REVVY__Quantity__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Trade_In_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>OCD Trade In Value</label>
+        <summarizedField>REVVY__MnQuoteItemSubLine__c.OCD_Line_Trade_In_Value__c</summarizedField>
+        <summaryForeignKey>REVVY__MnQuoteItemSubLine__c.REVVY__QuoteItem__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Unit_Price_With_Package__c</fullName>
+        <description>Unit Price with Package add on price is any</description>
+        <externalId>false</externalId>
+        <label>Unit Price With Package</label>
+        <summarizedField>REVVY__MnQuoteItemSubLine__c.REVVY__Extended_Price_F__c</summarizedField>
+        <summaryFilterItems>
+            <field>REVVY__MnQuoteItemSubLine__c.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>Equipment</value>
+        </summaryFilterItems>
+        <summaryForeignKey>REVVY__MnQuoteItemSubLine__c.REVVY__QuoteItem__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>OCD_Volume_Discount_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>OCD Volume Discount Id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OCD_Volume_Discount_Price__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>OCD Volume Discount Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Type_Field__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Type Field</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QC_Runs_Week__c</fullName>
+        <externalId>false</externalId>
+        <label>QC Runs/Week</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Adjustment1Absolute__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Absolute value of Adjustment 1</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Absolute value of Adjustment 1</inlineHelpText>
+        <label>Mark-up (Abs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Adjustment1Type__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Determines whether the Adjustment 1 is based on percentage  (e.g., 20%) or on an absolute amount (e.g., $100).</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Determines whether the Adjustment 1 is based on percentage  (e.g., 20%) or on an absolute amount(e.g., $100).</inlineHelpText>
+        <label>Mark-up Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Percent</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Absolute</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Adjustment1__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Percent value of Adjustment 1</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Percent value of Adjustment 1</inlineHelpText>
+        <label>Mark-up (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__AdjustmentRuleMapping__c</fullName>
+        <deprecated>false</deprecated>
+        <description>JSON representation of the quote item adjustment rule mapping in quote model.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>JSON representation of the quote item adjustment rule mapping in quote model. Useful for debugging quote level pricing rules.</inlineHelpText>
+        <label>Adjustment Rule Mapping Json</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>REVVY__AdjustmentRuleReason__c</fullName>
+        <deprecated>false</deprecated>
+        <description>JSON representation of the quote item adjustment rule reason in quote model.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>JSON representation of the quote item adjustment rule reason in quote model. Useful for debugging quote level pricing rules.</inlineHelpText>
+        <label>Adjustment Rule Reason Json</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>REVVY__AllAdjustmentRules__c</fullName>
+        <deprecated>false</deprecated>
+        <description>All adjustment rule applied to this quote item, copied from quote model.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>All adjustment rule applied to this quote item, copied from quote model..</inlineHelpText>
+        <label>All Adjustment Rules</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>REVVY__AllPricingRules__c</fullName>
+        <deprecated>false</deprecated>
+        <description>All pricing rule applied to this quote item, copied from quote model.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>All pricing rule applied to this quote item, copied from quote model..</inlineHelpText>
+        <label>All Pricing Rules</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>REVVY__AutoDiscountAbsolute__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Auto discount off of list price (e.g., $100 off), calculated by adjustment rules.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Auto discount off of list price with manual adjustment (e.g., $100 off auto discount + $100 manual so total $200), calculated by adjustment rules.</inlineHelpText>
+        <label>Auto Discount (Abs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__AutoDiscountReason__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Auto discount reason based on which rule sets the auto discount.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Auto discount label based on which rule sets the auto discount.</inlineHelpText>
+        <label>Auto Discount Reason</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__AutoDiscountType__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Determines whether the auto discount is based on percentage off (e.g., 20% off) or on an absolute amount off (e.g., $100 off).</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Determines whether the auto discount is based on percentage off (e.g., 20% off) or on an absolute amount off (e.g., $100 off).</inlineHelpText>
+        <label>Auto Discount Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Absolute</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Percent</fullName>
+                <default>true</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__AutoDiscount__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Percentage auto discount off of list price (e.g., 20% off), calculated by adjustment rules.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Percentage auto discount off of list price (e.g., 20% off), calculated by adjustment rules.</inlineHelpText>
+        <label>Auto Discount (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Billing_Frequency_WF__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Whether the product is charged on a recurring basis. A product can be charged one-time, weekly, monthly, or yearly.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Whether the product is charged on a recurring basis. A product can be charged one-time, weekly, monthly, or yearly.</inlineHelpText>
+        <label>Billing Frequency</label>
+        <length>20</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Catalog_Node__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Unique ID of the product associated with this quote item.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Unique ID of the product associated with this quote item.</inlineHelpText>
+        <label>Product</label>
+        <lookupFilter>
+            <active>true</active>
+            <booleanFilter>1 OR 2</booleanFilter>
+            <filterItems>
+                <field>REVVY__MnCatalogNode__c.REVVY__Type__c</field>
+                <operation>equals</operation>
+                <value>Product</value>
+            </filterItems>
+            <filterItems>
+                <field>REVVY__MnCatalogNode__c.REVVY__Type__c</field>
+                <operation>equals</operation>
+                <value>Bundle</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>REVVY__MnCatalogNode__c</referenceTo>
+        <relationshipLabel>Line Items</relationshipLabel>
+        <relationshipName>QuoteItems</relationshipName>
+        <required>true</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__ConfigitMainItemId__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Unique Configit quote ID.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Configit Quote ID for this record.</inlineHelpText>
+        <label>Configit Main ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__ConfigitQuoteId_F__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>REVVY__Quote__r.REVVY__ConfigitId__c</formula>
+        <label>Configit Quote ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__ConfigitQuoteItemId__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <deprecated>false</deprecated>
+        <description>Unique Configit quote item ID.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Configit Quote item ID for this record.</inlineHelpText>
+        <label>Configit Quote Item ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__ContractDiscount__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Percentage discount off of list price (e.g., 20% off).</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Percentage discount off of list price (e.g., 20% off).</inlineHelpText>
+        <label>Contract Discount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__ContractPrice__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Resolved Price</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Resolved Price</inlineHelpText>
+        <label>Contract Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__CostPrice__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Cost Price of a product in quote item</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Cost Price of a product in quote item</inlineHelpText>
+        <label>Cost</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Discount_Absolute__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Total discount off of list price (e.g., $100 off).</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Total discount off of list price (e.g., $100 off).</inlineHelpText>
+        <label>Manual Discount (Abs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Discount_Type__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Determines whether the discount is based on percentage off (e.g., 20% off) or on an absolute amount off (e.g., $100 off).</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Determines whether the discount is based on percentage off (e.g., 20% off) or on an absolute amount off (e.g., $100 off).</inlineHelpText>
+        <label>Manual Discount Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Absolute</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Percent</fullName>
+                <default>true</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Discount__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Percentage discount off of list price (e.g., 20% off).</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Percentage discount off of list price (e.g., 20% off).</inlineHelpText>
+        <label>Man. Disc. (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Discountable__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Specifies If manual discount can be applied as defined in the Catalog.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Catalog_Node__r.REVVY__Discountable__c</formula>
+        <inlineHelpText>Specifies If manual discount can be applied as defined in the Catalog.</inlineHelpText>
+        <label>Discountable</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__ErrorMessage__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Error Messages related to quote item</description>
+        <externalId>false</externalId>
+        <inlineHelpText>&gt;Error Messages related to quote item</inlineHelpText>
+        <label>Error Message</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Extended_Price_Display_F__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>REVVY__Unit_Price__c * REVVY__Quantity__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Extended Price (Display)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Extended_Price_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Price after discount multiplied by quantity.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Unit_Price__c * REVVY__Quantity__c</formula>
+        <inlineHelpText>Price after discount multiplied by quantity.</inlineHelpText>
+        <label>Ext. Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__FreezePricing__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Freezes the pricing and prevents manual discounts on this line.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Freezes the pricing and prevents manual discounts on this line</inlineHelpText>
+        <label>Freeze Pricing</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Frozen__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Controls if manual discount is allowed.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Controls if manual discount is allowed.</inlineHelpText>
+        <label>Frozen</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__GroupNumber__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The SectionNumber, OptionNumber, and GroupNumber fields are used internally to sort the quote items within a solution.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The SectionNumber, OptionNumber, and GroupNumber fields are used internally to sort the quote items within a solution.</inlineHelpText>
+        <label>Group Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__HasSubLineWithoutListPrice__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>This attribute is set to true only if there is any subline linked to this quote line and the list price on any sub line is null.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This attribute is set to true only if there is any subline linked to this quote line and the list price on any sub line is null.</inlineHelpText>
+        <label>Has sub lines with no list price.</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Id__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Unique ID for each record that can be used as an external ID for importing and exporting data.</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Unique ID for this record.</inlineHelpText>
+        <label>Quote Item ID</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__IsBelowLine__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Flag indicates whether the quote item is a below-the-line recommendation. Items flagged shouldn&apos;t be included with final calculations.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Flag indicates whether the quote item is a below-the-line recommendation. Items flagged shouldn&apos;t be included with final calculations.</inlineHelpText>
+        <label>Recommended</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__IsInstallBase__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Defines whether the main line is Install Base Relevant. Copied from MnCatalogNode__c when quote item is created.</description>
+        <externalId>false</externalId>
+        <label>Install Base Relevant</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__IsReConfigRequired__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Flag indicates whether due to any dependency a re-configure of this configuration is required.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Flag indicates whether due to any dependency a re-configure of this configuration is required.</inlineHelpText>
+        <label>Re-Config Required</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__IsSystemCostPrice__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>This attribute is to track if the Cost price was calculated by system or user entered. Value is false for user entered.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This attribute is to track if the Cost price was calculated by system or user entered. Value is false for user entered.</inlineHelpText>
+        <label>Is Cost Price System populated</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__IsSystemListPrice__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>This attribute is to track if the List price was calculated by system or user entered. Value is false for user entered.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This attribute is to track if the List price was calculated by system or user entered. Value is false for user entered.</inlineHelpText>
+        <label>Is List Price System populated</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__IsSystemUnitPrice__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>This attribute is to track if the Unit price was calculated by system or user entered. Value is false for user entered.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This attribute is to track if the Unit price was calculated by system or user entered. Value is false for user entered.</inlineHelpText>
+        <label>Is Unit Price System populated</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Is_Configuration_Complete__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Flag indicates whether the configuration is complete for a configurable product.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Flag indicates whether the configuration is complete for a configurable product.</inlineHelpText>
+        <label>Needs Config</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__ItemOption__c</fullName>
+        <deprecated>false</deprecated>
+        <description>JSON representation of the quote item in quote model.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>JSON representation of the quote item in quote model. Useful for debugging quote level pricing rules.</inlineHelpText>
+        <label>Option Json</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>REVVY__LineType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Tracked On</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Not tracked on contract</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Service</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__MainItemId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Unique ID of the main quote item for this quote item.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Unique ID of the main quote item for this quote item.</inlineHelpText>
+        <label>Main Quote Item</label>
+        <referenceTo>REVVY__MnQuoteItem__c</referenceTo>
+        <relationshipLabel>RelatedQuoteItems</relationshipLabel>
+        <relationshipName>RelatedQuoteItems</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__MarginAbsolute__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Absolute value of the margin</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Absolute value of the margin</inlineHelpText>
+        <label>Margin (Abs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__MarginType__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Determines whether the Margin is based on percentage  (e.g., 20%) or on an absolute amount(e.g., $100).</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Determines whether the Margin is based on percentage  (e.g., 20%) or on an absolute amount(e.g., $100).</inlineHelpText>
+        <label>Margin Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Percent</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Absolute</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Margin__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Percent value of the margin</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Percent value of the margin</inlineHelpText>
+        <label>Margin ( % )</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Monthly_Adjustment1_Absolute_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Adjustment (Abs) that is applied to a regular product that is billed Monthly. If the product is configurable, then the Monthly adjustment field is the adjustment on all sub-lines (e.g., the components) that are billed Monthly, including the adjustment on the main line if the main line is billed Monthly.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Monthly_Value_Before_Discount_F__c - REVVY__Monthly_Total_Cost_F__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Aggregate adjustment1 on products that are billed on a Monthly basis, shown in currency.</inlineHelpText>
+        <label>Monthly Mark-ups (Abs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Monthly_Adjustment1_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Adjustment (%) that is applied to a regular product that is billed Monthly. If the product is configurable, then the Monthly adjustment field is the adjustment on all sub-lines (e.g., the components) that are billed Monthly, including the adjustment on the main line if the main line is billed Monthly.</description>
+        <externalId>false</externalId>
+        <formula>IF (BLANKVALUE(REVVY__Monthly_Cost_Price_Before_Adjustment_F__c,0)==0, 0,(REVVY__Monthly_Value_Before_Discount_F__c - REVVY__Monthly_Total_Cost_F__c)/REVVY__Monthly_Total_Cost_F__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Adjustment that is applied to a regular product that is billed Monthly. If the product is configurable, then the Monthly adjustment field is the adjustment on all sub-lines that are billed Monthly, including the adjustment on the main line</inlineHelpText>
+        <label>Monthly Mark-ups (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Monthly_Cost_Price_Before_Adjustment_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Cost price of this product before adjustment. If the product is configurable, the cost price includes all sub-lines that are billed on a Monthly basis.</description>
+        <externalId>false</externalId>
+        <formula>CASE( REVVY__Billing_Frequency_WF__c , &apos;Monthly&apos;, IF(ISBLANK(REVVY__CostPrice__c) &amp;&amp; ISBLANK(REVVY__Monthly_Cost_Price_Before_Adjustment_S__c),null,BLANKVALUE(REVVY__CostPrice__c, 0) + BLANKVALUE(REVVY__Monthly_Cost_Price_Before_Adjustment_S__c, 0)), REVVY__Monthly_Cost_Price_Before_Adjustment_S__c)</formula>
+        <inlineHelpText>Cost price of this product before adjustment. If the product is configurable, the cost price includes all sub-lines that are billed on a Monthly basis.</inlineHelpText>
+        <label>Monthly Cost</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Monthly_Cost_Price_Before_Adjustment_S__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate cost price of all sub-lines in a configurable product that are billed on a Monthly basis.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Aggregate cost price of all sub-lines in a configurable product that are billed on a Monthly basis.</inlineHelpText>
+        <label>Monthly Cost including sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Monthly_Discount_Absolute_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Discount (Abs) that is applied to a regular product that is billed monthly. If the product is configurable, then the monthly discount field is the discount on all sub-lines (e.g., the components) that are billed monthly, including the discount on the main line if the main line is billed monthly.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Monthly_Price_Before_Discount_F__c - REVVY__Monthly_Extended_Price_F__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Aggregate absolute discount on products that are billed on a monthly basis, shown in currency.</inlineHelpText>
+        <label>Monthly Discounts (Abs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Monthly_Discount_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Discount (%) that is applied to a regular product that is billed monthly. If the product is configurable, then the monthly discount field is the discount on all sub-lines (e.g., the components) that are billed monthly, including the discount on the main line if the main line is billed monthly.</description>
+        <externalId>false</externalId>
+        <formula>IF (BLANKVALUE(REVVY__Monthly_Price_Before_Discount_F__c,0)==0, 0,(REVVY__Monthly_Price_Before_Discount_F__c - REVVY__Monthly_Extended_Price_F__c)/REVVY__Monthly_Price_Before_Discount_F__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Discount applied to a regular product that is billed monthly. If the product is configurable, this is the discount on all sub-lines (e.g., components) that are billed monthly, including the discount on the main line if the main line is billed monthly.</inlineHelpText>
+        <label>Monthly Discounts (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Monthly_Extended_Price_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Sum of the aggregate extended price (extended price = unit price x quantity) of all components of a configurable product, where the components are billed monthly, and the unit price of the configurable product, if the configurable product is billed monthly.</description>
+        <externalId>false</externalId>
+        <formula>CASE( REVVY__Billing_Frequency_WF__c , &apos;Monthly&apos;,  BLANKVALUE(REVVY__Unit_Price__c, 0)  +  REVVY__Monthly_Extended_Price_S__c  , REVVY__Monthly_Extended_Price_S__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Sum of the aggregate extended price of all components of a configurable product, where the components are billed monthly, and the unit price of the configurable product, if the configurable product is billed monthly.</inlineHelpText>
+        <label>Monthly Extended Price incl. sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Monthly_Extended_Price_S__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Aggregate extended price (extended price = unit price x quantity) of all components of a configurable product, where the components are billed monthly.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Aggregate extended price (extended price = unit price x quantity) of all components of a configurable product, where the components are billed monthly.</inlineHelpText>
+        <label>Monthly Extended Price all sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Monthly_Margin_Absolute_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Margin (Abs) that is applied to a regular product that is billed Monthly. If the product is configurable, then the Monthly margin field is the adjustment on all sub-lines (e.g., the components) that are billed Monthly, including the margin on the main line if the main line is billed Monthly.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Monthly_Total_Value_F__c - REVVY__Monthly_Total_Cost_F__c</formula>
+        <inlineHelpText>Aggregate margin on products that are billed on a Monthly basis, shown in currency.</inlineHelpText>
+        <label>Monthly Margins (Abs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Monthly_Margin_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Margin (%) that is applied to a regular product that is billed Monthly. If the product is configurable, then the Monthly margin field is the adjustment on all sub-lines (e.g., the components) that are billed Monthly, including the margin on the main line if the main line is billed Monthly.</description>
+        <externalId>false</externalId>
+        <formula>IF (BLANKVALUE(REVVY__Monthly_Total_Value_F__c,0)==0, 0,(REVVY__Monthly_Total_Value_F__c - (REVVY__Monthly_Cost_Price_Before_Adjustment_F__c  * REVVY__Quantity__c))/REVVY__Monthly_Total_Value_F__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Margin that is applied to a regular product that is billed Monthly. If the product is configurable, then the Monthly margin field is the adjustment on all sub-lines that are billed Monthly, including the margin on the main line</inlineHelpText>
+        <label>Monthly Margins (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Monthly_Price_Before_Discount_Display_F__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>REVVY__Monthly_Price_Before_Discount_F__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Monthly List</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Monthly_Price_Before_Discount_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>List price of this product before discount. If the product is configurable, the list price includes all sub-lines that are billed on a monthly basis.</description>
+        <externalId>false</externalId>
+        <formula>CASE( REVVY__Billing_Frequency_WF__c , &apos;Monthly&apos;,  BLANKVALUE(REVVY__Price__c, BLANKVALUE(REVVY__Unit_Price__c, 0))  +  REVVY__Monthly_Price_Before_Discount_S__c,  REVVY__Monthly_Price_Before_Discount_S__c)</formula>
+        <inlineHelpText>List price of this product before discount. If the product is configurable, the list price includes all sub-lines that are billed on a monthly basis.</inlineHelpText>
+        <label>Monthly List including sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Monthly_Price_Before_Discount_S__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Aggregate list price of all sub-lines in a configurable product that are billed on a monthly basis, before any discounts are applied.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Aggregate list price of all sub-lines in a configurable product that are billed on a monthly basis, before any discounts are applied.</inlineHelpText>
+        <label>Monthly List all sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Monthly_Total_Cost_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate cost price (cost x quantity) of all products that are billed on a Monthly basis.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Monthly_Cost_Price_Before_Adjustment_F__c * REVVY__Quantity__c</formula>
+        <inlineHelpText>Aggregate cost price (cost price x quantity) of all products that are billed on a Monthly basis.</inlineHelpText>
+        <label>Total Monthly Cost Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Monthly_Total_Value_Display_F__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>REVVY__Monthly_Total_Value_F__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Monthly Total Unit Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Monthly_Total_Value_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate extended price (unit price x quantity) of all products that are billed on a monthly basis after discounts have been applied.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Monthly_Extended_Price_F__c * REVVY__Quantity__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Aggregate extended price (unit price x quantity) of all products that are billed on a monthly basis after discounts have been applied.</inlineHelpText>
+        <label>Monthly Total Unit Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Monthly_Unit_Price_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Unit price of this product. If the product is configurable, the unit price includes all sub-lines that are billed on a Monthly basis.</description>
+        <externalId>false</externalId>
+        <formula>CASE( REVVY__Billing_Frequency_WF__c , &apos;Monthly&apos;, BLANKVALUE(REVVY__Unit_Price__c, 0) + REVVY__Monthly_Unit_Price_S__c, REVVY__Monthly_Unit_Price_S__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Unit price of this product. If the product is configurable, the unit price includes all sub-lines that are billed on a Monthly basis.</inlineHelpText>
+        <label>Monthly Unit Price including sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Monthly_Unit_Price_S__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate unit price of all sub-lines in a configurable product that are billed on a Monthly basis.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Aggregate unit price of all sub-lines in a configurable product that are billed on a Monthly basis.</inlineHelpText>
+        <label>Monthly Unit Price all sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Monthly_Value_Before_Discount_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate extended price (unit price x quantity) of all products that are billed on a monthly basis before any discounts are applied.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Monthly_Price_Before_Discount_F__c * REVVY__Quantity__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Aggregate extended price (unit price x quantity) of all products that are billed on a monthly basis before any discounts are applied.</inlineHelpText>
+        <label>Monthly Total List</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__NeedsApproval__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Flag that indicates whether the quote requires approval. This flag is set based on the criteria specified in the approval process workflow.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Flag that indicates whether the quote requires approval. This flag is set based on the criteria specified in the approval process workflow.</inlineHelpText>
+        <label>Needs Approval</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__One_Time_Adjustment1_Absolute_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Adjustment (Abs) that is applied to a regular product that is billed one time. If the product is configurable, then the one time adjustment field is the adjustment on all sub-lines (e.g., the components) that are billed one time, including the adjustment on the main line if the main line is billed one time.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__One_Time_Value_Before_Discount_F__c - REVVY__One_Time_Total_Cost_F__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Aggregate adjustment1 on products that are billed on a one-time basis, shown in currency.</inlineHelpText>
+        <label>One-time Mark-ups (Abs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__One_Time_Adjustment1_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Adjustment (%) that is applied to a regular product that is billed one time. If the product is configurable, then the one time adjustment field is the adjustment on all sub-lines (e.g., the components) that are billed one time, including the adjustment on the main line if the main line is billed one time.</description>
+        <externalId>false</externalId>
+        <formula>IF (BLANKVALUE(REVVY__One_Time_Cost_Price_Before_Adjustment_F__c,0)==0, 0,(REVVY__One_Time_Value_Before_Discount_F__c - REVVY__One_Time_Total_Cost_F__c)/REVVY__One_Time_Total_Cost_F__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Adjustment that is applied to a regular product that is billed one time. If the product is configurable, then the one time adjustment field is the adjustment on all sub-lines (e.g., the components) that are billed one time plus main line</inlineHelpText>
+        <label>One-time Mark-ups (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__One_Time_Cost_Price_Before_Adjustment_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Cost price of this product before adjustment. If the product is configurable, the cost  price includes all sub-lines that are billed on a one-time basis.</description>
+        <externalId>false</externalId>
+        <formula>CASE( REVVY__Billing_Frequency_WF__c , &apos;One Time&apos;, IF(ISBLANK(REVVY__CostPrice__c) &amp;&amp; ISBLANK(REVVY__One_Time_Cost_Price_Before_Adjustment_S__c),null,BLANKVALUE(REVVY__CostPrice__c, 0) + BLANKVALUE(REVVY__One_Time_Cost_Price_Before_Adjustment_S__c, 0)), REVVY__One_Time_Cost_Price_Before_Adjustment_S__c)</formula>
+        <inlineHelpText>Cost price of this product before adjustment. If the product is configurable, the cost  price includes all sub-lines that are billed on a one-time basis.</inlineHelpText>
+        <label>One-time Cost</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__One_Time_Cost_Price_Before_Adjustment_S__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate cost price of all sub-lines in a configurable product that are billed on a one-time basis.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Aggregate cost price of all sub-lines in a configurable product that are billed on a one-time basis.</inlineHelpText>
+        <label>One-time Cost including sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__One_Time_Discount_Absolute_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Discount (Abs) that is applied to a regular product that is billed one time. If the product is configurable, then the one time discount field is the discount on all sub-lines (e.g., the components) that are billed one time, including the discount on the main line if the main line is billed one time.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__One_Time_Price_Before_Discount_F__c - REVVY__One_Time_Extended_Price_F__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Aggregate discount on products that are billed on a one-time basis, shown in currency.</inlineHelpText>
+        <label>One-time Discounts (Abs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__One_Time_Discount_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Discount (%) that is applied to a regular product that is billed one time. If the product is configurable, then the one time discount field is the discount on all sub-lines (e.g., the components) that are billed one time, including the discount on the main line if the main line is billed one time.</description>
+        <externalId>false</externalId>
+        <formula>IF (BLANKVALUE(REVVY__One_Time_Price_Before_Discount_F__c,0)==0, 0,(REVVY__One_Time_Price_Before_Discount_F__c - REVVY__One_Time_Extended_Price_F__c)/REVVY__One_Time_Price_Before_Discount_F__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Discount applied to a regular product that is billed one time. If the product is configurable, this is the discount on all sub-lines (e.g., components) that are billed one time, including the discount on the main line if the main line is billed one time.</inlineHelpText>
+        <label>One-time Discounts (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__One_Time_Extended_Price_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Sum of the aggregate extended price (extended price = unit price x quantity) of all components of a configurable product, where the components are billed one time, and the unit price of the configurable product, if the configurable product is billed one time.</description>
+        <externalId>false</externalId>
+        <formula>CASE( REVVY__Billing_Frequency_WF__c , &apos;One Time&apos;, BLANKVALUE(REVVY__Unit_Price__c, 0) +  REVVY__One_Time_Extended_Price_S__c, REVVY__One_Time_Extended_Price_S__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Sum of the aggregate extended price of all components of a configurable product, where the components are billed one time, and the unit price of the configurable product, if the configurable product is billed one time.</inlineHelpText>
+        <label>One-time Extended Price incl. sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__One_Time_Extended_Price_S__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Aggregate extended price (extended price = unit price x quantity) of all components of a configurable product, where the components are billed one time.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Aggregate extended price (extended price = unit price x quantity) of all components of a configurable product, where the components are billed one time.</inlineHelpText>
+        <label>One-time Extended Price all sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__One_Time_Margin_Absolute_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Margin (Abs) that is applied to a regular product that is billed one time. If the product is configurable, then the one time margin field is the adjustment on all sub-lines (e.g., the components) that are billed one time, including the margin on the main line if the main line is billed one time.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__One_Time_Total_Value_F__c - REVVY__One_Time_Total_Cost_F__c</formula>
+        <inlineHelpText>Aggregate margin on products that are billed on a one-time basis, shown in currency.</inlineHelpText>
+        <label>One-time Margins (Abs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__One_Time_Margin_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Margin (%) that is applied to a regular product that is billed one time. If the product is configurable, then the one time margin field is the adjustment on all sub-lines (e.g., the components) that are billed one time, including the margin on the main line if the main line is billed one time.</description>
+        <externalId>false</externalId>
+        <formula>IF (BLANKVALUE(REVVY__One_Time_Total_Value_F__c,0)==0, 0,(REVVY__One_Time_Total_Value_F__c - REVVY__One_Time_Total_Cost_F__c)/REVVY__One_Time_Total_Value_F__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Margin that is applied to a regular product that is billed one time. If the product is configurable, then the one time margin field is the adjustment on all sub-lines (e.g., the components) that are billed one time, including the margin on the main line i</inlineHelpText>
+        <label>One-time Margins (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__One_Time_Price_Before_Discount_Display_F__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>REVVY__One_Time_Price_Before_Discount_F__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>One-time List</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__One_Time_Price_Before_Discount_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>List price of this product before discount. If the product is configurable, the list price includes all sub-lines that are billed on a one-time basis.</description>
+        <externalId>false</externalId>
+        <formula>CASE( REVVY__Billing_Frequency_WF__c , &apos;One Time&apos;,  BLANKVALUE(REVVY__Price__c, BLANKVALUE(REVVY__Unit_Price__c, 0))  +  REVVY__One_Time_Price_Before_Discount_S__c,  REVVY__One_Time_Price_Before_Discount_S__c)</formula>
+        <inlineHelpText>List price of this product before discount. If the product is configurable, the list price includes all sub-lines that are billed on a one-time basis.</inlineHelpText>
+        <label>One-time List including sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__One_Time_Price_Before_Discount_S__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Aggregate list price of all sub-lines in a configurable product that are billed on a one-time basis, before any discounts are applied.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Aggregate list price of all sub-lines in a configurable product that are billed on a one-time basis, before any discounts are applied.</inlineHelpText>
+        <label>One-time List all sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__One_Time_Total_Cost_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate cost price (cost x quantity) of all products that are billed on a one-time basis.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__One_Time_Cost_Price_Before_Adjustment_F__c * REVVY__Quantity__c</formula>
+        <inlineHelpText>Aggregate cost price (cost price x quantity) of all products that are billed on a one-time basis.</inlineHelpText>
+        <label>Total One Time Cost Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__One_Time_Total_Value_Display_F__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>REVVY__One_Time_Total_Value_F__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>One-time Total Unit Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__One_Time_Total_Value_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate extended price (unit price x quantity) of all products that are billed on a one-time basis after discounts have been applied.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__One_Time_Extended_Price_F__c * REVVY__Quantity__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Aggregate extended price (unit price x quantity) of all products that are billed on a one-time basis after discounts have been applied.</inlineHelpText>
+        <label>One-time Total Unit Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__One_Time_Unit_Price_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Unit price of this product. If the product is configurable, the unit price includes all sub-lines that are billed on a one-time basis.</description>
+        <externalId>false</externalId>
+        <formula>CASE( REVVY__Billing_Frequency_WF__c , &apos;One Time&apos;, BLANKVALUE(REVVY__Unit_Price__c, 0) + REVVY__One_Time_Unit_Price_S__c, REVVY__One_Time_Unit_Price_S__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Unit price of this product. If the product is configurable, the unit price includes all sub-lines that are billed on a one-time basis.</inlineHelpText>
+        <label>One-time Unit Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__One_Time_Unit_Price_S__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate unit price of all sub-lines in a configurable product that are billed on a one-time basis.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Aggregate unit price of all sub-lines in a configurable product that are billed on a one-time basis.</inlineHelpText>
+        <label>One-time Unit Price including sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__One_Time_Value_Before_Discount_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate extended price (unit price x quantity) of all products that are billed on a one-time basis before any discounts are applied.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__One_Time_Price_Before_Discount_F__c * REVVY__Quantity__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Aggregate extended price (unit price x quantity) of all products that are billed on a one-time basis before any discounts are applied.</inlineHelpText>
+        <label>One-time Total List</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Opportunity__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Opportunity</label>
+        <referenceTo>Opportunity</referenceTo>
+        <relationshipLabel>Revvy Quoted Products</relationshipLabel>
+        <relationshipName>QuoteItems</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__OptionNumber__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The SectionNumber, OptionNumber, and GroupNumber fields are used internally to sort the quote items within a solution.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The SectionNumber, OptionNumber, and GroupNumber fields are used internally to sort the quote items within a solution.</inlineHelpText>
+        <label>Option Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__OriginalContractId__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Original Contract ID applied to this quote item</description>
+        <externalId>false</externalId>
+        <inlineHelpText>&gt;Original contract ID applied to this quote item</inlineHelpText>
+        <label>Original Contract Id</label>
+        <length>32</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__OriginalContract__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Original Contract applied to this quote item</description>
+        <externalId>false</externalId>
+        <inlineHelpText>&gt;Original contract applied to this quote item</inlineHelpText>
+        <label>Original Contract</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__PriceListLine__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Unique ID of the Price List Line object used to derive the List Price for this product.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Unique ID of the Price List Line object used to derive the List Price for this product.</inlineHelpText>
+        <label>Price List Line</label>
+        <referenceTo>REVVY__MnPriceListLine__c</referenceTo>
+        <relationshipLabel>QuoteLineItem</relationshipLabel>
+        <relationshipName>QuoteLineItem</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__PriceType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Price Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>List</fullName>
+                <default>true</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Price_Display_F__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>REVVY__Price__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>List Price (Display)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Price__c</fullName>
+        <deprecated>false</deprecated>
+        <description>List price of product for this quote.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>List price of product for this quote.</inlineHelpText>
+        <label>List Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__PricingRuleMapping__c</fullName>
+        <deprecated>false</deprecated>
+        <description>JSON representation of the quote item pricing rule mapping in quote model.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>JSON representation of the quote item pricing rule mapping in quote model. Useful for debugging quote level pricing rules.</inlineHelpText>
+        <label>Pricing Rule Mapping Json</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>REVVY__PricingRuleReason__c</fullName>
+        <deprecated>false</deprecated>
+        <description>JSON representation of the quote item pricing rule reason in quote model.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>JSON representation of the quote item pricing rule reason in quote model. Useful for debugging quote level pricing rules.</inlineHelpText>
+        <label>Pricing Rule Reason Json</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>REVVY__PricingSource__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Denotes the contract subtype / pricing list ID from medtech</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Denotes the contract subtype / pricing list ID from medtech</inlineHelpText>
+        <label>Pricing Source</label>
+        <length>32</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__PrimaryCategory__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Primary category for this product, used in gross profit analysis calculations.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Primary category for this product, used in gross profit analysis calculations.</inlineHelpText>
+        <label>Primary Category</label>
+        <referenceTo>REVVY__MnCatalogNode__c</referenceTo>
+        <relationshipLabel>QuoteItemPrimaryCategory</relationshipLabel>
+        <relationshipName>QuoteItemPrimaryCategory</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__ProductConfig__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Unique ID of the model used to configure this product.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Unique ID of the model used to configure this product.</inlineHelpText>
+        <label>Item Configuration ID</label>
+        <referenceTo>REVVY__MnConfigEngineModel__c</referenceTo>
+        <relationshipLabel>QuoteItems</relationshipLabel>
+        <relationshipName>QuoteItems</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Product_ID_F__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>REVVY__Catalog_Node__r.REVVY__Id__c</formula>
+        <label>Product ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Product_Name_F__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>REVVY__Catalog_Node__r.REVVY__LocaleName_F__c</formula>
+        <label>Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Product_Type_F__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IF (REVVY__Catalog_Node__r.REVVY__Configurable__c, &apos;Config&apos;,
+IF (TEXT(REVVY__Catalog_Node__r.REVVY__Type__c) = &apos;Bundle&apos;, &apos;Bundle&apos;,
+IF (TEXT(REVVY__Catalog_Node__r.REVVY__Billing_Frequency__c) != &apos;One Time&apos;, &apos;Services&apos;, &apos;Product&apos;
+)
+)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Quantity__c</fullName>
+        <defaultValue>1</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Number of units.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of units.</inlineHelpText>
+        <label>Qty</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__QuoteItemSubLinesNeedApprovalCount__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Quote Item SubLines Need Approval Count</label>
+        <summaryFilterItems>
+            <field>REVVY__MnQuoteItemSubLine__c.REVVY__NeedsApproval__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </summaryFilterItems>
+        <summaryForeignKey>REVVY__MnQuoteItemSubLine__c.REVVY__QuoteItem__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__QuoteSolution__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Unique ID of the solution that this quote item belongs to.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Unique ID of the solution that this quote item belongs to.</inlineHelpText>
+        <label>Quote Solution</label>
+        <referenceTo>REVVY__MnQuoteSolution__c</referenceTo>
+        <relationshipLabel>Solution Line Items</relationshipLabel>
+        <relationshipName>Solution_Line_Items</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Quote__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Unique ID of the quote that this quote item belongs to.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Unique ID of the quote that this quote item belongs to.</inlineHelpText>
+        <label>Quote</label>
+        <referenceTo>REVVY__MnQuote__c</referenceTo>
+        <relationshipLabel>Line Items</relationshipLabel>
+        <relationshipName>QuoteItems</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>REVVY__Record_Number__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Position number for this quote item.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Position number for this quote item.</inlineHelpText>
+        <label>Quote Item Position</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__SapPlant__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Sap Plant for this product.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Configit Quote ID for this record.</inlineHelpText>
+        <label>Sap Plant</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__SectionNumber__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The SectionNumber, OptionNumber, and GroupNumber fields  are used internally to sort the quote items within a solution.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The SectionNumber, OptionNumber, and GroupNumber fields  are used internally to sort the quote items within a solution.</inlineHelpText>
+        <label>Section Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Solution_Name_F__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>REVVY__QuoteSolution__r.REVVY__Solution_Name_F__c</formula>
+        <label>Solution Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__SourceContractItem__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Source Contract Item</label>
+        <referenceTo>REVVY__MnContractItem__c</referenceTo>
+        <relationshipLabel>Quote Line Items</relationshipLabel>
+        <relationshipName>Quote_Line_Items</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__TierName__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Pricing Tier of the product captured from RME for Medtech</description>
+        <externalId>false</externalId>
+        <inlineHelpText>&gt;Pricing Tier of the product</inlineHelpText>
+        <label>Customer Pricing Tier</label>
+        <length>32</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__TotalCostPrice__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Total Cost (taking quantity into account).</description>
+        <externalId>false</externalId>
+        <formula>IF (OR(ISNULL(REVVY__CostPrice__c), ISBLANK(REVVY__CostPrice__c)), 0, (REVVY__CostPrice__c * REVVY__Quantity__c))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Total Cost (taking quantity into account).</inlineHelpText>
+        <label>Total Cost</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__TotalDiscountAbsolute__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>REVVY__Discount_Absolute__c + REVVY__AutoDiscountAbsolute__c + REVVY__VolDiscAbsolute__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Discount (Abs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__TotalDiscount__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>REVVY__Discount__c + REVVY__AutoDiscount__c + REVVY__VolDisc__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Discount (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Total_Price__c</fullName>
+        <deprecated>false</deprecated>
+        <description>List price multiplied by quantity.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Price__c  *  REVVY__Quantity__c</formula>
+        <inlineHelpText>List price multiplied by quantity.</inlineHelpText>
+        <label>Total List Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Total_Value_Display_F__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IF
+(
+REVVY__Billing_Frequency_WF__c = &apos;Monthly&apos;, REVVY__Monthly_Total_Value_Display_F__c ,
+IF (REVVY__Billing_Frequency_WF__c = &apos;Yearly&apos;, REVVY__Yearly_Total_Value_Display_F__c ,
+IF (REVVY__Billing_Frequency_WF__c = &apos;Weekly&apos;, REVVY__Weekly_Total_Value_Display_F__c ,
+REVVY__One_Time_Total_Value_Display_F__c
+)
+)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__UID__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Unique ID of the BOM from the Configuration Engine.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Unique ID of the BOM from the Configuration Engine.</inlineHelpText>
+        <label>UID Configured BOM</label>
+        <length>200</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__UISection__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Name of the UI section that is returned by the product configuration.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Name of the UI section that is returned by the product configuration.</inlineHelpText>
+        <label>Section</label>
+        <length>200</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REVVY__Unit_Price_F__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>REVVY__Unit_Price__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Unit Price (Display)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Unit_Price__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Unit price of product (list price less the discount)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Unit price of product (list price less the discount)</inlineHelpText>
+        <label>Unit Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__VolDiscAbsolute__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Total volume discount off of list price (e.g., $100 off).</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Total volume discount off of list price (e.g., $100 off).</inlineHelpText>
+        <label>Vol. Disc. (Abs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__VolDisc__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Percentage volume discount off of list price (e.g., 20% off).</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Percentage volume discount off of list price (e.g., 20% off).</inlineHelpText>
+        <label>Vol. Disc. (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Weekly_Adjustment1_Absolute_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Adjustment (Abs) that is applied to a regular product that is billed Weekly. If the product is configurable, then the Weekly adjustment field is the adjustment on all sub-lines (e.g., the components) that are billed Weekly, including the adjustment on the main line if the main line is billed Weekly.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Weekly_Value_Before_Discount_F__c - REVVY__Weekly_Total_Cost_F__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Aggregate adjustment1 on products that are billed on a Weekly basis, shown in currency.</inlineHelpText>
+        <label>Weekly Mark-ups (Abs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Weekly_Adjustment1_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Adjustment (%) that is applied to a regular product that is billed Weekly. If the product is configurable, then the Weekly adjustment field is the adjustment on all sub-lines (e.g., the components) that are billed Weekly, including the adjustment on the main line if the main line is billed Weekly.</description>
+        <externalId>false</externalId>
+        <formula>IF (BLANKVALUE(REVVY__Weekly_Cost_Price_Before_Adjustment_F__c,0)==0, 0,(REVVY__Weekly_Value_Before_Discount_F__c - REVVY__Weekly_Total_Cost_F__c)/REVVY__Weekly_Total_Cost_F__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Adjustment that is applied to a regular product that is billed Weekly. If the product is configurable, then the Weekly adjustment field is the adjustment on all sub-lines (e.g., the components) that are billed Weekly, including the adjustment on the main</inlineHelpText>
+        <label>Weekly Mark-ups (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Weekly_Cost_Price_Before_Adjustment_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Cost price of this product before adjustment. If the product is configurable, the cost price includes all sub-lines that are billed on a Weekly basis.</description>
+        <externalId>false</externalId>
+        <formula>CASE( REVVY__Billing_Frequency_WF__c , &apos;Weekly&apos;, IF(ISBLANK(REVVY__CostPrice__c) &amp;&amp; ISBLANK(REVVY__Weekly_Cost_Price_Before_Adjustment_S__c),null,BLANKVALUE(REVVY__CostPrice__c, 0) + BLANKVALUE(REVVY__Weekly_Cost_Price_Before_Adjustment_S__c, 0)), REVVY__Weekly_Cost_Price_Before_Adjustment_S__c)</formula>
+        <inlineHelpText>Cost price of this product before adjustment. If the product is configurable, the cost price includes all sub-lines that are billed on a Weekly basis.</inlineHelpText>
+        <label>Weekly Cost</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Weekly_Cost_Price_Before_Adjustment_S__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate cost price of all sub-lines in a configurable product that are billed on a Weekly basis.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Aggregate cost price of all sub-lines in a configurable product that are billed on a Weekly basis.</inlineHelpText>
+        <label>Weekly Cost including sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Weekly_Discount_Absolute_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate discount on products that are billed on a weekly basis, shown in currency.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Weekly_Price_Before_Discount_F__c - REVVY__Weekly_Extended_Price_F__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Aggregate discount on products that are billed on a weekly basis, shown in currency.</inlineHelpText>
+        <label>Weekly Discount (Abs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Weekly_Discount_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Discount that is applied to a regular product that is billed weekly. If the product is configurable, then the weekly discount field is the discount on all sub-lines (e.g., the components) that are billed weekly, including the discount on the main line if the main line is billed weekly.</description>
+        <externalId>false</externalId>
+        <formula>IF (BLANKVALUE(REVVY__Weekly_Price_Before_Discount_F__c,0)==0, 0,(REVVY__Weekly_Price_Before_Discount_F__c - REVVY__Weekly_Extended_Price_F__c)/REVVY__Weekly_Price_Before_Discount_F__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Discount applied to a regular product that is billed weekly. If the product is configurable, this is the discount on all sub-lines (e.g., components) that are billed weekly, including the discount on the main line if the main line is billed weekly.</inlineHelpText>
+        <label>Weekly Discount (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Weekly_Extended_Price_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Sum of the aggregate extended price (extended price = unit price x quantity) of all components of a configurable product, where the components are billed weekly, and the unit price of the configurable product, if the configurable product is billed weekly.</description>
+        <externalId>false</externalId>
+        <formula>CASE( REVVY__Billing_Frequency_WF__c , &apos;Weekly&apos;,  BLANKVALUE(REVVY__Unit_Price__c, 0) + REVVY__Weekly_Extended_Price_S__c , REVVY__Weekly_Extended_Price_S__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Sum of the aggregate extended price of all components of a configurable product, where the components are billed weekly, and the unit price of the configurable product, if the configurable product is billed weekly.</inlineHelpText>
+        <label>Weekly Extended Price incl. sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Weekly_Extended_Price_S__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Aggregate extended price (extended price = unit price x quantity) of all components of a configurable product, where the components are billed weekly.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Aggregate extended price (extended price = unit price x quantity) of all components of a configurable product, where the components are billed weekly.</inlineHelpText>
+        <label>Weekly Extended Price all sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Weekly_Margin_Absolute_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Margin (Abs) that is applied to a regular product that is billed Weekly. If the product is configurable, then the Weekly margin field is the adjustment on all sub-lines (e.g., the components) that are billed Weekly, including the margin on the main line if the main line is billed Weekly.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Weekly_Total_Value_F__c - REVVY__Weekly_Total_Cost_F__c</formula>
+        <inlineHelpText>Aggregate margin on products that are billed on a Weekly basis, shown in currency.</inlineHelpText>
+        <label>Weekly Margins (Abs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Weekly_Margin_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Margin (%) that is applied to a regular product that is billed Weekly. If the product is configurable, then the Weekly margin field is the adjustment on all sub-lines (e.g., the components) that are billed Weekly, including the margin on the main line if the main line is billed Weekly.</description>
+        <externalId>false</externalId>
+        <formula>IF (BLANKVALUE(REVVY__Weekly_Total_Value_F__c,0)==0, 0,(REVVY__Weekly_Total_Value_F__c - REVVY__Weekly_Total_Cost_F__c)/REVVY__Weekly_Total_Value_F__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Margin that is applied to a regular product that is billed Weekly. If the product is configurable, then the Weekly margin field is the adjustment on all sub-lines (e.g., the components) that are billed Weekly, including the margin on the main line if the</inlineHelpText>
+        <label>Weekly Margins (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Weekly_Price_Before_Discount_Display_F__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>REVVY__Weekly_Price_Before_Discount_F__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Weekly List</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Weekly_Price_Before_Discount_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>List price of this product before discount. If the product is configurable, the list price includes all sub-lines that are billed on a weekly basis.</description>
+        <externalId>false</externalId>
+        <formula>CASE( REVVY__Billing_Frequency_WF__c , &apos;Weekly&apos;,  BLANKVALUE(REVVY__Price__c, BLANKVALUE(REVVY__Unit_Price__c, 0))  +  REVVY__Weekly_Price_Before_Discount_S__c,  REVVY__Weekly_Price_Before_Discount_S__c)</formula>
+        <inlineHelpText>List price of this product before discount. If the product is configurable, the list price includes all sub-lines that are billed on a weekly basis.</inlineHelpText>
+        <label>Weekly List including sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Weekly_Price_Before_Discount_S__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Aggregate list price of all sub-lines in a configurable product that are billed on a weekly basis, before any discounts are applied.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Aggregate list price of all sub-lines in a configurable product that are billed on a weekly basis, before any discounts are applied.</inlineHelpText>
+        <label>Weekly List all sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Weekly_Total_Cost_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate cost price (cost x quantity) of all products that are billed on a Weekly basis.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Weekly_Cost_Price_Before_Adjustment_F__c * REVVY__Quantity__c</formula>
+        <inlineHelpText>Aggregate cost price (cost price x quantity) of all products that are billed on a Weekly basis.</inlineHelpText>
+        <label>Total Weekly Cost Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Weekly_Total_Value_Display_F__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>REVVY__Weekly_Total_Value_F__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Weekly Total Unit Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Weekly_Total_Value_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate extended price (unit price x quantity) of all products that are billed on a weekly basis after discounts have been applied.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Weekly_Extended_Price_F__c * REVVY__Quantity__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Aggregate extended price (unit price x quantity) of all products that are billed on a weekly basis after discounts have been applied.</inlineHelpText>
+        <label>Weekly Total Unit Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Weekly_Unit_Price_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Unit price of this product. If the product is configurable, the unit price includes all sub-lines that are billed on a Weekly basis.</description>
+        <externalId>false</externalId>
+        <formula>CASE( REVVY__Billing_Frequency_WF__c , &apos;Weekly&apos;, BLANKVALUE(REVVY__Unit_Price__c, 0) + REVVY__Weekly_Unit_Price_S__c, REVVY__Weekly_Unit_Price_S__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Unit price of this product. If the product is configurable, the unit price includes all sub-lines that are billed on a Weekly basis.</inlineHelpText>
+        <label>Weekly Unit Price including sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Weekly_Unit_Price_S__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate unit price of all sub-lines in a configurable product that are billed on a Weekly basis.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Aggregate unit price of all sub-lines in a configurable product that are billed on a Weekly basis.</inlineHelpText>
+        <label>Weekly Unit Price all sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Weekly_Value_Before_Discount_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate extended price (unit price x quantity) of all products that are billed on a weekly basis before any discounts are applied.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Weekly_Price_Before_Discount_F__c * REVVY__Quantity__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Aggregate extended price (unit price x quantity) of all products that are billed on a weekly basis before any discounts are applied.</inlineHelpText>
+        <label>Weekly Total List</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Yearly_Adjustment1_Absolute_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate adjustment1 on products that are billed on a Yearly basis, shown in currency.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Yearly_Value_Before_Discount_F__c - REVVY__Yearly_Total_Cost_F__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Aggregate adjustment1 on products that are billed on a Yearly basis, shown in currency.</inlineHelpText>
+        <label>Yearly Mark-up (Abs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Yearly_Adjustment1_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Adjustment that is applied to a regular product that is billed Yearly. If the product is configurable, then the Yearly adjustment field is the adjustment on all sub-lines (e.g., the components) that are billed Yearly, including the adjustment on the main line if the main line is billed Yearly.</description>
+        <externalId>false</externalId>
+        <formula>IF (BLANKVALUE(REVVY__Yearly_Cost_Price_Before_Adjustment_F__c,0)==0, 0,(REVVY__Yearly_Price_Before_Discount_F__c - REVVY__Yearly_Total_Cost_F__c)/REVVY__Yearly_Total_Cost_F__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Adjustment that is applied to a regular product that is billed Yearly. If the product is configurable, then the Yearly adjustment field is the adjustment on all sub-lines (e.g., the components) that are billed Yearly, including the adjustment on the main</inlineHelpText>
+        <label>Yearly Mark-up (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Yearly_Cost_Price_Before_Adjustment_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Cost price of this product before adjustment. If the product is configurable, the cost price includes all sub-lines that are billed on a Yearly basis.</description>
+        <externalId>false</externalId>
+        <formula>CASE( REVVY__Billing_Frequency_WF__c , &apos;Yearly&apos;, IF(ISBLANK(REVVY__CostPrice__c) &amp;&amp; ISBLANK(REVVY__Yearly_Cost_Price_Before_Adjustment_S__c),null,BLANKVALUE(REVVY__CostPrice__c, 0) + BLANKVALUE(REVVY__Yearly_Cost_Price_Before_Adjustment_S__c, 0)), REVVY__Yearly_Cost_Price_Before_Adjustment_S__c)</formula>
+        <inlineHelpText>Cost price of this product before adjustment. If the product is configurable, the cost price includes all sub-lines that are billed on a Yearly basis.</inlineHelpText>
+        <label>Yearly Cost</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Yearly_Cost_Price_Before_Adjustment_S__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate cost price of all sub-lines in a configurable product that are billed on a Yearly basis.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Aggregate cost price of all sub-lines in a configurable product that are billed on a Yearly basis.</inlineHelpText>
+        <label>Yearly Cost including sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Yearly_Discount_Absolute_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Discount (Abs) that is applied to a regular product that is billed yearly. If the product is configurable, then the yearly discount field is the discount on all sub-lines (e.g., the components) that are billed yearly, including the discount on the main line if the main line is billed yearly.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Yearly_Price_Before_Discount_F__c - REVVY__Yearly_Extended_Price_F__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Aggregate discount on products that are billed on a yearly basis, shown in currency.</inlineHelpText>
+        <label>Yearly Discounts (Abs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Yearly_Discount_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Discount (%) that is applied to a regular product that is billed yearly. If the product is configurable, then the yearly discount field is the discount on all sub-lines (e.g., the components) that are billed yearly, including the discount on the main line if the main line is billed yearly.</description>
+        <externalId>false</externalId>
+        <formula>IF (BLANKVALUE(REVVY__Yearly_Price_Before_Discount_F__c,0)==0, 0,(REVVY__Yearly_Price_Before_Discount_F__c - REVVY__Yearly_Extended_Price_F__c)/REVVY__Yearly_Price_Before_Discount_F__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Discount applied to a regular product that is billed yearly. If the product is configurable, this is the discount on all sub-lines (e.g., components) that are billed yearly, including the discount on the main line if the main line is billed yearly.</inlineHelpText>
+        <label>Yearly Discounts (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Yearly_Extended_Price_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Sum of the aggregate extended price (extended price = unit price x quantity) of all components of a configurable product, where the components are billed yearly, and the unit price of the configurable product, if the configurable product is billed yearly.</description>
+        <externalId>false</externalId>
+        <formula>CASE( REVVY__Billing_Frequency_WF__c , &apos;Yearly&apos;,  BLANKVALUE(REVVY__Unit_Price__c, 0) + REVVY__Yearly_Extended_Price_S__c, REVVY__Yearly_Extended_Price_S__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Sum of the aggregate extended price of all components of a configurable product, where the components are billed yearly, and the unit price of the configurable product, if the configurable product is billed yearly.</inlineHelpText>
+        <label>Yearly Extended Price incl. sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Yearly_Extended_Price_S__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Aggregate extended price (extended price = unit price x quantity) of all components of a configurable product, where the components are billed yearly.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Aggregate extended price (extended price = unit price x quantity) of all components of a configurable product, where the components are billed yearly.</inlineHelpText>
+        <label>Yearly Extended Price all sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Yearly_Margin_Absolute_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Margin (Abs) that is applied to a regular product that is billed Yearly. If the product is configurable, then the Yearly margin field is the adjustment on all sub-lines (e.g., the components) that are billed Yearly, including the margin on the main line if the main line is billed Yearly.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Yearly_Total_Value_F__c - REVVY__Yearly_Total_Cost_F__c</formula>
+        <inlineHelpText>Aggregate margin on products that are billed on a Yearly basis, shown in currency.</inlineHelpText>
+        <label>Yearly Margins (Abs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Yearly_Margin_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Margin (%) that is applied to a regular product that is billed Yearly. If the product is configurable, then the Yearly margin field is the adjustment on all sub-lines (e.g., the components) that are billed Yearly, including the margin on the main line if the main line is billed Yearly.</description>
+        <externalId>false</externalId>
+        <formula>IF (BLANKVALUE(REVVY__Yearly_Total_Value_F__c,0)==0, 0,(REVVY__Yearly_Total_Value_F__c - REVVY__Yearly_Total_Cost_F__c)/REVVY__Yearly_Total_Value_F__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Margin that is applied to a regular product that is billed Yearly. If the product is configurable, then the Yearly margin field is the adjustment on all sub-lines (e.g., the components) that are billed Yearly, including the margin on the main line if the</inlineHelpText>
+        <label>Yearly Margins (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Yearly_Price_Before_Discount_Display_F__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>REVVY__Yearly_Price_Before_Discount_F__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Yearly List</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Yearly_Price_Before_Discount_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>List price of this product before discount. If the product is configurable, the list price includes all sub-lines that are billed on a yearly basis.</description>
+        <externalId>false</externalId>
+        <formula>CASE( REVVY__Billing_Frequency_WF__c , &apos;Yearly&apos;,  BLANKVALUE(REVVY__Price__c, BLANKVALUE(REVVY__Unit_Price__c, 0))  +  REVVY__Yearly_Price_Before_Discount_S__c,  REVVY__Yearly_Price_Before_Discount_S__c)</formula>
+        <inlineHelpText>List price of this product before discount. If the product is configurable, the list price includes all sub-lines that are billed on a yearly basis.</inlineHelpText>
+        <label>Yearly List including sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Yearly_Price_Before_Discount_S__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Aggregate list price of all sub-lines in a configurable product that are billed on a yearly basis, before any discounts are applied.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Aggregate list price of all sub-lines in a configurable product that are billed on a yearly basis, before any discounts are applied.</inlineHelpText>
+        <label>Yearly List all sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Yearly_Total_Cost_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate cost price (cost x quantity) of all products that are billed on a Yearly basis.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Yearly_Cost_Price_Before_Adjustment_F__c * REVVY__Quantity__c</formula>
+        <inlineHelpText>Aggregate cost price (cost price x quantity) of all products that are billed on a Yearly basis.</inlineHelpText>
+        <label>Total Yearly Cost Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Yearly_Total_Value_Display_F__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>REVVY__Yearly_Total_Value_F__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Yearly Total Unit Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Yearly_Total_Value_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate extended price (unit price x quantity) of all products that are billed on a yearly basis after discounts have been applied.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Yearly_Extended_Price_F__c * REVVY__Quantity__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Aggregate extended price (unit price x quantity) of all products that are billed on a yearly basis after discounts have been applied.</inlineHelpText>
+        <label>Yearly Total Unit Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Yearly_Unit_Price_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Unit price of this product. If the product is configurable, the unit price includes all sub-lines that are billed on a Yearly basis.</description>
+        <externalId>false</externalId>
+        <formula>CASE( REVVY__Billing_Frequency_WF__c , &apos;Yearly&apos;, BLANKVALUE(REVVY__Unit_Price__c, 0) + REVVY__Yearly_Unit_Price_S__c, REVVY__Yearly_Unit_Price_S__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Unit price of this product. If the product is configurable, the unit price includes all sub-lines that are billed on a Yearly basis.</inlineHelpText>
+        <label>Yearly Unit Price including sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Yearly_Unit_Price_S__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate unit price of all sub-lines in a configurable product that are billed on a Yearly basis.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Aggregate unit price of all sub-lines in a configurable product that are billed on a Yearly basis.</inlineHelpText>
+        <label>Yearly Unit Price all sub-lines</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>REVVY__Yearly_Value_Before_Discount_F__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Aggregate extended price (unit price x quantity) of all products that are billed on a yearly basis before any discounts are applied.</description>
+        <externalId>false</externalId>
+        <formula>REVVY__Yearly_Price_Before_Discount_F__c * REVVY__Quantity__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Aggregate extended price (unit price x quantity) of all products that are billed on a yearly basis before any discounts are applied.</inlineHelpText>
+        <label>Yearly Total List</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Repeats__c</fullName>
+        <externalId>false</externalId>
+        <label>Repeats</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Reportable_Result_Billing_Code_F__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(  OR(OR(TEXT(REVVY__Quote__r.OCD_Billing_ISO_Country_Code__c)  = &apos;US&apos;, TEXT(REVVY__Quote__r.OCD_Billing_ISO_Country_Code__c)  = &apos;USA&apos;), TEXT(REVVY__Quote__r.OCD_Billing_ISO_Country_Code__c)  = &apos;United States&apos;), REVVY__Catalog_Node__r.US_Reportable_Result_Billing_Code__c, Local_SKU_Id__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Reportable Result Billing Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Annual_Patients__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Annual Patients</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Annual_Repeat_And_Wastage_Volume__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Annual Repeat And Wastage Volume</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Test_Volume__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Test Volume</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Z_OCD_Revvy_Quote_for_CPRR__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This is used to display CPRR related fields in REVVY quote as a related list.</description>
+        <externalId>false</externalId>
+        <label>Revvy Quote for CPRR</label>
+        <referenceTo>REVVY__MnQuote__c</referenceTo>
+        <relationshipLabel>Line Items for CPRR</relationshipLabel>
+        <relationshipName>Z_Quote_Line_Item_CPRR</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Z_OCD_Revvy_Quote_for_CPT__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This is used to display CPT related fields in REVVY quote as a related list.</description>
+        <externalId>false</externalId>
+        <label>Revvy Quote for CPT</label>
+        <referenceTo>REVVY__MnQuote__c</referenceTo>
+        <relationshipLabel>Line Items for CPT/Reagent Rental</relationshipLabel>
+        <relationshipName>Z_Quote_Line_Items_CPT</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Z_OCD_Revvy_Quote_for_Managed_Services__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This is used to display Managed Services related fields in REVVY quote as a related list.</description>
+        <externalId>false</externalId>
+        <label>Revvy Quote for Managed Services</label>
+        <referenceTo>REVVY__MnQuote__c</referenceTo>
+        <relationshipLabel>Line Items  for Managed Services</relationshipLabel>
+        <relationshipName>Z_Quote_Line_Item_ManagedServices</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ccQty__c</fullName>
+        <externalId>false</externalId>
+        <label>ccQty</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>iaQty__c</fullName>
+        <externalId>false</externalId>
+        <label>iaQty</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+</CustomObject>
